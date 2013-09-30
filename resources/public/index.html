@@ -1,0 +1,67 @@
+<html>
+  <head>
+    <style>
+      #canvas {
+        border: 1px dotted black;
+      }
+    </style>
+
+    <script type="text/javascript">
+      window.onload = function herewego() {
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext("2d");
+        drawGrid(context);
+
+        makeSub(context, 50, 50);
+      }
+
+      window.addEventListener('keydown', function (event) {
+        console.log(event.keyCode);
+        switch (event.keyCode) {
+          case 37: //left
+          break;
+
+          case 38: //up
+          break;
+
+          case 39: //right
+          break;
+
+          case 40: //down
+          break;
+        }
+      });
+
+
+      function makeSub(context, x, y) {
+        var sub = new Image();
+        sub.src = "/cat.png";
+        sub.onload = function () {
+          context.drawImage(sub, x, y, 50, 50);
+        }
+        return sub;
+      }
+
+      function drawGrid(context) {
+        // "pencil" methods (does not leave the ink, just moves the pen)
+        for (var x = 0.5; x < 800; x += 50) {
+          context.moveTo(x, 0);
+          context.lineTo(x, 600);
+        }
+        for (var y = 0.5; y < 600; y += 50) {
+          context.moveTo(0, y);
+          context.lineTo(800, y);
+        }
+
+        // "ink" methods (leaves the ink where where moved the pencil around)
+        context.strokeStyle = "#eee";
+        context.stroke();
+      }
+
+    </script>
+
+  </head>
+  <body>
+    <canvas id="canvas" width="800" height="600"></canvas>
+  </body>
+</html>

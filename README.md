@@ -1,6 +1,14 @@
 # uboats
 
-A Clojure library designed to ... well, that part is up to you.
+This is a game (work in progress) that is designed to be a 2D browser-based
+realtime strategy game. It is similar to the game bomberman.
+
+Rather than bombermen though, each player controls a submarine and can go under
+water, use sonar, and some other things.
+
+
+
+
 
 ## Usage
 
