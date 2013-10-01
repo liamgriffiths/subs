@@ -7,29 +7,42 @@
     </style>
 
     <script type="text/javascript">
-      window.onload = function herewego() {
-        var canvas = document.getElementById("canvas");
-        var context = canvas.getContext("2d");
-        drawGrid(context);
 
-        makeSub(context, 50, 50);
+      var player = {};
+      player.x = 50;
+      player.y = 50;
+
+      var canvas;
+      var context;
+
+      window.onload = function herewego() {
+        canvas = document.getElementById("canvas");
+        context = canvas.getContext("2d");
+
+        drawGrid(context);
+        makeSub(context, player.x, player.y);
       }
 
       window.addEventListener('keydown', function (event) {
-        console.log(event.keyCode);
+        // console.log(event.keyCode);
         switch (event.keyCode) {
           case 37: //left
+            player.x -= 50;
           break;
 
           case 38: //up
+            player.y -= 50;
           break;
 
           case 39: //right
+            player.x += 50;
           break;
 
           case 40: //down
+            player.y += 50;
           break;
         }
+        makeSub(context, player.x, player.y);
       });
 
 
