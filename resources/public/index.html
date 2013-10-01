@@ -1,80 +1,23 @@
 <html>
   <head>
     <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
       #canvas {
-        border: 1px dotted black;
+        /* border: 1px dotted black; */
       }
     </style>
 
-    <script type="text/javascript">
-
-      var player = {};
-      player.x = 50;
-      player.y = 50;
-
-      var canvas;
-      var context;
-
-      window.onload = function herewego() {
-        canvas = document.getElementById("canvas");
-        context = canvas.getContext("2d");
-
-        drawGrid(context);
-        makeSub(context, player.x, player.y);
-      }
-
-      window.addEventListener('keydown', function (event) {
-        // console.log(event.keyCode);
-        switch (event.keyCode) {
-          case 37: //left
-            player.x -= 50;
-          break;
-
-          case 38: //up
-            player.y -= 50;
-          break;
-
-          case 39: //right
-            player.x += 50;
-          break;
-
-          case 40: //down
-            player.y += 50;
-          break;
-        }
-        makeSub(context, player.x, player.y);
-      });
-
-
-      function makeSub(context, x, y) {
-        var sub = new Image();
-        sub.src = "/cat.png";
-        sub.onload = function () {
-          context.drawImage(sub, x, y, 50, 50);
-        }
-        return sub;
-      }
-
-      function drawGrid(context) {
-        // "pencil" methods (does not leave the ink, just moves the pen)
-        for (var x = 0.5; x < 800; x += 50) {
-          context.moveTo(x, 0);
-          context.lineTo(x, 600);
-        }
-        for (var y = 0.5; y < 600; y += 50) {
-          context.moveTo(0, y);
-          context.lineTo(800, y);
-        }
-
-        // "ink" methods (leaves the ink where where moved the pencil around)
-        context.strokeStyle = "#eee";
-        context.stroke();
-      }
-
-    </script>
+    <script type='text/javascript' src='/playersController.js'></script>
+    <script type='text/javascript' src='/player.js'></script>
+    <script type='text/javascript' src='/boardController.js'></script>
+    <script type='text/javascript' src='/board.js'></script>
+    <script type='text/javascript' src='/game.js'></script>
 
   </head>
   <body>
-    <canvas id="canvas" width="800" height="600"></canvas>
+    <canvas id="canvas" width="100%" height="100%"></canvas>
   </body>
 </html>
