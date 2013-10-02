@@ -50,13 +50,13 @@ Mine.prototype.finishExplosion = function () {
 
 
 Mine.prototype.explodeTo = function (toX, toY) {
-  var x1 = this.position.x;
-  var x2 = toX;
-  var y1 = this.position.y;
-  var y2 = toY;
+  var x1 = toX < this.position.x ? toX : this.position.x;
+  var x2 = (toX > this.position.x ? toX : this.position.x) + 1;
+  var y1 = toY < this.position.y ? toY : this.position.y;
+  var y2 = (toY > this.position.y ? toY : this.position.y) + 1;
 
-  for(var x = x1; x < x2; x + (x1 > x2 ? -1 : 1)){
-    for(var y = y1; y < y2; y + (y1 > y2 ? -1 : 1)){
+  for(var x = x1; x < x2; x++){
+    for(var y = y1; y < y2; y++){
       if(boardController.board.exists(x, y)){
         tile = boardController.board.tiles[x][y];
         tile.exploding = true;
