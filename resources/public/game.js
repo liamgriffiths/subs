@@ -5,6 +5,7 @@ var currentName = prompt("Who are you?");
 
 var boardController = new BoardController();
 var playersController = new PlayersController();
+var minesController = new MinesController();
 
 function setup() {
   canvas.width = document.body.clientWidth;
@@ -34,6 +35,7 @@ function draw() {
 
   boardController.draw();
   playersController.draw();
+  minesController.draw();
 }
 
 // updates the current objects
@@ -50,6 +52,7 @@ function update() {
 
 
   boardController.update();
+  minesController.update();
   playersController.update({keys: PRESSED_KEYS});
   PRESSED_KEYS = [];
 }
@@ -86,8 +89,12 @@ window.addEventListener('keydown', function (event) {
       PRESSED_KEYS.push('zoomin');
       break;
 
-    case 83: //a
+    case 83: //s
       PRESSED_KEYS.push('zoomout');
+      break;
+
+    case 77: //m
+      PRESSED_KEYS.push('leavemine');
       break;
   }
 });

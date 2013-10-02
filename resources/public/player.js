@@ -33,12 +33,15 @@ Player.prototype.update = function (options) {
           this.position.y += 1;
         }
       }
+
+      if(options.keys[i] == 'leavemine'){
+        minesController.newMine(this.position);
+      }
     }
   }
 };
 
 Player.prototype.canMoveTo = function(x, y){
-  console.log(x,y);
   if(x < 0){ return false; }
   if(y < 0){ return false; }
   if(x > boardController.board.w){ return false; }
