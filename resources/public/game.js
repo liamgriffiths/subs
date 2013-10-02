@@ -1,4 +1,4 @@
-var TILESIZE = 20;
+var TILESIZE = 80;
 var PRESSED_KEYS = [];
 
 var currentName = prompt("Who are you?");
@@ -23,7 +23,6 @@ function setup() {
 function main() {
   draw();
   update();
-
   // TODO: make more compatible
   window.requestAnimationFrame(main);
 }

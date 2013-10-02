@@ -42,10 +42,7 @@ Player.prototype.update = function (options) {
 };
 
 Player.prototype.canMoveTo = function(x, y){
-  if(x < 0){ return false; }
-  if(y < 0){ return false; }
-  if(x > boardController.board.w){ return false; }
-  if(y > boardController.board.h){ return false; }
+  if(! boardController.board.exists(x,y)){ return false; }
   if(boardController.board.tiles[x][y].type == 'wall'){ return false; }
   return true;
 };

@@ -14,7 +14,7 @@ function Board(w, h, tileSize) {
 
       var rand = Math.floor(Math.random() * 10);
       var type = 'water';
-      if(rand > 5){
+      if(rand > 7){
         type = 'wall';
       }
 
@@ -65,9 +65,34 @@ Board.prototype.drawTiles = function () {
         context.closePath();
         context.fill();
       }
+      if(this.tiles[x][y].type == 'explosion'){
+        context.beginPath();
+        context.fillStyle = 'red';
+        context.moveTo(x * TILESIZE, y * TILESIZE);
+        context.lineTo(x * TILESIZE + TILESIZE, y * TILESIZE);
+        context.lineTo(x * TILESIZE + TILESIZE, y * TILESIZE + TILESIZE);
+        context.lineTo(x * TILESIZE, y * TILESIZE + TILESIZE);
+        context.closePath();
+        context.fill();
+      }
     }
   }
 };
 
+Board.prototype.exists = function(x, y){
+  if(typeof(this.tiles) != 'undefined'){
+    if(typeof(this.tiles[x]) != 'undefined'){
+      if(typeof(this.tiles[x][y]) != 'undefined'){
+        return true;
+      }
+    }
+  }
+  return false;
+};
 
+Board.prototype.ifExists = function(x, y, fn){
+  if(this.exists(x, y)){
+    return fn(this.tiles[x][y]);
+  }
+};
 
