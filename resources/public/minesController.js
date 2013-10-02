@@ -1,6 +1,6 @@
-function MinesController() {
+var MinesController = function () {
   this.mines = [];
-}
+};
 
 MinesController.prototype.draw = function () {
   for(var i = 0; i < this.mines.length; i++){
@@ -24,5 +24,6 @@ MinesController.prototype.update = function () {
 };
 
 MinesController.prototype.newMine = function (position) {
-  this.mines.push(new Mine(position));
+  var mine = new Mine(position);
+  this.mines.push(mine);
 };

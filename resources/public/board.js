@@ -16,12 +16,11 @@ function Board(w, h, tileSize) {
       var type = 'water';
       if(rand > 7){
         type = 'wall';
+      // }else if(rand < 2){
+      //   type = 'hardwall';
       }
 
-      this.tiles[x][y] = {
-        type: type,   // each tile has a type which defines what you can do here
-        contains: []  // each tile can be occupied by players, items, bombs, etc
-      };
+      this.tiles[x][y] = new Tile(type, {x: x, y: y});
     }
   }
 
@@ -55,26 +54,7 @@ Board.prototype.drawGrid = function () {
 Board.prototype.drawTiles = function () {
   for(var x = 0; x < this.w; x++){
     for(var y = 0; y < this.h; y++){
-      if(this.tiles[x][y].type == 'wall'){
-        context.beginPath();
-        context.fillStyle = '#888';
-        context.moveTo(x * TILESIZE, y * TILESIZE);
-        context.lineTo(x * TILESIZE + TILESIZE, y * TILESIZE);
-        context.lineTo(x * TILESIZE + TILESIZE, y * TILESIZE + TILESIZE);
-        context.lineTo(x * TILESIZE, y * TILESIZE + TILESIZE);
-        context.closePath();
-        context.fill();
-      }
-      if(this.tiles[x][y].type == 'explosion'){
-        context.beginPath();
-        context.fillStyle = 'red';
-        context.moveTo(x * TILESIZE, y * TILESIZE);
-        context.lineTo(x * TILESIZE + TILESIZE, y * TILESIZE);
-        context.lineTo(x * TILESIZE + TILESIZE, y * TILESIZE + TILESIZE);
-        context.lineTo(x * TILESIZE, y * TILESIZE + TILESIZE);
-        context.closePath();
-        context.fill();
-      }
+      this.tiles[x][y].draw();
     }
   }
 };
@@ -88,11 +68,5 @@ Board.prototype.exists = function(x, y){
     }
   }
   return false;
-};
-
-Board.prototype.ifExists = function(x, y, fn){
-  if(this.exists(x, y)){
-    return fn(this.tiles[x][y]);
-  }
 };
 

@@ -1,7 +1,7 @@
-var TILESIZE = 80;
+var TILESIZE = 20;
 var PRESSED_KEYS = [];
 
-var currentName = prompt("Who are you?");
+var currentName = "liam";
 
 var boardController = new BoardController();
 var playersController = new PlayersController();
@@ -15,7 +15,7 @@ function setup() {
   var board_h = (canvas.height / TILESIZE) - 1;
 
   boardController.newBoard(board_w, board_h, TILESIZE);
-  playersController.newPlayer(currentName, {x: randomInteger(board_w), 
+  playersController.newPlayer(currentName, {x: randomInteger(board_w),
                                             y: randomInteger(board_h)});
 }
 
@@ -23,8 +23,7 @@ function setup() {
 function main() {
   draw();
   update();
-  // TODO: make more compatible
-  window.requestAnimationFrame(main);
+  nextTick(main);
 }
 
 // does the screen drawing
@@ -32,9 +31,10 @@ function draw() {
   // clear the canvas
   clearCanvas();
 
+  // NOTE: the order that these are drawn makes a difference, bottom to top
   boardController.draw();
-  playersController.draw();
   minesController.draw();
+  playersController.draw();
 }
 
 // updates the current objects
@@ -92,7 +92,7 @@ window.addEventListener('keydown', function (event) {
       PRESSED_KEYS.push('zoomout');
       break;
 
-    case 77: //m
+    case 32: //spacebar
       PRESSED_KEYS.push('leavemine');
       break;
   }
@@ -104,4 +104,19 @@ function clearCanvas() {
 
 function randomInteger(i) {
   return Math.floor(Math.random() * i);
+}
+
+function nextTick(fn) {
+  window.requestAnimationFrame(fn);
+  // var fps = 15;
+  // setTimeout(function () {
+  //   window.requestAnimationFrame(fn);
+  // }, 1000 / fps);
+}
+
+function demoMessage() {
+   console.log("hello");
+   context.fillStyle = "blue";
+   context.font = "bold 16px Arial";
+   context.fillText("Hello World", canvas.width/2, canvas.height/2);
 }

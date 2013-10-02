@@ -1,10 +1,10 @@
-function Player(name, position) {
+var Player = function (name, position) {
   this.name = name;
   this.position = position;
   this.image = new Image();
   this.image.src = "/mariosub.png";
   // this.image.onload = this.draw;
-}
+};
 
 Player.prototype.draw = function () {
   context.drawImage(this.image, this.position.x * TILESIZE, this.position.y * TILESIZE, TILESIZE, TILESIZE);
@@ -43,6 +43,24 @@ Player.prototype.update = function (options) {
 
 Player.prototype.canMoveTo = function(x, y){
   if(! boardController.board.exists(x,y)){ return false; }
-  if(boardController.board.tiles[x][y].type == 'wall'){ return false; }
+
+  var cannotAccess = ['wall', 'hardwall'];
+  for(var i = 0; i < cannotAccess.length; i++){
+    if(boardController.board.tiles[x][y].type == cannotAccess[i]){
+      return false;
+    }
+  }
+
+  // TODO: come up with a better name for this
+  // var blockingType = [Mine];
+  // for(var j = 0; j < boardController.board.tiles[x][y].contains.length; j++){
+  //   for(var i = 0; i < blockingType.length; i++){
+  //     if(boardController.board.tiles[x][y].contains[j].constructor === blockingType){
+  //     console.log(boardController.board.tiles[x][y].contains[j].constructor);
+  //      return false;
+  //     }
+  //   }
+  // }
+
   return true;
 };
