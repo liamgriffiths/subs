@@ -16,8 +16,8 @@ function Board(w, h, tileSize) {
       var type = 'water';
       if(rand > 7){
         type = 'wall';
-      // }else if(rand < 2){
-      //   type = 'hardwall';
+      }else if(rand < 2){
+        type = 'hardwall';
       }
 
       this.tiles[x][y] = new Tile(type, {x: x, y: y});
