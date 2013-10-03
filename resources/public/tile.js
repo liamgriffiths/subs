@@ -17,10 +17,15 @@ var Tile = function (type, position) {
     case 'explosion':
       this.explodable = true;
       break;
+
+    default:
+      this.explodable = true;
+      break;
   }
 };
 
 Tile.prototype.update = function () {
+  if(this.exploding) this.items = [];
 };
 
 Tile.prototype.draw = function () {

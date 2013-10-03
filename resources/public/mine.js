@@ -98,9 +98,13 @@ Mine.prototype.finishExplosionTo = function (toX, toY) {
 function explodeTile(x, y){
   if(boardController.board.exists(x, y)){
     tile = boardController.board.tiles[x][y];
-    tile.exploding = true;
-    if(tile.type != 'water'){ return false; }
-    return true;
+    if(tile.explodable){
+      tile.exploding = true;
+      if(tile.type != 'water'){ return false; }
+      return true;
+    }else{
+      return false;
+    }
   }
 }
 
