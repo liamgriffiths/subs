@@ -46,7 +46,12 @@ Tile.prototype.addItem = function (item) {
   this.items.push(item);
 };
 
-Tile.prototype.removeItem = function (item) {
+Tile.prototype.removeItem = function (i) {
+  this.items.splice(i, 1);
+};
+
+Tile.prototype.removeAllItems = function () {
+  this.items = [];
 };
 
 Tile.prototype.drawWall = function () {
