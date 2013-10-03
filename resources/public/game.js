@@ -39,26 +39,17 @@ function draw() {
 
 // updates the current objects
 function update() {
-
-  for(var i = 0; i < PRESSED_KEYS.length; i++){
-    if(PRESSED_KEYS[i] == 'zoomin'){
-      TILESIZE += 1;
-    }
-    if(PRESSED_KEYS[i] == 'zoomout'){
-      TILESIZE -= 1;
-    }
-  }
-
-
-  boardController.update();
+  boardController.update({keys: PRESSED_KEYS});
   minesController.update();
   playersController.update({keys: PRESSED_KEYS});
+  // clear all pressed keys for this tick
   PRESSED_KEYS = [];
 }
 
 var canvas;
 var context;
 
+// set up the game and run it
 window.onload = function herewego() {
   canvas = document.getElementById("canvas");
   context = canvas.getContext("2d");
