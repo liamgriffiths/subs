@@ -50,41 +50,68 @@ Mine.prototype.finishExplosion = function () {
 
 
 Mine.prototype.explodeTo = function (toX, toY) {
-  var x1 = toX < this.position.x ? toX : this.position.x;
-  var x2 = (toX > this.position.x ? toX : this.position.x) + 1;
-  var y1 = toY < this.position.y ? toY : this.position.y;
-  var y2 = (toY > this.position.y ? toY : this.position.y) + 1;
+  // explode horizontally
+  if(this.position.x < toX){
+    for(x = this.position.x; x < toX; x++){
+      if(! explodeTile(x, toY)){ return; }
+    }
+  }else{
+    for(x = this.position.x; x > toX; x--){
+      if(! explodeTile(x, toY)){ return; }
+    }
+  }
 
-  for(var x = x1; x < x2; x++){
-    for(var y = y1; y < y2; y++){
-      if(boardController.board.exists(x, y)){
-        tile = boardController.board.tiles[x][y];
-        tile.exploding = true;
-        if(tile.type != 'water'){ return; }
-      }else{
-        return;
-      }
+  // explode vertically
+  if(this.position.y < toY){
+    for(y = this.position.y; y < toY; y++){
+      if(! explodeTile(toX, y)){ return; }
+    }
+  }else{
+    for(y = this.position.y; y > toY; y--){
+      if(! explodeTile(toX, y)){ return; }
     }
   }
 };
 
 Mine.prototype.finishExplosionTo = function (toX, toY) {
-  var x1 = toX < this.position.x ? toX : this.position.x;
-  var x2 = (toX > this.position.x ? toX : this.position.x) + 1;
-  var y1 = toY < this.position.y ? toY : this.position.y;
-  var y2 = (toY > this.position.y ? toY : this.position.y) + 1;
+  if(this.position.x < toX){
+    for(x = this.position.x; x < toX; x++){
+      stopExplodingTile(x, toY);
+    }
+  }else{
+    for(x = this.position.x; x > toX; x--){
+      stopExplodingTile(x, toY);
+    }
+  }
 
-  for(var x = x1; x < x2; x++){
-    for(var y = y1; y < y2; y++){
-      if(boardController.board.exists(x, y)){
-        tile = boardController.board.tiles[x][y];
-        if(tile.exploding){
-          tile.exploding = false;
-          if(tile.explodable){
-            tile.type = 'water';
-          }
-        }
-      }
+  if(this.position.y < toY){
+    for(y = this.position.y; y < toY; y++){
+      stopExplodingTile(toX, y);
+    }
+  }else{
+    for(y = this.position.y; y > toY; y--){
+      stopExplodingTile(toX, y);
     }
   }
 };
+
+function explodeTile(x, y){
+  if(boardController.board.exists(x, y)){
+    tile = boardController.board.tiles[x][y];
+    tile.exploding = true;
+    if(tile.type != 'water'){ return false; }
+    return true;
+  }
+}
+
+function stopExplodingTile(x,y) {
+  if(boardController.board.exists(x, y)){
+    tile = boardController.board.tiles[x][y];
+    if(tile.exploding){
+      tile.exploding = false;
+      if(tile.explodable){
+        tile.type = 'water';
+      }
+    }
+  }
+}

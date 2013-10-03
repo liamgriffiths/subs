@@ -108,10 +108,6 @@ function randomInteger(i) {
 
 function nextTick(fn) {
   window.requestAnimationFrame(fn);
-  // var fps = 15;
-  // setTimeout(function () {
-  //   window.requestAnimationFrame(fn);
-  // }, 1000 / fps);
 }
 
 function demoMessage() {
