@@ -67,15 +67,26 @@ Player.prototype.canMoveTo = function(x, y){
   }
 
   // TODO: come up with a better name for this
-  // var blockingType = [Mine];
-  // for(var j = 0; j < boardController.board.tiles[x][y].contains.length; j++){
-  //   for(var i = 0; i < blockingType.length; i++){
-  //     if(boardController.board.tiles[x][y].contains[j].constructor === blockingType){
-  //     console.log(boardController.board.tiles[x][y].contains[j].constructor);
-  //      return false;
-  //     }
-  //   }
-  // }
+  var blockingTypes = [Mine];
+  for(var j = 0; j < boardController.board.tiles[x][y].items.length; j++){
+    for(var i = 0; i < blockingTypes.length; i++){
+      if(boardController.board.tiles[x][y].items[j].constructor === blockingTypes[i]){
+       return false;
+      }
+    }
+  }
 
   return true;
+};
+
+
+Player.prototype.drawFrame1 = function () {
+  context.beginPath();
+  context.fillStyle = '#888';
+  context.moveTo(this.position.x * TILESIZE, this.position.y * TILESIZE);
+  context.lineTo(this.position.x * TILESIZE + TILESIZE, this.position.y * TILESIZE);
+  context.lineTo(this.position.x * TILESIZE + TILESIZE, this.position.y * TILESIZE + TILESIZE);
+  context.lineTo(this.position.x * TILESIZE, this.position.y * TILESIZE + TILESIZE);
+  context.closePath();
+  context.fill();
 };
