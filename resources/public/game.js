@@ -7,6 +7,14 @@ var boardController = new BoardController();
 var playersController = new PlayersController();
 var minesController = new MinesController();
 
+
+// main game loop
+function main() {
+  draw();
+  update();
+  nextTick(main);
+}
+
 function setup() {
   canvas.width = document.body.clientWidth;
   canvas.height = document.body.clientHeight;
@@ -19,17 +27,9 @@ function setup() {
                                             y: randomInteger(board_h)});
 }
 
-// main game loop
-function main() {
-  draw();
-  update();
-  nextTick(main);
-}
-
 // does the screen drawing
 function draw() {
-  // clear the canvas
-  clearCanvas();
+  clearCanvas(); // clear the canvas
 
   // NOTE: the order that these are drawn makes a difference, bottom to top
   boardController.draw();
@@ -98,21 +98,8 @@ window.addEventListener('keydown', function (event) {
   }
 });
 
-function clearCanvas() {
-  canvas.width = canvas.width;
-}
 
-function randomInteger(i) {
-  return Math.floor(Math.random() * i);
-}
-
+// TODO: this might not be xbrowser :-/
 function nextTick(fn) {
   window.requestAnimationFrame(fn);
-}
-
-function demoMessage() {
-   console.log("hello");
-   context.fillStyle = "blue";
-   context.font = "bold 16px Arial";
-   context.fillText("Hello World", canvas.width/2, canvas.height/2);
 }
