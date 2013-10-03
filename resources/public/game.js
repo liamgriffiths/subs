@@ -1,4 +1,4 @@
-var TILESIZE = 20;
+var TILESIZE = 80;
 var PRESSED_KEYS = [];
 
 var currentName = "liam";
