@@ -1,13 +1,23 @@
 var Player = function (name, position) {
+  this.alive = true;
   this.name = name;
   this.position = position;
   this.image = new Image();
   this.image.src = "/mariosub.png";
+
+  this.ghostImage = new Image();
+  this.ghostImage.src = "/ghost.png";
   // this.image.onload = this.draw;
+  
+  this.color1 = 0;
 };
 
 Player.prototype.draw = function () {
-  context.drawImage(this.image, this.position.x * TILESIZE, this.position.y * TILESIZE, TILESIZE, TILESIZE);
+  if(this.alive){
+    context.drawImage(this.image, this.position.x * TILESIZE, this.position.y * TILESIZE, TILESIZE, TILESIZE);
+  }else{
+    context.drawImage(this.ghostImage, this.position.x * TILESIZE, this.position.y * TILESIZE, TILESIZE, TILESIZE);
+  }
 };
 
 Player.prototype.update = function (options) {
@@ -38,6 +48,11 @@ Player.prototype.update = function (options) {
         minesController.newMine(this.position);
       }
     }
+  }
+
+  // player is caught in the explosion
+  if(boardController.board.tiles[this.position.x][this.position.y].exploding){
+    this.alive = false;
   }
 };
 
