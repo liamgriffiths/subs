@@ -13,29 +13,50 @@ var minesController = new MinesController();
 function main() {
   draw();
   update();
-  nextTick(main);
+  nextFrame(main);
 }
 
 function setup() {
   canvas.width = document.body.clientWidth;
   canvas.height = document.body.clientHeight;
 
-  var board_w = canvas.width / TILESIZE;
-  var board_h = (canvas.height / TILESIZE) - 1;
+  var board_w = 20;
+  var board_h = 20;
 
   boardController.newBoard(board_w, board_h, TILESIZE);
-  playersController.newPlayer(currentName, {x: randomInteger(board_w),
-                                            y: randomInteger(board_h)});
+  playersController.newPlayer(currentName, {x: board_w /2,
+                                            y: board_h /2});
 }
 
 // does the screen drawing
 function draw() {
   clearCanvas(); // clear the canvas
 
+  var draws = [];
+
   // NOTE: the order that these are drawn makes a difference, bottom to top
   boardController.draw();
-  minesController.draw();
   playersController.draw();
+
+  var minesDraws = minesController.draw();
+  for(var i = 0; i < minesDraws.length; i++){
+    if(minesDraws[i] !== null){
+      if(draws[i] === undefined){
+        draws[i] = [];
+      }
+
+      if(minesDraws[i] !== undefined){
+        draws[i] = draws[i].concat(minesDraws[i]);
+      }
+    }
+  }
+
+  for(var j = 0; j < draws.length; j++){
+    for(var k = 0; k < draws[j].length; k++){
+      draws[j][k]();
+    }
+  }
+
 }
 
 // updates the current objects
@@ -92,6 +113,6 @@ window.addEventListener('keydown', function (event) {
 
 
 // TODO: this might not be xbrowser :-/
-function nextTick(fn) {
+function nextFrame(fn) {
   window.requestAnimationFrame(fn);
 }

@@ -2,8 +2,9 @@ function Mine(position){
   this.position = {};
   this.position.x = position.x;
   this.position.y = position.y;
+  this.position.z = position.z || 2;
   this.countdown = 100;
-  this.power = 4; // how many adjacent tiles it will affect
+  this.power = 10; // how many adjacent tiles it will affect
   this.live = true;
   this.explodingTime = 50;
   this.exploding = false;
@@ -31,6 +32,10 @@ Mine.prototype.update = function () {
     }else{
       this.exploding = false;
     }
+  }
+
+  if(boardController.board.tiles[this.position.x][this.position.y].exploding){
+    this.countdown = 0;
   }
 };
 

@@ -3,9 +3,16 @@ var MinesController = function () {
 };
 
 MinesController.prototype.draw = function () {
+  var draws = [];
   for(var i = 0; i < this.mines.length; i++){
-    this.mines[i].draw();
+
+    if(draws[this.mines[i].position.z] === undefined){
+      draws[this.mines[i].position.z] = [];
+    }
+
+    draws[this.mines[i].position.z].push(this.mines[i].draw.bind(this.mines[i]));
   }
+  return draws;
 };
 
 MinesController.prototype.update = function () {

@@ -15,13 +15,14 @@ var Player = function (name, position) {
 Player.prototype.draw = function () {
   if(this.alive){
     context.drawImage(this.image, this.position.x * TILESIZE, this.position.y * TILESIZE, TILESIZE, TILESIZE);
+    // context.drawImage(this.image, canvas.width/2, canvas.height/2, TILESIZE, TILESIZE);
   }else{
     context.drawImage(this.ghostImage, this.position.x * TILESIZE, this.position.y * TILESIZE, TILESIZE, TILESIZE);
   }
 };
 
 Player.prototype.update = function (options) {
-  if(options.keys){
+  if(options.keys.length){
     for(var i = 0; i < options.keys.length; i++){
       if(options.keys[i] == 'left'){
         if(this.canMoveTo(this.position.x - 1, this.position.y)){
