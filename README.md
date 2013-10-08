@@ -1,4 +1,4 @@
-# uboats
+# subs
 
 This is a game (work in progress) that is designed to be a 2D browser-based
 realtime strategy game. It is similar to the game bomberman.
