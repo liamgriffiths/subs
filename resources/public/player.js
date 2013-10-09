@@ -52,26 +52,26 @@ Player.prototype.update = function (options) {
   }
 
   // player is caught in the explosion
-  if(boardController.board.tiles[this.position.x][this.position.y].exploding){
+  if(board.tiles[this.position.x][this.position.y].exploding){
     this.alive = false;
   }
 };
 
 Player.prototype.canMoveTo = function(x, y){
-  if(! boardController.board.exists(x,y)){ return false; }
+  if(! board.exists(x,y)){ return false; }
 
   var cannotAccess = ['wall', 'hardwall'];
   for(var i = 0; i < cannotAccess.length; i++){
-    if(boardController.board.tiles[x][y].type == cannotAccess[i]){
+    if(board.tiles[x][y].type == cannotAccess[i]){
       return false;
     }
   }
 
   // TODO: come up with a better name for this
   var blockingTypes = [Mine];
-  for(var j = 0; j < boardController.board.tiles[x][y].items.length; j++){
+  for(var j = 0; j < board.tiles[x][y].items.length; j++){
     for(var i = 0; i < blockingTypes.length; i++){
-      if(boardController.board.tiles[x][y].items[j].constructor === blockingTypes[i]){
+      if(board.tiles[x][y].items[j].constructor === blockingTypes[i]){
        return false;
       }
     }

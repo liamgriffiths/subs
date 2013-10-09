@@ -6,7 +6,7 @@ var lastFrameTime;
 
 var currentName = "liam";
 
-var boardController = new BoardController();
+var board;
 var playersController = new PlayersController();
 var minesController = new MinesController();
 
@@ -25,7 +25,7 @@ function setup() {
   var board_w = 50;
   var board_h = 50;
 
-  boardController.newBoard(board_w, board_h, TILESIZE);
+  board = new Board(board_w, board_h, TILESIZE);
   playersController.newPlayer(currentName, {x: board_w /2,
                                             y: board_h /2});
 }
@@ -41,7 +41,7 @@ function draw() {
 
   var draws = [];
   // NOTE: the order that these are drawn makes a difference, bottom to top
-  boardController.draw();
+  board.draw();
   playersController.draw();
   var minesDraws = minesController.draw();
   for(var i = 0; i < minesDraws.length; i++){
@@ -67,7 +67,7 @@ function draw() {
 
 // updates the current objects
 function update() {
-  boardController.update({keys: PRESSED_KEYS});
+  board.update({keys: PRESSED_KEYS});
   minesController.update();
   playersController.update({keys: PRESSED_KEYS});
   // clear all pressed keys for this tick

@@ -31,7 +31,8 @@ Board.prototype.draw = function () {
   this.drawTiles();
 };
 
-Board.prototype.update = function () {
+Board.prototype.update = function (options) {
+  this.handleZoom(options.keys);
 };
 
 Board.prototype.drawGrid = function () {
@@ -69,4 +70,12 @@ Board.prototype.exists = function(x, y){
   }
   return false;
 };
+
+Board.prototype.handleZoom = function (keys) {
+  for(var i = 0; i < keys.length; i++){
+    if(keys[i] == 'zoomin') TILESIZE += 1;
+    if(keys[i] == 'zoomout') TILESIZE -= 1;
+  }
+};
+
 

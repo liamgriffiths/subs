@@ -34,7 +34,7 @@ Mine.prototype.update = function () {
     }
   }
 
-  if(boardController.board.tiles[this.position.x][this.position.y].exploding){
+  if(board.tiles[this.position.x][this.position.y].exploding){
     this.countdown = 0;
   }
 };
@@ -101,8 +101,8 @@ Mine.prototype.finishExplosionTo = function (toX, toY) {
 };
 
 function explodeTile(x, y){
-  if(boardController.board.exists(x, y)){
-    tile = boardController.board.tiles[x][y];
+  if(board.exists(x, y)){
+    tile = board.tiles[x][y];
     if(tile.explodable){
       tile.exploding = true;
       if(tile.type != 'water'){ return false; }
@@ -114,8 +114,8 @@ function explodeTile(x, y){
 }
 
 function stopExplodingTile(x,y) {
-  if(boardController.board.exists(x, y)){
-    tile = boardController.board.tiles[x][y];
+  if(board.exists(x, y)){
+    tile = board.tiles[x][y];
     if(tile.exploding){
       tile.exploding = false;
       if(tile.explodable){
