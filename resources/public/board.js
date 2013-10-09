@@ -27,7 +27,7 @@ function Board(w, h, tileSize) {
 }
 
 Board.prototype.draw = function () {
-  this.drawGrid();
+  // this.drawGrid();
   this.drawTiles();
 };
 

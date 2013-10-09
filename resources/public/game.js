@@ -1,6 +1,8 @@
 
-var TILESIZE = 80;
+var TILESIZE = 20;
 var PRESSED_KEYS = [];
+var FPS;
+var lastFrameTime;
 
 var currentName = "liam";
 
@@ -50,13 +52,14 @@ function draw() {
       }
     }
   }
-
   for(var j = 0; j < draws.length; j++){
     for(var k = 0; k < draws[j].length; k++){
       draws[j][k]();
     }
   }
 
+  context.translate(newX, newY);
+  drawFPSMeter();
 }
 
 // updates the current objects
@@ -109,10 +112,24 @@ window.addEventListener('keydown', function (event) {
       PRESSED_KEYS.push('leavemine');
       break;
   }
+  event.preventDefault();
 });
 
 
 // TODO: this might not be xbrowser :-/
 function nextFrame(fn) {
+  var currentTime = new Date().getTime();
+  var delta = (currentTime - lastFrameTime) / 1000; // divide by msecs
+  lastFrameTime = currentTime;
+  FPS = 1.0 / delta;
+
   window.requestAnimationFrame(fn);
 }
+
+function drawFPSMeter () {
+  context.font = "bold 22px monospace";
+  context.fillStyle = "black";
+  context.fillText(Math.floor(FPS) + "fps", 10, 30);
+}
+
+
