@@ -19,11 +19,11 @@ function main() {
 }
 
 function setup() {
-  canvas.width = document.body.clientWidth;
-  canvas.height = document.body.clientHeight;
+  canvas.width = 500; //document.body.clientWidth;
+  canvas.height =500;// document.body.clientHeight;
 
-  var board_w = 20;
-  var board_h = 20;
+  var board_w = 50;
+  var board_h = 50;
 
   boardController.newBoard(board_w, board_h, TILESIZE);
   playersController.newPlayer(currentName, {x: board_w /2,
@@ -34,12 +34,15 @@ function setup() {
 function draw() {
   clearCanvas(); // clear the canvas
 
-  var draws = [];
+  var player = playersController.players[currentName];
+  var newX = player.position.x * TILESIZE - (canvas.height / 2);
+  var newY = player.position.y * TILESIZE - (canvas.width / 2);
+  context.translate(-newX, -newY);
 
+  var draws = [];
   // NOTE: the order that these are drawn makes a difference, bottom to top
   boardController.draw();
   playersController.draw();
-
   var minesDraws = minesController.draw();
   for(var i = 0; i < minesDraws.length; i++){
     if(minesDraws[i] !== null){
