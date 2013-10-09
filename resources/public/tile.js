@@ -54,17 +54,6 @@ Tile.prototype.removeAllItems = function () {
   this.items = [];
 };
 
-Tile.prototype.drawWall = function () {
-  context.beginPath();
-  context.fillStyle = '#888';
-  context.moveTo(this.position.x * TILESIZE, this.position.y * TILESIZE);
-  context.lineTo(this.position.x * TILESIZE + TILESIZE, this.position.y * TILESIZE);
-  context.lineTo(this.position.x * TILESIZE + TILESIZE, this.position.y * TILESIZE + TILESIZE);
-  context.lineTo(this.position.x * TILESIZE, this.position.y * TILESIZE + TILESIZE);
-  context.closePath();
-  context.fill();
-};
-
 Tile.prototype.drawHardWall = function (x, y) {
   context.beginPath();
   context.fillStyle = 'blue';
@@ -86,3 +75,20 @@ Tile.prototype.drawExplosion = function (x, y) {
   context.closePath();
   context.fill();
 };
+
+
+var WallTile = function () {
+  this.explodable = true;
+};
+
+Tile.prototype.drawWall = function () {
+  context.beginPath();
+  context.fillStyle = '#888';
+  context.moveTo(this.position.x * TILESIZE, this.position.y * TILESIZE);
+  context.lineTo(this.position.x * TILESIZE + TILESIZE, this.position.y * TILESIZE);
+  context.lineTo(this.position.x * TILESIZE + TILESIZE, this.position.y * TILESIZE + TILESIZE);
+  context.lineTo(this.position.x * TILESIZE, this.position.y * TILESIZE + TILESIZE);
+  context.closePath();
+  context.fill();
+};
+

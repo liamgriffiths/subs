@@ -3,16 +3,15 @@ var MinesController = function () {
 };
 
 MinesController.prototype.draw = function () {
-  var draws = [];
+  var drawFns = [];
   for(var i = 0; i < this.mines.length; i++){
 
-    if(draws[this.mines[i].position.z] === undefined){
-      draws[this.mines[i].position.z] = [];
+    if(drawFns[this.mines[i].position.z] === undefined){
+      drawFns[this.mines[i].position.z] = [];
     }
-
-    draws[this.mines[i].position.z].push(this.mines[i].draw.bind(this.mines[i]));
+    drawFns[this.mines[i].position.z].push(this.mines[i].draw.bind(this.mines[i]));
   }
-  return draws;
+  return drawFns;
 };
 
 MinesController.prototype.update = function () {
