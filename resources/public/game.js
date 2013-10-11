@@ -8,7 +8,7 @@ var currentName = "liam";
 
 var board;
 var playersController = new PlayersController();
-var minesController = new MinesController();
+var minesCollection = new MinesCollection();
 
 
 // main game loop
@@ -43,7 +43,7 @@ function draw() {
   // NOTE: the order that these are drawn makes a difference, bottom to top
   board.draw();
   playersController.draw();
-  var minesDraws = minesController.draw();
+  var minesDraws = minesCollection.draw();
   for(var i = 0; i < minesDraws.length; i++){
     if(minesDraws[i] !== null){
       if(draws[i] === undefined){
@@ -68,7 +68,7 @@ function draw() {
 // updates the current objects
 function update() {
   board.update({keys: PRESSED_KEYS});
-  minesController.update();
+  minesCollection.update();
   playersController.update({keys: PRESSED_KEYS});
   // clear all pressed keys for this tick
   PRESSED_KEYS = [];

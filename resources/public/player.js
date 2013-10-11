@@ -25,28 +25,32 @@ Player.prototype.update = function (options) {
   if(options.keys.length){
     for(var i = 0; i < options.keys.length; i++){
       if(options.keys[i] == 'left'){
+        this.direction = 'left';
         if(this.canMoveTo(this.position.x - 1, this.position.y)){
           this.position.x -= 1;
         }
       }
       if(options.keys[i] == 'right'){
+        this.direction = 'right';
         if(this.canMoveTo(this.position.x + 1, this.position.y)){
           this.position.x += 1;
         }
       }
       if(options.keys[i] == 'up'){
+        this.direction = 'up';
         if(this.canMoveTo(this.position.x, this.position.y - 1)){
           this.position.y -= 1;
         }
       }
       if(options.keys[i] == 'down'){
+        this.direction = 'down';
         if(this.canMoveTo(this.position.x, this.position.y + 1)){
           this.position.y += 1;
         }
       }
 
       if(options.keys[i] == 'leavemine'){
-        minesController.newMine(this.position);
+        minesCollection.newMine(this.position);
       }
     }
   }
