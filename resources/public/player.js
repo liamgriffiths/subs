@@ -2,20 +2,22 @@ var Player = function (name, position) {
   this.alive = true;
   this.name = name;
   this.position = position;
-  this.image = new Image();
-  this.image.src = "/mariosub.png";
+  this.direction = 'up';
 
   this.ghostImage = new Image();
   this.ghostImage.src = "/ghost.png";
   // this.image.onload = this.draw;
-  
-  this.color1 = 0;
 };
 
 Player.prototype.draw = function () {
   if(this.alive){
-    context.drawImage(this.image, this.position.x * TILESIZE, this.position.y * TILESIZE, TILESIZE, TILESIZE);
+    //context.drawImage(this.image, this.position.x * TILESIZE, this.position.y * TILESIZE, TILESIZE, TILESIZE);
     // context.drawImage(this.image, canvas.width/2, canvas.height/2, TILESIZE, TILESIZE);
+
+    if(this.direction == 'up') this.drawUp();
+    if(this.direction == 'down') this.drawDown();
+    if(this.direction == 'left') this.drawLeft();
+    if(this.direction == 'right') this.drawRight();
   }else{
     context.drawImage(this.ghostImage, this.position.x * TILESIZE, this.position.y * TILESIZE, TILESIZE, TILESIZE);
   }
@@ -85,13 +87,70 @@ Player.prototype.canMoveTo = function(x, y){
 };
 
 
-Player.prototype.drawFrame1 = function () {
+Player.prototype.drawUp = function () {
   context.beginPath();
-  context.fillStyle = '#888';
-  context.moveTo(this.position.x * TILESIZE, this.position.y * TILESIZE);
-  context.lineTo(this.position.x * TILESIZE + TILESIZE, this.position.y * TILESIZE);
+  context.fillStyle = 'green';
+  context.moveTo(this.position.x * TILESIZE + (TILESIZE/2), this.position.y * TILESIZE);
+  context.lineTo(this.position.x * TILESIZE + TILESIZE - (TILESIZE/2), this.position.y * TILESIZE);
   context.lineTo(this.position.x * TILESIZE + TILESIZE, this.position.y * TILESIZE + TILESIZE);
   context.lineTo(this.position.x * TILESIZE, this.position.y * TILESIZE + TILESIZE);
+  context.closePath();
+  context.fill();
+};
+
+Player.prototype.drawDown = function () {
+  context.beginPath();
+  context.fillStyle = 'green';
+  context.moveTo(this.position.x * TILESIZE, this.position.y * TILESIZE);
+  context.lineTo(this.position.x * TILESIZE + TILESIZE, this.position.y * TILESIZE);
+  context.lineTo(this.position.x * TILESIZE + (TILESIZE/2), this.position.y * TILESIZE + TILESIZE);
+  context.lineTo(this.position.x * TILESIZE + (TILESIZE/2), this.position.y * TILESIZE + TILESIZE);
+  context.closePath();
+  context.fill();
+};
+
+Player.prototype.drawLeft = function () {
+  context.beginPath();
+  context.fillStyle = 'green';
+  // take the pen and move to top left corner of tile
+  context.moveTo(this.position.x * TILESIZE,
+                 this.position.y * TILESIZE + (TILESIZE/2));
+
+  // take the pen and move to the top right corner
+  context.lineTo(this.position.x * TILESIZE + TILESIZE,
+                 this.position.y * TILESIZE);
+
+  // move to the opposite corner
+  context.lineTo(this.position.x * TILESIZE + TILESIZE,
+                 this.position.y * TILESIZE + TILESIZE);
+
+  // move to 'bottom left'
+  context.lineTo(this.position.x * TILESIZE,
+                 this.position.y * TILESIZE + (TILESIZE/2));
+
+  context.closePath();
+  context.fill();
+};
+
+Player.prototype.drawRight = function () {
+  context.beginPath();
+  context.fillStyle = 'green';
+  // take the pen and move to top left corner of tile
+  context.moveTo(this.position.x * TILESIZE,
+                 this.position.y * TILESIZE);
+
+  // take the pen and move to the top right corner
+  context.lineTo(this.position.x * TILESIZE + TILESIZE,
+                 this.position.y * TILESIZE + (TILESIZE/2));
+
+  // move to the opposite corner
+  context.lineTo(this.position.x * TILESIZE + TILESIZE,
+                 this.position.y * TILESIZE + (TILESIZE/2));
+
+  // move to 'bottom left'
+  context.lineTo(this.position.x * TILESIZE,
+                 this.position.y * TILESIZE + TILESIZE);
+
   context.closePath();
   context.fill();
 };
