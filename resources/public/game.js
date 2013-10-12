@@ -9,6 +9,9 @@ var currentName = "liam";
 var board;
 var playersController = new PlayersController();
 var minesCollection = new MinesCollection();
+var canvas;
+var context;
+
 
 
 // main game loop
@@ -73,9 +76,6 @@ function update() {
   // clear all pressed keys for this tick
   PRESSED_KEYS = [];
 }
-
-var canvas;
-var context;
 
 // set up the game and run it
 window.onload = function herewego() {
