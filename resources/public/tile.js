@@ -77,10 +77,6 @@ Tile.prototype.drawExplosion = function (x, y) {
 };
 
 
-var WallTile = function () {
-  this.explodable = true;
-};
-
 Tile.prototype.drawWall = function () {
   context.beginPath();
   context.fillStyle = '#888';
