@@ -1,8 +1,8 @@
-var MinesController = function () {
+var MinesCollection = function () {
   this.mines = [];
 };
 
-MinesController.prototype.draw = function () {
+MinesCollection.prototype.draw = function () {
   var drawFns = [];
   for(var i = 0; i < this.mines.length; i++){
 
@@ -14,7 +14,7 @@ MinesController.prototype.draw = function () {
   return drawFns;
 };
 
-MinesController.prototype.update = function () {
+MinesCollection.prototype.update = function () {
   for(var i = 0; i < this.mines.length; i++){
     this.mines[i].update();
 
@@ -26,13 +26,13 @@ MinesController.prototype.update = function () {
   }
 };
 
-MinesController.prototype.newMine = function (position) {
+MinesCollection.prototype.newMine = function (position) {
   var mine = new Mine(position);
   this.mines.push(mine);
   board.tiles[position.x][position.y].addItem(mine);
 };
 
-MinesController.prototype.removeMine = function (i) {
+MinesCollection.prototype.removeMine = function (i) {
   var minePosition = this.mines[i].position;
   board.tiles[minePosition.x][minePosition.y].removeAllItems();
   this.mines[i].finishExplosion();

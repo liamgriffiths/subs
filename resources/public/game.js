@@ -23,7 +23,7 @@ function main() {
 
 function setup() {
   canvas.width = 500; //document.body.clientWidth;
-  canvas.height =500;// document.body.clientHeight;
+  canvas.height =500; //document.body.clientHeight;
 
   var board_w = 50;
   var board_h = 50;
