@@ -15,9 +15,24 @@
   (set! (.-width canvas) (.-width canvas)))
 
 
+(defn draw-wall [color x y]
+  (set! (.-fillStyle context) color)
+  (.beginPath context)
+  (.moveTo context (* x 10) (* y 10))
+  (.lineTo context (+ (* x 10) 10) (* y 10))
+  (.lineTo context (+ (* x 10) 10) (+ (* y 10) 10))
+  (.lineTo context (* x 10) (+ (* y 10) 10))
+  (.closePath context)
+  (.fill context))
+
+(def draw-fns
+ {:hard-wall (partial draw-wall 'blue')
+  :soft-wall (partial draw-wall 'black')
+  :explosion (partial draw-wall 'red')})
+
 (def walls
-  (list {:x 4 :y 6 :direction :up :length 3 :type hard}
-        {:x 1 :y 1 :direction :right :length 6 :type soft}))
+  (list {:x 4 :y 6 :direction :up :length 3 :type :hard-wall}
+        {:x 1 :y 1 :direction :right :length 6 :type :soft-wall :draw drawFun})
 
 (defn decompose-wall [wall]
   (if (= 0 (:length wall))
@@ -27,7 +42,7 @@
             [x2 y2] (case (:direction wall)
                       :up [x (+ y 1)]
                       :right [(+ x 1) y])]
-        (cons {:x (:x wall) :y (:y wall)}
+        (cons {:x (:x wall) :y (:y wall) :type (:type wall) :wall wall}
               (decompose-wall {:x x2 :y y2
                                :type (:type wall)
                                :direction (:direction wall)
@@ -43,10 +58,16 @@
                  (add-tile (first tiles)
                            board)))))
 
+(defn render [tiles]
+  (doseq [tile tiles] 
+    ((draw-fns (tile :type)) (tile :x) (tile :y))))
+
 (defn add-tile [tile board]
-  (assoc ((board (tile :x)) (tile :y))
-
-
+  (let [x (:x tile)
+        y (:y tile)
+        row (board x)
+        new-row (assoc row y tile)]
+    (assoc board x new-row)))
 
 
 (defn build-tiles [walls tiles]
@@ -56,12 +77,12 @@
 (defn add-wall! [wall tiles]
   (conj ((tiles (wall :x)) wall :y) :wall wall))
 
-(defn game-loop [frame-count]
+(defn game-loop [frame-count board]
   (clear-canvas)
-  (draw)
+  (render board)
   (update)
   (draw-rect (+ 10 frame-count) 10)
-  (.requestAnimationFrame js/window #(game-loop (inc frame-count))))
+  (.requestAnimationFrame js/window #(game-loop (inc frame-count)) board))
 
 (defn new-tiles [w h]
  (vec (repeat w (vec (repeat h {})))))
