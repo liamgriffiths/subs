@@ -121,7 +121,7 @@ window.addEventListener('keydown', function (event) {
       PRESSED_KEYS.push('leavemine');
       break;
   }
-  event.preventDefault();
+  // event.preventDefault();
 });
 
 
