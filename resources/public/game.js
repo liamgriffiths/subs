@@ -1,7 +1,5 @@
-
-var TILESIZE = 20;
+var TILESIZE = 40;
 var PRESSED_KEYS = [];
-var SPRITES = {};
 var FPS;
 var lastFrameTime;
 
@@ -17,28 +15,35 @@ var context;
 
 // main game loop
 function main() {
+  var currentTime = new Date().getTime();
+  var delta = (currentTime - lastFrameTime) / 1000; // divide by msecs
+  lastFrameTime = currentTime;
+  FPS = 1.0 / delta;
+
   draw();
   update();
-  // nextFrame(main);
+  nextFrame(main);
 }
 
 function setup() {
   canvas.width = 800;
   canvas.height = 600;
 
-  var board_w = 10;
-  var board_h = 10;
+  var board_w = 40;
+  var board_h = 40;
 
   board = new Board(board_w, board_h, TILESIZE);
-  playersController.newPlayer(currentName, {x: board_w / 2,
-                                            y: board_h / 2});
+
+  // player start position, middle of board for now
+  var playerPos = (new Vector(board_w, board_h)).mul(0.5);
+  playersCollection.newPlayer(currentName, playerPos);
 }
 
 // does the screen drawing
 function draw() {
-  clearCanvas(); // clear the canvas
+  Utils.clearCanvas(); // clear the canvas
 
-  var player = playersController.players[currentName];
+  var player = playersCollection.players[currentName];
   var newX = player.position.x * TILESIZE - (canvas.height / 2);
   var newY = player.position.y * TILESIZE - (canvas.width / 2);
   context.translate(-newX, -newY);
@@ -46,7 +51,7 @@ function draw() {
   var draws = [];
   // NOTE: the order that these are drawn makes a difference, bottom to top
   board.draw();
-  playersController.draw();
+  playersCollection.draw();
   var minesDraws = minesCollection.draw();
   for(var i = 0; i < minesDraws.length; i++){
     if(minesDraws[i] !== null){
@@ -73,7 +78,7 @@ function draw() {
 function update() {
   board.update({keys: PRESSED_KEYS});
   minesCollection.update();
-  playersController.update({keys: PRESSED_KEYS});
+  playersCollection.update({keys: PRESSED_KEYS});
   // clear all pressed keys for this tick
   PRESSED_KEYS = [];
 }
@@ -122,15 +127,11 @@ window.addEventListener('keydown', function (event) {
 
 // TODO: this might not be xbrowser :-/
 function nextFrame(fn) {
-  var currentTime = new Date().getTime();
-  var delta = (currentTime - lastFrameTime) / 1000; // divide by msecs
-  lastFrameTime = currentTime;
-  FPS = 1.0 / delta;
   window.requestAnimationFrame(fn);
 }
 
 function drawFPSMeter () {
-  // context.font = "bold 22px VT323";
+  // context.font = 4bold 22px VT323";
   // context.fillStyle = "#FFF";
   // context.fillText(Math.floor(FPS) + "fps", 10, 30);
   debug(Math.floor(FPS) + "fps");

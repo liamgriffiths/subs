@@ -1,7 +1,7 @@
 var Player = function (name, position) {
   this.alive = true;
   this.name = name;
-  this.position = position;
+  this.position = position; // 2d vector
   this.direction = 'up';
 
   this.ghostImage = new Image();

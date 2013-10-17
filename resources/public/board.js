@@ -7,6 +7,8 @@ function Board(w, h, tileSize) {
 
   this.tiles = [];
 
+  // Tile.prototype.setupSprites();
+
   // build up an array of arrays that hold a hash
   for(var x = 0; x < this.w; x++){
     this.tiles[x]= [];
@@ -20,7 +22,7 @@ function Board(w, h, tileSize) {
         type = 'hardwall';
       }
 
-      this.tiles[x][y] = new Tile(type, {x: x, y: y});
+      this.tiles[x][y] = new Tile(type, new Vector(x, y));
     }
   }
 

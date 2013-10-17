@@ -13,9 +13,18 @@ function Mine(position){
 Mine.prototype.draw = function () {
   var x = this.position.x * TILESIZE + TILESIZE / 4;
   var y = this.position.y * TILESIZE + TILESIZE / 4;
-  var size = TILESIZE * 0.5;
+
+  var size1 = Math.floor(TILESIZE * 0.6);
+  context.fillStyle = '#eee';
+  context.fillRect(x, y, size1, size1);
+
+  var size = Math.floor(TILESIZE * 0.5);
   context.fillStyle = '#000';
   context.fillRect(x, y, size, size);
+
+  var size3 = Math.floor(TILESIZE * 0.2);
+  context.fillStyle = '#ddd';
+  context.fillRect(x + 5, y + 5, size3, size3);
 };
 
 Mine.prototype.update = function () {
