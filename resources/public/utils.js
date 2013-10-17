@@ -1,11 +1,9 @@
-var clearCanvas = function () {
-  canvas.width = canvas.width;
-};
+var Utils = {
+  clearCanvas: function(){
+    canvas.width = canvas.width;
+  },
 
-var randomInteger = function (i) {
-  return Math.floor(Math.random() * i);
-};
-
-var randomColor = function () {
-
+  randomInt: function(i){
+    return Math.floor(Math.random() * i);
+  }
 };

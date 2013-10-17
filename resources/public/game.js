@@ -1,13 +1,14 @@
 
 var TILESIZE = 20;
 var PRESSED_KEYS = [];
+var SPRITES = {};
 var FPS;
 var lastFrameTime;
 
 var currentName = "liam";
 
 var board;
-var playersController = new PlayersController();
+var playersCollection = new PlayersCollection();
 var minesCollection = new MinesCollection();
 var canvas;
 var context;
@@ -18,19 +19,19 @@ var context;
 function main() {
   draw();
   update();
-  nextFrame(main);
+  // nextFrame(main);
 }
 
 function setup() {
-  canvas.width = 500; //document.body.clientWidth;
-  canvas.height =500; //document.body.clientHeight;
+  canvas.width = 800;
+  canvas.height = 600;
 
-  var board_w = 50;
-  var board_h = 50;
+  var board_w = 10;
+  var board_h = 10;
 
   board = new Board(board_w, board_h, TILESIZE);
-  playersController.newPlayer(currentName, {x: board_w /2,
-                                            y: board_h /2});
+  playersController.newPlayer(currentName, {x: board_w / 2,
+                                            y: board_h / 2});
 }
 
 // does the screen drawing
@@ -125,14 +126,18 @@ function nextFrame(fn) {
   var delta = (currentTime - lastFrameTime) / 1000; // divide by msecs
   lastFrameTime = currentTime;
   FPS = 1.0 / delta;
-
   window.requestAnimationFrame(fn);
 }
 
 function drawFPSMeter () {
-  context.font = "bold 22px monospace";
-  context.fillStyle = "black";
-  context.fillText(Math.floor(FPS) + "fps", 10, 30);
+  // context.font = "bold 22px VT323";
+  // context.fillStyle = "#FFF";
+  // context.fillText(Math.floor(FPS) + "fps", 10, 30);
+  debug(Math.floor(FPS) + "fps");
+}
+
+function debug(message){
+  document.getElementById('debug').innerHTML = message;
 }
 
 
