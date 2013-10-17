@@ -1,23 +1,26 @@
 (ns subs)
-  ;; (:require [goog.dom :as dom]
-  ;;           [goog.events :as events]))
+;; (:require [goog.dom :as dom]
+;;           [goog.events :as events]))
 ;            [clojure.browser.event :as event]
 ;            [clojure.browser.dom :as dom]))
 
 
+(declare context)
+(declare canvas)
+(declare add-tile)
 
-(defn draw-rect [x y]
-  (.beginPath context)
-  (set! (.-fillStyle context) "#888")
-  (.fillRect context x y 50 50))
+;; (defn draw-rect [x y]
+;;   (.beginPath context)
+;;   (set! (.-fillStyle context) "#888")
+;;   (.fillRect context x y 50 50))
 
 (defn clear-canvas []
   (set! (.-width canvas) (.-width canvas)))
 
 
 (defn draw-wall [color x y]
-  (set! (.-fillStyle context) color)
   (.beginPath context)
+  (set! (.-fillStyle context) color)
   (.moveTo context (* x 10) (* y 10))
   (.lineTo context (+ (* x 10) 10) (* y 10))
   (.lineTo context (+ (* x 10) 10) (+ (* y 10) 10))
@@ -26,13 +29,13 @@
   (.fill context))
 
 (def draw-fns
- {:hard-wall (partial draw-wall 'blue')
-  :soft-wall (partial draw-wall 'black')
-  :explosion (partial draw-wall 'red')})
+ {:hard-wall (partial draw-wall "blue")
+  :soft-wall (partial draw-wall "black")
+  :explosion (partial draw-wall "red")})
 
 (def walls
   (list {:x 4 :y 6 :direction :up :length 3 :type :hard-wall}
-        {:x 1 :y 1 :direction :right :length 6 :type :soft-wall :draw drawFun})
+        {:x 1 :y 1 :direction :right :length 6 :type :soft-wall}))
 
 (defn decompose-wall [wall]
   (if (= 0 (:length wall))
@@ -48,19 +51,13 @@
                                :direction (:direction wall)
                                :length (- (:length wall) 1)})))))
 
-(defn make-board
-  ([tiles w h]
-   (make-board tiles (new-tiles w h)))
-  ([tiles board]
-   (if (empty? tiles)
-        board
-     (make-board (rest tiles)
-                 (add-tile (first tiles)
-                           board)))))
 
-(defn render [tiles]
-  (doseq [tile tiles] 
-    ((draw-fns (tile :type)) (tile :x) (tile :y))))
+(defn add-walls [tiles walls]
+  (if (empty? walls)
+      tiles
+      (add-walls (concat (decompose-wall (first walls))
+                          tiles)
+                 (rest walls))))
 
 (defn add-tile [tile board]
   (let [x (:x tile)
@@ -70,22 +67,26 @@
     (assoc board x new-row)))
 
 
-(defn build-tiles [walls tiles]
-  (dolist [wall walls]
-          (add-wall! wall tiles)))
+(defn make-board
+  ([tiles w h]
+   (make-board tiles (vec (repeat w (vec (repeat h {}))))))
+  ([tiles board]
+   (if (empty? tiles)
+        board
+     (make-board (rest tiles)
+                 (add-tile (first tiles)
+                           board)))))
 
-(defn add-wall! [wall tiles]
-  (conj ((tiles (wall :x)) wall :y) :wall wall))
+(defn render [tiles]
+  (doseq [tile tiles]
+    ((draw-fns (tile :type)) (tile :x) (tile :y))))
 
-(defn game-loop [frame-count board]
+(defn game-loop [frame-count tiles]
   (clear-canvas)
-  (render board)
-  (update)
-  (draw-rect (+ 10 frame-count) 10)
-  (.requestAnimationFrame js/window #(game-loop (inc frame-count)) board))
-
-(defn new-tiles [w h]
- (vec (repeat w (vec (repeat h {})))))
+  (render tiles)
+  ;; (draw-rect (+ 10 frame-count) 10)
+  ;; (when (> 1 frame-count) (js/lololo))
+  (.requestAnimationFrame js/window #(game-loop (inc frame-count) tiles)))
 
 (defn main []
   (def canvas (.getElementById js/document "canvas"))
@@ -97,9 +98,12 @@
   (let []
     (.log js/console "canvas is" canvas)
     (.log js/console "context is" context)
-    (draw-rect 10 10)
-    (game-loop 0 (game-board 10 10))))
+    (game-loop 0 (add-walls '() walls))))
+    ;; (draw-rect 10 10)
+    ;; (game-loop 0 (game-board 10 10))))
 
+(.addEventListener js/window "keydown" (fn [event]
+                                      (.log js/console (.-keyCode event))))
 (defn draw [])
 (defn update [])
 

@@ -1,4 +1,7 @@
 (ns newtest)
+(def walls
+  (list {:x 4 :y 6 :direction :up :length 3 :type :hard-wall}
+        {:x 1 :y 1 :direction :right :length 6 :type :soft-wall}))
 (defn decompose-wall [wall]
   (println "decomposing " wall)
   (if (= 0 (:length wall))
@@ -20,7 +23,7 @@
         row (board x)
         new-row (assoc row y tile)]
     (assoc board x new-row)))
-    
+
 (defn new-tiles [w h]
  (vec (repeat w (vec (repeat h {})))))
 
