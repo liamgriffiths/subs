@@ -1,6 +1,5 @@
-function Player(name, position) {
+function Player( position) {
   this.alive = true;
-  this.name = name;
   this.position = position; // 2d vector
   this.direction = 'up';
 

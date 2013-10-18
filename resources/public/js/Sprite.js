@@ -13,7 +13,7 @@ Sprite.prototype.update = function() {
 };
 
 Sprite.prototype.draw = function() {
-  var start = this.position.mul(TILESIZE) // scale positon by tilesize to get the
+  var start = this.position.mul(TILESIZE); // scale positon by tilesize to get the
                                                     // pixel location on the canvas
   var end = start.add(TILESIZE); // this is the opposite corner of the tile
 

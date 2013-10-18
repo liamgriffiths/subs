@@ -62,6 +62,7 @@ Tile.prototype.draw = function() {
   }else{
     if(this.type == 'water') return;
     if(this.type == 'hardwall'){
+
       this.sprite.draw();
     }else{
       return this.drawTile();

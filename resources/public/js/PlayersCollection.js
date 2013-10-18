@@ -3,11 +3,12 @@ function PlayersCollection() {
 }
 
 PlayersCollection.prototype.newPlayer = function(name, position) {
-  this.players[name] = new Player(name, position);
+  this.players[name] = new Player(position);
+  return this.players[name];
 };
 
 PlayersCollection.prototype.removePlayer = function(name) {
-  delete this.players[name];
+  return delete(this.players[name]);
 };
 
 PlayersCollection.prototype.draw = function() {
@@ -17,11 +18,5 @@ PlayersCollection.prototype.draw = function() {
 };
 
 PlayersCollection.prototype.update = function(options) {
-  for(var player in this.players){
-    if(this.players[player].name == currentName){
-      this.players[player].update(options);
-    }else{
-      this.players[player].update();
-    }
-  }
+  this.players['liam'].update(options);
 };

@@ -35,4 +35,3 @@ Vector.prototype.mul = function(n) {
     return new Vector(this.value.map(function(i){ return i * n; }));
   }
 };
-

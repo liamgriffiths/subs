@@ -2,13 +2,12 @@ var TILESIZE = 40,
     PRESSED_KEYS = [],
     FPS = 0,
     lastFrameTime = 0,
-    currentName = 'liam',
     playersCollection = new PlayersCollection(),
     minesCollection = new MinesCollection(),
+    currentPlayer,
     canvas,
     context,
     board;
-
 
 
 // main game loop
@@ -30,16 +29,16 @@ function setup() {
 
   // Create a new Player and add to the middle of the board
   var playerPos = new Vector(board.w, board.h).mul(0.5);
-  playersCollection.newPlayer(currentName, playerPos);
+  currentPlayer = playersCollection.newPlayer('liam', playerPos);
 }
 
 // does the screen drawing
 function draw() {
   Utils.clearCanvas(canvas);
 
-  var player = playersCollection.players[currentName];
-  var newX = player.position.x * TILESIZE - (canvas.height / 2);
-  var newY = player.position.y * TILESIZE - (canvas.width / 2);
+  var player = currentPlayer;
+  var newX = player.position.x * TILESIZE - (canvas.width / 2);
+  var newY = player.position.y * TILESIZE - (canvas.height / 2);
   context.translate(-newX, -newY);
 
   var draws = [];
