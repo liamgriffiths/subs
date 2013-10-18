@@ -29,29 +29,11 @@ function Board(w, h, tileSize) {
 }
 
 Board.prototype.draw = function () {
-  // this.drawGrid();
   this.drawTiles();
 };
 
 Board.prototype.update = function (options) {
   this.handleZoom(options.keys);
-};
-
-Board.prototype.drawGrid = function () {
-  // "pencil" methods (does not leave the ink, just moves the pen)
-  for (var x = 0.5; x < this.pixelsW; x += TILESIZE) {
-    context.moveTo(x, 0);
-    context.lineTo(x, this.pixelsH);
-  }
-
-  for (var y = 0.5; y < this.pixelsH; y += TILESIZE) {
-    context.moveTo(0, y);
-    context.lineTo(this.pixelsW, y);
-  }
-
-  // // "ink" methods (leaves the ink where where moved the pencil around)
-  context.strokeStyle = "#eee";
-  context.stroke();
 };
 
 Board.prototype.drawTiles = function () {

@@ -1,6 +1,5 @@
 function Sprite(size, position){
-  this.w = size; // in "pixels" per tile
-  this.h = size;
+  this.size = size; // in "pixels" per tile
   this.position = position; // 2d Vector
   this.currentFrame = 0;
   this.tick = 0;
@@ -22,19 +21,16 @@ Sprite.prototype.draw = function(){
   var p = 0;
 
   var drawX = 0;
-  var drawY = 0;
-
   for(var x = start.x; x < end.x; x += pixelSize){
+    var drawY = 0;
     for(var y = start.y; y < end.y; y += pixelSize){
-
       context.fillStyle = this.frames[this.currentFrame][drawX][drawY];
       context.fillRect(x, y, pixelSize, pixelSize);
-      debugger;
-
       drawY += 1;
     }
     drawX += 1;
   }
+  // debugger;
 };
 
 Sprite.prototype.frames = [];

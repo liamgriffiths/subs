@@ -19,12 +19,24 @@ var Tile = function (type, position) {
     case 'hardwall':
       this.explodable = false;
       this.sprite = new Sprite(4, this.position);
-      var c1 = "rgba(0,  0, 255, "+(Utils.getRandomInt(5,10)/2)+")";
-      var c2 = "rgba(0, 55, 200, "+(Utils.getRandomInt(5,10)/2)+")";
+      var c1 = "rgba(0, 0, 255, "+(Utils.getRandomInt(5,10)/2)+")";
+      var c2 = "rgba(255, 0, 0, "+(Utils.getRandomInt(5,10)/2)+")";
       this.sprite.frames.push([[c1, c1, c1, c1],
                                [c2, c2, c2, c2],
                                [c1, c1, c1, c1],
                                [c2, c2, c2, c2]]);
+      this.sprite.frames.push([[c1, c1, c1, c1],
+                               [c2, c2, c2, c2],
+                               [c1, c1, c1, c1],
+                               [c2, c2, c2, c2]]);
+      this.sprite.frames.push([[c2, c2, c2, c2],
+                               [c1, c1, c1, c1],
+                               [c2, c2, c2, c2],
+                               [c1, c1, c1, c1]]);
+      this.sprite.frames.push([[c2, c2, c2, c2],
+                               [c1, c1, c1, c1],
+                               [c2, c2, c2, c2],
+                               [c1, c1, c1, c1]]);
       break;
 
     case 'explosion':
