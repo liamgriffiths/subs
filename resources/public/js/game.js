@@ -3,7 +3,7 @@ var PRESSED_KEYS = [];
 var FPS = 0,
     lastFrameTime = 0;
 
-var currentName = "liam";
+var currentName = 'liam';
 
 var board;
 var playersCollection = new PlayersCollection();
@@ -80,8 +80,8 @@ function update() {
 
 // set up the game and run it
 window.onload = function herewego() {
-  canvas = document.getElementById("canvas");
-  context = canvas.getContext("2d");
+  canvas = document.getElementById('canvas');
+  context = canvas.getContext('2d');
   setup();
   main();
 };
@@ -106,7 +106,7 @@ function nextFrame(fn) {
 }
 
 function drawFPSMeter () {
-  debug(Math.floor(FPS) + "fps");
+  debug(Math.floor(FPS) + 'fps');
 }
 
 function debug(message){

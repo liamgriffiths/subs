@@ -10,8 +10,8 @@ function Tile(type, position) {
     case 'wall':
       this.explodable = true;
       for(var i = 0; i < 16; i++){
-        var rcolors = ["rgba(255, 225, 225, "+(Utils.getRandomInt(5,10)/2)+")",
-                       "rgba(0, 255, 200, "+(Utils.getRandomInt(5,10)/2)+")"];
+        var rcolors = ['rgba(255, 225, 225, '+(Utils.getRandomInt(5,10)/2)+')',
+                       'rgba(0, 255, 200, '+(Utils.getRandomInt(5,10)/2)+')'];
         this.colors.push(rcolors[Math.floor(Math.random() * rcolors.length)]);
       }
       break;
@@ -19,8 +19,8 @@ function Tile(type, position) {
     case 'hardwall':
       this.explodable = false;
       this.sprite = new Sprite(4, this.position);
-      var c1 = "rgba(0, 0, 255, "+(Utils.getRandomInt(5,10)/2)+")";
-      var c2 = "rgba(255, 0, 0, "+(Utils.getRandomInt(5,10)/2)+")";
+      var c1 = 'rgba(0, 0, 255, '+(Utils.getRandomInt(5,10)/2)+')';
+      var c2 = 'rgba(255, 0, 0, '+(Utils.getRandomInt(5,10)/2)+')';
       this.sprite.frames.push([[c1, c1, c1, c1],
                                [c2, c2, c2, c2],
                                [c1, c1, c1, c1],
@@ -47,7 +47,7 @@ function Tile(type, position) {
       this.explodable = true;
       break;
   }
-};
+}
 
 Tile.prototype.update = function() {
   if(this.exploding) this.items = [];
@@ -85,7 +85,7 @@ Tile.prototype.setupSprites = function() {
   var scontext = scanvas.getContext('2d');
 
   var sectionSize = Math.floor(TILESIZE/2);
-  var colors = ["rgba(0, 255, 200, 0.5)"];
+  var colors = ['rgba(0, 255, 200, 0.5)'];
 
   context.moveTo(0, 0);
 
@@ -104,8 +104,6 @@ Tile.prototype.setupSprites = function() {
       scontext.fill(); // fill in the shape with the fillStyleColor
     }
   }
-  console.log("ok");
-
   SPRITES.wall = true;
 };
 

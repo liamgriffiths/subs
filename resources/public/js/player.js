@@ -5,9 +5,9 @@ function Player(name, position) {
   this.direction = 'up';
 
   this.ghostImage = new Image();
-  this.ghostImage.src = "/images/ghost.png";
+  this.ghostImage.src = '/images/ghost.png';
   // this.image.onload = this.draw;
-};
+}
 
 Player.prototype.draw = function() {
   if(this.alive){
