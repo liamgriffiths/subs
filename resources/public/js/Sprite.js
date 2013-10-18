@@ -1,4 +1,4 @@
-function Sprite(size, position){
+function Sprite(size, position) {
   this.size = size; // in "pixels" per tile
   this.position = position; // 2d Vector
   this.z = 0; // z-index for sprite - determines when this tile is drawn in
@@ -7,12 +7,12 @@ function Sprite(size, position){
   this.tick = 0;
 }
 
-Sprite.prototype.update = function(){
+Sprite.prototype.update = function() {
   this.currentFrame = this.tick % this.frames.length;
   this.tick++;
 };
 
-Sprite.prototype.draw = function(){
+Sprite.prototype.draw = function() {
   var start = this.position.mul(TILESIZE) // scale positon by tilesize to get the
                                                     // pixel location on the canvas
   var end = start.add(TILESIZE); // this is the opposite corner of the tile
@@ -35,8 +35,8 @@ Sprite.prototype.draw = function(){
 
 // TODO: look into a way to write the frames to hidden canvases to hopefully
 // make rendering a wee bit faster
-Sprite.prototype.cache = function(){};
-Sprite.prototype.cacheFrame = function(){
+Sprite.prototype.cache = function() {};
+Sprite.prototype.cacheFrame = function() {
 };
 
 Sprite.prototype.frames = [];

@@ -1,4 +1,4 @@
-var Player = function (name, position) {
+function Player(name, position) {
   this.alive = true;
   this.name = name;
   this.position = position; // 2d vector
@@ -9,7 +9,7 @@ var Player = function (name, position) {
   // this.image.onload = this.draw;
 };
 
-Player.prototype.draw = function () {
+Player.prototype.draw = function() {
   if(this.alive){
     //context.drawImage(this.image, this.position.x * TILESIZE, this.position.y * TILESIZE, TILESIZE, TILESIZE);
     // context.drawImage(this.image, canvas.width/2, canvas.height/2, TILESIZE, TILESIZE);
@@ -23,7 +23,7 @@ Player.prototype.draw = function () {
   }
 };
 
-Player.prototype.update = function (options) {
+Player.prototype.update = function(options) {
   if(options.keys.length){
     for(var i = 0; i < options.keys.length; i++){
       if(options.keys[i] == 'left'){
@@ -87,7 +87,7 @@ Player.prototype.canMoveTo = function(x, y){
 };
 
 
-Player.prototype.drawUp = function () {
+Player.prototype.drawUp = function() {
   context.beginPath();
   context.fillStyle = 'green';
   context.moveTo(this.position.x * TILESIZE + (TILESIZE/2), this.position.y * TILESIZE);
@@ -98,7 +98,7 @@ Player.prototype.drawUp = function () {
   context.fill();
 };
 
-Player.prototype.drawDown = function () {
+Player.prototype.drawDown = function() {
   context.beginPath();
   context.fillStyle = 'green';
   context.moveTo(this.position.x * TILESIZE, this.position.y * TILESIZE);
@@ -109,7 +109,7 @@ Player.prototype.drawDown = function () {
   context.fill();
 };
 
-Player.prototype.drawLeft = function () {
+Player.prototype.drawLeft = function() {
   context.beginPath();
   context.fillStyle = 'green';
   // take the pen and move to top left corner of tile
@@ -132,7 +132,7 @@ Player.prototype.drawLeft = function () {
   context.fill();
 };
 
-Player.prototype.drawRight = function () {
+Player.prototype.drawRight = function() {
   context.beginPath();
   context.fillStyle = 'green';
   // take the pen and move to top left corner of tile

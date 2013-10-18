@@ -22,15 +22,15 @@ function Board(w, h) {
 
 }
 
-Board.prototype.draw = function () {
+Board.prototype.draw = function() {
   this.drawTiles();
 };
 
-Board.prototype.update = function (options) {
+Board.prototype.update = function(options) {
   this.handleZoom(options.keys);
 };
 
-Board.prototype.drawTiles = function () {
+Board.prototype.drawTiles = function() {
   for(var x = 0; x < this.w; x++){
     for(var y = 0; y < this.h; y++){
       this.tiles[x][y].draw();
@@ -49,7 +49,7 @@ Board.prototype.exists = function(x, y){
   return false;
 };
 
-Board.prototype.handleZoom = function (keys) {
+Board.prototype.handleZoom = function(keys) {
   for(var i = 0; i < keys.length; i++){
     if(keys[i] == 'zoomin') TILESIZE += 1;
     if(keys[i] == 'zoomout') TILESIZE -= 1;

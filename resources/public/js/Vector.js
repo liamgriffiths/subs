@@ -1,5 +1,5 @@
 // Generic vector class
-function Vector(/* vector values */){
+function Vector(/* vector values */) {
   var args = Array.prototype.slice.call(arguments);
   if(args.length == 1 && typeof(args) == 'object'){
     this.value = args[0];
@@ -13,7 +13,7 @@ function Vector(/* vector values */){
 }
 
 // add vectors
-Vector.prototype.add = function(n){
+Vector.prototype.add = function(n) {
   if(typeof(n) == 'object'){
   }else if(typeof(n) == 'number'){
     return new Vector(this.value.map(function(i){ return i + n; }));
@@ -21,7 +21,7 @@ Vector.prototype.add = function(n){
 };
 
 // subtract vectors
-Vector.prototype.sub = function(n){
+Vector.prototype.sub = function(n) {
   if(typeof(n) == 'object'){
   }else if(typeof(n) == 'number'){
     return new Vector(this.value.map(function(i){ return i - n; }));
@@ -29,7 +29,7 @@ Vector.prototype.sub = function(n){
 };
 
 // multiply vectors
-Vector.prototype.mul = function(n){
+Vector.prototype.mul = function(n) {
   if(typeof(n) == 'object'){
   }else if(typeof(n) == 'number'){
     return new Vector(this.value.map(function(i){ return i * n; }));

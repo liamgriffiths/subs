@@ -1,4 +1,4 @@
-var Tile = function (type, position) {
+function Tile(type, position) {
   this.position = position;
   this.type = type;
   this.items = [];
@@ -49,11 +49,11 @@ var Tile = function (type, position) {
   }
 };
 
-Tile.prototype.update = function () {
+Tile.prototype.update = function() {
   if(this.exploding) this.items = [];
 };
 
-Tile.prototype.draw = function () {
+Tile.prototype.draw = function() {
   if(this.exploding){
     return this.drawExplosion();
   }else{
@@ -71,15 +71,15 @@ Tile.prototype.addItem = function (item) {
   this.items.push(item);
 };
 
-Tile.prototype.removeItem = function (i) {
+Tile.prototype.removeItem = function(i) {
   this.items.splice(i, 1);
 };
 
-Tile.prototype.removeAllItems = function () {
+Tile.prototype.removeAllItems = function() {
   this.items = [];
 };
 
-Tile.prototype.setupSprites = function () {
+Tile.prototype.setupSprites = function() {
   var scanvas = document.createElement('canvas');
   scanvas.setAttribute('id', 'wall');
   var scontext = scanvas.getContext('2d');
@@ -109,7 +109,7 @@ Tile.prototype.setupSprites = function () {
   SPRITES.wall = true;
 };
 
-Tile.prototype.drawHardWall = function (x, y) {
+Tile.prototype.drawHardWall = function(x, y) {
   context.moveTo(this.position.x * TILESIZE, this.position.y * TILESIZE);
 
   var startX = this.position.x * TILESIZE;
@@ -126,7 +126,7 @@ Tile.prototype.drawHardWall = function (x, y) {
   }
 };
 
-Tile.prototype.drawExplosion = function (x, y) {
+Tile.prototype.drawExplosion = function(x, y) {
   context.moveTo(this.position.x * TILESIZE, this.position.y * TILESIZE);
 
   var startX = this.position.x * TILESIZE;
@@ -144,7 +144,7 @@ Tile.prototype.drawExplosion = function (x, y) {
 };
 
 
-Tile.prototype.drawTile = function () {
+Tile.prototype.drawTile = function() {
   context.moveTo(this.position.x * TILESIZE, this.position.y * TILESIZE);
 
   var startX = this.position.x * TILESIZE;

@@ -10,7 +10,7 @@ function Mine(position){
   this.exploding = false;
 }
 
-Mine.prototype.draw = function () {
+Mine.prototype.draw = function() {
   var x = this.position.x * TILESIZE + TILESIZE / 4;
   var y = this.position.y * TILESIZE + TILESIZE / 4;
 
@@ -27,7 +27,7 @@ Mine.prototype.draw = function () {
   context.fillRect(x + 5, y + 5, size3, size3);
 };
 
-Mine.prototype.update = function () {
+Mine.prototype.update = function() {
   if(this.countdown > 0){
     this.countdown -= 1;
   }else{
@@ -48,14 +48,14 @@ Mine.prototype.update = function () {
   }
 };
 
-Mine.prototype.explode = function () {
+Mine.prototype.explode = function() {
   this.explodeTo(this.position.x + this.power, this.position.y);
   this.explodeTo(this.position.x - this.power, this.position.y);
   this.explodeTo(this.position.x, this.position.y + this.power);
   this.explodeTo(this.position.x, this.position.y - this.power);
 };
 
-Mine.prototype.finishExplosion = function () {
+Mine.prototype.finishExplosion = function() {
   this.finishExplosionTo(this.position.x + this.power, this.position.y);
   this.finishExplosionTo(this.position.x - this.power, this.position.y);
   this.finishExplosionTo(this.position.x, this.position.y + this.power);
@@ -63,7 +63,7 @@ Mine.prototype.finishExplosion = function () {
 };
 
 
-Mine.prototype.explodeTo = function (toX, toY) {
+Mine.prototype.explodeTo = function(toX, toY) {
   // explode horizontally
   if(this.position.x < toX){
     for(x = this.position.x; x < toX; x++){
@@ -87,7 +87,7 @@ Mine.prototype.explodeTo = function (toX, toY) {
   }
 };
 
-Mine.prototype.finishExplosionTo = function (toX, toY) {
+Mine.prototype.finishExplosionTo = function(toX, toY) {
   if(this.position.x < toX){
     for(x = this.position.x; x < toX; x++){
       stopExplodingTile(x, toY);
