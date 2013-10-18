@@ -1,15 +1,14 @@
 var TILESIZE = 40;
 var PRESSED_KEYS = [];
-var FPS;
-var lastFrameTime;
+var FPS = 0,
+    lastFrameTime = 0;
 
 var currentName = "liam";
 
 var board;
 var playersCollection = new PlayersCollection();
 var minesCollection = new MinesCollection();
-var canvas;
-var context;
+var canvas, context;
 
 
 
@@ -28,20 +27,16 @@ function main() {
 function setup() {
   canvas.width = 800;
   canvas.height = 600;
-
-  var board_w = 40;
-  var board_h = 40;
-
-  board = new Board(board_w, board_h, TILESIZE);
+  board = new Board(40, 40, TILESIZE);
 
   // player start position, middle of board for now
-  var playerPos = (new Vector(board_w, board_h)).mul(0.5);
+  var playerPos = (new Vector(board.w, board.h)).mul(0.5);
   playersCollection.newPlayer(currentName, playerPos);
 }
 
 // does the screen drawing
 function draw() {
-  Utils.clearCanvas(); // clear the canvas
+  Utils.clearCanvas(canvas); // clear the canvas
 
   var player = playersCollection.players[currentName];
   var newX = player.position.x * TILESIZE - (canvas.height / 2);
@@ -79,7 +74,7 @@ function update() {
   board.update({keys: PRESSED_KEYS});
   minesCollection.update();
   playersCollection.update({keys: PRESSED_KEYS});
-  // clear all pressed keys for this tick
+  // clear all pressed keys for this frame
   PRESSED_KEYS = [];
 }
 
@@ -93,33 +88,13 @@ window.onload = function herewego() {
 
 window.addEventListener('keydown', function (event) {
   switch (event.keyCode) {
-    case 37: //left
-      PRESSED_KEYS.push('left');
-      break;
-
-    case 38: //up
-      PRESSED_KEYS.push('up');
-      break;
-
-    case 39: //right
-      PRESSED_KEYS.push('right');
-      break;
-
-    case 40: //down
-      PRESSED_KEYS.push('down');
-      break;
-
-    case 65: //a
-      PRESSED_KEYS.push('zoomin');
-      break;
-
-    case 83: //s
-      PRESSED_KEYS.push('zoomout');
-      break;
-
-    case 32: //spacebar
-      PRESSED_KEYS.push('leavemine');
-      break;
+    case 37: PRESSED_KEYS.push('left'); break;
+    case 38: PRESSED_KEYS.push('up'); break;
+    case 39: PRESSED_KEYS.push('right'); break;
+    case 40: PRESSED_KEYS.push('down'); break;
+    case 65: PRESSED_KEYS.push('zoomin'); break; // a
+    case 83: PRESSED_KEYS.push('zoomout'); break; // s
+    case 32: PRESSED_KEYS.push('leavemine'); break; // space
   }
   // event.preventDefault();
 });
@@ -131,9 +106,6 @@ function nextFrame(fn) {
 }
 
 function drawFPSMeter () {
-  // context.font = 4bold 22px VT323";
-  // context.fillStyle = "#FFF";
-  // context.fillText(Math.floor(FPS) + "fps", 10, 30);
   debug(Math.floor(FPS) + "fps");
 }
 

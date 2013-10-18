@@ -1,7 +1,6 @@
 var Utils = {
-  clearCanvas: function(){
-    canvas.width = canvas.width;
-  },
+  // TODO: figure out why this clears the canvas
+  clearCanvas: function(c){ c.width = c.width; },
 
   // returns a random integer between min and max
   // using math.round() will give you a non-uniform distribution!
