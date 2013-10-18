@@ -5,7 +5,7 @@ var Player = function (name, position) {
   this.direction = 'up';
 
   this.ghostImage = new Image();
-  this.ghostImage.src = "/ghost.png";
+  this.ghostImage.src = "/images/ghost.png";
   // this.image.onload = this.draw;
 };
 
