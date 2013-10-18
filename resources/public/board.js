@@ -1,13 +1,7 @@
-function Board(w, h, tileSize) {
+function Board(w, h) {
   this.w = w;
   this.h = h;
-  this.tileSize = tileSize;
-  this.pixelsW = this.w * this.tileSize;
-  this.pixelsH = this.h * this.tileSize;
-
   this.tiles = [];
-
-  // Tile.prototype.setupSprites();
 
   // build up an array of arrays that hold a hash
   for(var x = 0; x < this.w; x++){
