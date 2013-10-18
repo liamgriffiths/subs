@@ -1,42 +1,41 @@
-var TILESIZE = 40;
-var PRESSED_KEYS = [];
-var FPS = 0,
-    lastFrameTime = 0;
-
-var currentName = 'liam';
-
-var board;
-var playersCollection = new PlayersCollection();
-var minesCollection = new MinesCollection();
-var canvas, context;
+var TILESIZE = 40,
+    PRESSED_KEYS = [],
+    FPS = 0,
+    lastFrameTime = 0,
+    currentName = 'liam',
+    playersCollection = new PlayersCollection(),
+    minesCollection = new MinesCollection(),
+    canvas,
+    context,
+    board;
 
 
 
 // main game loop
 function main() {
   var currentTime = new Date().getTime();
-  var delta = (currentTime - lastFrameTime) / 1000; // divide by msecs
+  var diff = (currentTime - lastFrameTime) / 1000; // divide by msecs
   lastFrameTime = currentTime;
-  FPS = 1.0 / delta;
+  FPS = 1.0 / diff;
 
   draw();
   update();
-  nextFrame(main);
+  window.requestAnimationFrame(main);
 }
 
 function setup() {
   canvas.width = 800;
   canvas.height = 600;
-  board = new Board(40, 40, TILESIZE);
+  board = new Board(40, 40);
 
-  // player start position, middle of board for now
-  var playerPos = (new Vector(board.w, board.h)).mul(0.5);
+  // Create a new Player and add to the middle of the board
+  var playerPos = new Vector(board.w, board.h).mul(0.5);
   playersCollection.newPlayer(currentName, playerPos);
 }
 
 // does the screen drawing
 function draw() {
-  Utils.clearCanvas(canvas); // clear the canvas
+  Utils.clearCanvas(canvas);
 
   var player = playersCollection.players[currentName];
   var newX = player.position.x * TILESIZE - (canvas.height / 2);
@@ -66,7 +65,7 @@ function draw() {
   }
 
   context.translate(newX, newY);
-  drawFPSMeter();
+  document.getElementById('debug').innerHTML = Math.floor(FPS) + 'fps';
 }
 
 // updates the current objects
@@ -74,8 +73,7 @@ function update() {
   board.update({keys: PRESSED_KEYS});
   minesCollection.update();
   playersCollection.update({keys: PRESSED_KEYS});
-  // clear all pressed keys for this frame
-  PRESSED_KEYS = [];
+  PRESSED_KEYS = []; // clear all pressed keys for this frame
 }
 
 // set up the game and run it
@@ -98,19 +96,4 @@ window.addEventListener('keydown', function (event) {
   }
   // event.preventDefault();
 });
-
-
-// TODO: this might not be xbrowser :-/
-function nextFrame(fn) {
-  window.requestAnimationFrame(fn);
-}
-
-function drawFPSMeter () {
-  debug(Math.floor(FPS) + 'fps');
-}
-
-function debug(message){
-  document.getElementById('debug').innerHTML = message;
-}
-
 

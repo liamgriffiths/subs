@@ -1,12 +1,12 @@
-function Mine(position){
+function Mine(position, countdown, power, explodingTime){
   this.position = {};
   this.position.x = position.x;
   this.position.y = position.y;
   this.position.z = position.z || 2;
-  this.countdown = 100;
-  this.power = 10; // how many adjacent tiles it will affect
+  this.countdown = countdown || 100;
+  this.power = power || 10; // how many adjacent tiles it will affect
   this.live = true;
-  this.explodingTime = 50;
+  this.explodingTime = explodingTime || 50;
   this.exploding = false;
 }
 
