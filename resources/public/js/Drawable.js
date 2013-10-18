@@ -1,7 +1,6 @@
 // Mixin to handle drawable objects
-var Drawable = {
-  sayHello: function(){
-    console.log('hello from the mixin');
-  }
+function Drawable() {}
 
+Drawable.prototype.sayHello = function() {
+  console.log('hello from the mixin');
 };

@@ -3,7 +3,6 @@ function Tile(type, position) {
   this.type = type;
   this.items = [];
   this.explodable = false;
-  this.exploding = false;
   this.colors = [];
 
   switch(this.type){
@@ -47,7 +46,11 @@ function Tile(type, position) {
       this.explodable = true;
       break;
   }
+
 }
+
+Utils.mixin(Tile, Eventable);
+Utils.mixin(Tile, Explodable);
 
 Tile.prototype.update = function() {
   if(this.exploding) this.items = [];

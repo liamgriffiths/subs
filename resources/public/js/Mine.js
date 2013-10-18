@@ -113,7 +113,7 @@ function explodeTile(x, y){
   if(board.exists(x, y)){
     tile = board.tiles[x][y];
     if(tile.explodable){
-      tile.exploding = true;
+      tile.explode();
       if(tile.type != 'water'){ return false; }
       return true;
     }else{
@@ -126,7 +126,7 @@ function stopExplodingTile(x,y) {
   if(board.exists(x, y)){
     tile = board.tiles[x][y];
     if(tile.exploding){
-      tile.exploding = false;
+      tile.stopExploding();
       if(tile.explodable){
         tile.type = 'water';
       }
