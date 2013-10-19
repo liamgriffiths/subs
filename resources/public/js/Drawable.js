@@ -8,12 +8,6 @@ function Drawable() {}
 
 Drawable.prototype._drawQueue = [];
 
-/**
- * Add drawable function to queue
- * @method addDrawable
- * @param {Vector} position - x && y are positions on grid, z is it's draw order
- * @param {Function} fn - is the objects function that does the drawing
- */
 Drawable.prototype.addDrawable = function(position, fn) {
   // TODO: move this logic into something else, maybe a Camera obj?
   var distToYEdge = Math.ceil((canvas.height / TILESIZE) / 2);
@@ -32,11 +26,6 @@ Drawable.prototype.addDrawable = function(position, fn) {
   }
 };
 
-/**
- * TODO: find a clearer way to do this
- * Static Function - Combine and draw queues
- * @param {Array...} - expecting list of _drawQueue arrays
- */
 Drawable.prototype.drawQueue = function() {
   var queues = Array.prototype.slice.call(arguments);
   if(queues.length){
