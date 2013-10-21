@@ -4,6 +4,7 @@ var TILESIZE = 40,
     lastFrameTime = 0,
     playersCollection = new PlayersCollection(),
     minesCollection = new MinesCollection(),
+    camera = new Camera(),
     currentPlayer,
     canvas,
     context,
@@ -62,6 +63,7 @@ function draw() {
       draws[j][k]();
     }
   }
+  camera.draw();
 
   context.translate(newX, newY);
   document.getElementById('debug').innerHTML = Math.floor(FPS) + 'fps';
@@ -69,6 +71,7 @@ function draw() {
 
 // updates the current objects
 function update() {
+  camera.update(currentPlayer.position);
   board.update({keys: PRESSED_KEYS});
   minesCollection.update();
   playersCollection.update({keys: PRESSED_KEYS});

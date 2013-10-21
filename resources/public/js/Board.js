@@ -20,7 +20,7 @@ Board.prototype.generateTiles = function() {
         type = 'hardwall';
       }
 
-      this.tiles[x][y] = new Tile(type, new Vector(x, y));
+      this.tiles[x][y] = new Tile(type, new Vector(x, y, 1));
     }
   }
   return this.tiles;
@@ -29,20 +29,23 @@ Board.prototype.generateTiles = function() {
 Board.prototype.draw = function() {
   // draw all tiles
   // TODO: move this logic into something else, maybe a Camera obj?
-  var distToYEdge = Math.ceil((canvas.height / TILESIZE) / 2);
-  var distToXEdge = Math.ceil((canvas.width / TILESIZE) / 2);
+  // var distToYEdge = Math.ceil((canvas.height / TILESIZE) / 2);
+  // var distToXEdge = Math.ceil((canvas.width / TILESIZE) / 2);
 
-  // origin of current canvas view (in tiles not pixels)
-  var start = new Vector(currentPlayer.position.x, currentPlayer.position.y);
-  start.x = start.x - distToXEdge - 1;
-  start.y = start.y - distToYEdge - 1;
-  var end = new Vector(start.x + 2 * distToXEdge + 1, start.y + 2 * distToYEdge + 1);
+  // // origin of current canvas view (in tiles not pixels)
+  // var start = new Vector(currentPlayer.position.x, currentPlayer.position.y);
+  // start.x = start.x - distToXEdge - 1;
+  // start.y = start.y - distToYEdge - 1;
+  // var end = new Vector(start.x + 2 * distToXEdge + 1, start.y + 2 * distToYEdge + 1);
 
   for(var x = 0; x < this.w; x++){
     for(var y = 0; y < this.h; y++){
-      if(x > start.x && x < end.x && y > start.y && y < end.y) {
-        this.tiles[x][y].draw();
-      }
+      // if(x > start.x && x < end.x && y > start.y && y < end.y) {
+      //   this.tiles[x][y].draw();
+      // }
+      var tile = this.tiles[x][y];
+      camera.addDrawable(tile.draw.bind(tile), tile.position);
+
     }
   }
 };

@@ -128,4 +128,3 @@ BinaryHeap.prototype.size = function() {
   return this.nodes.length;
 };
 
-module.exports.BinaryHeap = BinaryHeap;
