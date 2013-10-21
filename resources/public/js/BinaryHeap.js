@@ -15,8 +15,19 @@
 // node the child nodes are of greater value. Another implementation might do
 // the opposite where the root node is the greatest valued node in the tree.
 
-function BinaryHeap(_nodes) {
-  this.nodes = _nodes || [];
+function BinaryHeap(_compareFn) {
+  // nodes are stored in a regular array
+  this.nodes = [];
+
+  // compare the values of two nodes at indexA and indexB
+  // returns 1 if A is greater
+  // returns -1 if B is greater
+  // returns 0 if they are equal
+  this.compareFn = _compareFn || function(nodeA, nodeB) {
+    if(nodeA > nodeB) return 1;
+    if(nodeA < nodeB) return -1;
+    return 0;
+  };
 }
 
 // left child for node at index i
@@ -44,20 +55,10 @@ BinaryHeap.prototype.add = function(node) {
   return this;
 };
 
-// compare the values of two nodes at indexA and indexB
-// returns 1 if A is greater
-// returns -1 if B is greater
-// returns 0 if they are equal
-BinaryHeap.prototype.compareNodes = function(indexA, indexB) {
-  if(this.nodes[indexA] > this.nodes[indexB]) return 1;
-  if(this.nodes[indexA] < this.nodes[indexB]) return -1;
-  return 0;
-};
-
 // swap nodes in the nodes array
 BinaryHeap.prototype.swapNodes = function(indexA, indexB) {
-  nodeA = this.nodes[indexA];
-  nodeB = this.nodes[indexB];
+  var nodeA = this.nodes[indexA];
+  var nodeB = this.nodes[indexB];
   this.nodes[indexA] = nodeB;
   this.nodes[indexB] = nodeA;
   return this;
@@ -68,7 +69,7 @@ BinaryHeap.prototype.swapNodes = function(indexA, indexB) {
 BinaryHeap.prototype.bubbleUp = function(i) {
   pi = this.parent(i);
   // loop until node at index i is <= it's parent node
-  while(this.compareNodes(i, pi) < 0){
+  while(this.compare(i, pi) < 0){
     this.swapNodes(i, pi);
     i = pi;
     pi = this.parent(i);
@@ -79,16 +80,25 @@ BinaryHeap.prototype.bubbleUp = function(i) {
 // remove node at index 0, which will be the smallest valued node in the 'tree',
 // the important thing when popping off this node though is reordering the array
 // afterward so the next root node is the smallest value
-BinaryHeap.prototype.remove = function(i) {
+BinaryHeap.prototype.remove = function() {
   var rootNode = this.nodes.shift();
   this.bubbleDown();
   return rootNode;
+};
+
+// use the this.compareFn to compare the nodes at indexA and indexB
+BinaryHeap.prototype.compare = function(indexA, indexB) {
+  var nodeA = this.nodes[indexA];
+  var nodeB = this.nodes[indexB];
+  return this.compareFn(nodeA, nodeB);
 };
 
 // this operation takes the last node of the nodes array and makes it the first
 // value in the tree. then push this node down the tree swapping it with it's
 // children until it has no more children of greater value
 BinaryHeap.prototype.bubbleDown = function() {
+  if(this.size() < 1) return; // 
+  // take last node in array off and put at the front of the array
   var lastNode = this.nodes.pop();
   this.nodes.unshift(lastNode);
 
@@ -96,8 +106,10 @@ BinaryHeap.prototype.bubbleDown = function() {
   var l = this.left(0);
   var r = this.right(0);
 
-  while(this.compareNodes(i, l) > 0 || this.compareNodes(i, l) > 0){
-    if(this.compareNodes(l, r) < 0){
+  // while the current node's value is greater than its children
+  while(this.compare(i, l) > 0 || this.compare(i, r) > 0){
+
+    if(this.compare(l, r) < 0){
       // left child is less than right
       this.swapNodes(i, l);
       i = l;
@@ -112,9 +124,8 @@ BinaryHeap.prototype.bubbleDown = function() {
   return this;
 };
 
+BinaryHeap.prototype.size = function() {
+  return this.nodes.length;
+};
+
 module.exports.BinaryHeap = BinaryHeap;
-
-
-
-
-
