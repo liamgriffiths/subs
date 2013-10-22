@@ -12,8 +12,9 @@ PlayersCollection.prototype.removePlayer = function(name) {
 };
 
 PlayersCollection.prototype.draw = function() {
-  for(var player in this.players){
-    this.players[player].draw();
+  for(var name in this.players){
+    var player = this.players[name];
+    camera.addDrawable(player.draw.bind(player), player.position);
   }
 };
 

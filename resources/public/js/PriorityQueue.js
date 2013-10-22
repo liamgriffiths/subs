@@ -18,7 +18,7 @@ function PriorityQueue() {
 }
 
 PriorityQueue.prototype.enqueue = function(item, priority) {
-  priority = priority || 1;
+  // priority = priority || 1;
   this.queue.add({item: item, priority: priority});
   return this;
 };
@@ -27,7 +27,12 @@ PriorityQueue.prototype.dequeue = function() {
   if(this.isEmpty()){
     return false;
   }else{
-    return this.queue.remove().item;
+    var thing = this.queue.remove();
+    if(thing !== undefined){
+      return thing.item;
+    }else{
+      return false; //?
+    }
   }
 };
 
