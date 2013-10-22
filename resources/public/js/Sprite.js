@@ -1,10 +1,9 @@
 function Sprite(size, position) {
   this.size = size; // in "pixels" per tile
   this.position = position; // 2d Vector
-  this.z = 0; // z-index for sprite - determines when this tile is drawn in
-              // in relation to other sprites in this tile
   this.currentFrame = 0;
   this.tick = 0;
+  this.frames = [];
 }
 
 Sprite.prototype.update = function() {

@@ -42,27 +42,9 @@ function draw() {
   var newY = player.position.y * TILESIZE - (canvas.height / 2);
   context.translate(-newX, -newY);
 
-  var draws = [];
-  // NOTE: the order that these are drawn makes a difference, bottom to top
   board.draw();
   playersCollection.draw();
-  var minesDraws = minesCollection.draw();
-  for(var i = 0; i < minesDraws.length; i++){
-    if(minesDraws[i] !== null){
-      if(draws[i] === undefined){
-        draws[i] = [];
-      }
-
-      if(minesDraws[i] !== undefined){
-        draws[i] = draws[i].concat(minesDraws[i]);
-      }
-    }
-  }
-  for(var j = 0; j < draws.length; j++){
-    for(var k = 0; k < draws[j].length; k++){
-      draws[j][k]();
-    }
-  }
+  minesCollection.draw();
   camera.draw();
 
   context.translate(newX, newY);

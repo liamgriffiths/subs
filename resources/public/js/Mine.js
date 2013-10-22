@@ -1,16 +1,25 @@
 function Mine(position, countdown, power, explodingTime){
-  this.position = {};
-  this.position.x = position.x;
-  this.position.y = position.y;
+  this.position = new Vector(position.x, position.y, position.z);
   this.position.z = position.z || 2;
   this.countdown = countdown || 100;
   this.power = power || 10; // how many adjacent tiles it will affect
   this.live = true;
   this.explodingTime = explodingTime || 50;
   this.exploding = false;
+
+  this.sprite = new Sprite(5, this.position);
+  var c1 = Color.BLACK();
+  var c2 = Color.RED();
+
+  this.sprite.frames.push([[c1, c1, c1, c1, c1],
+                           [c1, c2, c2, c2, c1],
+                           [c1, c2, c2, c2, c1],
+                           [c1, c2, c2, c2, c1],
+                           [c1, c1, c1, c1, c1]]);
 }
 
 Mine.prototype.draw = function() {
+  return this.sprite.draw();
   var x = this.position.x * TILESIZE + TILESIZE / 4;
   var y = this.position.y * TILESIZE + TILESIZE / 4;
 
