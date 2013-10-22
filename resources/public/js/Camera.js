@@ -23,16 +23,29 @@ Camera.prototype.addDrawable = function(drawFn, position){
   // to the draw queue
   if(position.x > this.start.x && position.x < this.end.x &&
      position.y > this.start.y && position.y < this.end.y) {
-      //prioritize by position.z, the lower the sooner it is drawn
-      this.drawQueue.enqueue(drawFn, position.z);
+       //prioritize by position.z, the lower the sooner it is drawn
+       this.drawQueue.enqueue(drawFn, position.z);
   }
+  // this.debug(drawFn);
 };
 
 Camera.prototype.draw = function() {
   // remove from queue and execute function
-  // debugger;
   while(this.drawQueue.size()){
     var fn = this.drawQueue.dequeue();
-    fn();
+    if(fn instanceof Function){
+      // FIXME: for some reason there are undefs being added into my queue, not
+      // sure if there is a prob with the queue implementation or if they are
+      // sneaking in another way - so far only seems to be Tile objects
+      fn();
+    }
   }
+};
+
+// TODO: fix this crazy function
+Camera.prototype.zoom = function(amount) {
+  // for(var i = 0; i < keys.length; i++){
+  //   if(keys[i] == 'zoomin') TILESIZE += 1;
+  //   if(keys[i] == 'zoomout') TILESIZE -= 1;
+  // }
 };
