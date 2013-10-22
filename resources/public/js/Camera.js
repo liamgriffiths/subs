@@ -1,9 +1,3 @@
-// Mixin to handle drawable functions, the idea here is that within an object
-// draw functions can be added to a queue that will draw things off all types
-// of object in the correct order. Also it should only draw objects which are
-// within the viewport of the current player.
-//
-// This might not be the best way to accomplish this, but we'll see!
 function Camera(position) {
   this.position = position;
   this.drawQueue = new PriorityQueue();

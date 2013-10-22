@@ -3,15 +3,13 @@ var MinesCollection = function() {
 };
 
 MinesCollection.prototype.draw = function() {
-  var drawFns = [];
   for(var i = 0; i < this.mines.length; i++){
-
-    if(drawFns[this.mines[i].position.z] === undefined){
-      drawFns[this.mines[i].position.z] = [];
-    }
-    drawFns[this.mines[i].position.z].push(this.mines[i].draw.bind(this.mines[i]));
+    var mine = this.mines[i];
+    // camera.addDrawable(mine.draw.bind(mine), mine.position);
+    // var p = new Vector(currentPlayer.position.x, currentPlayer.position.y, 2);
+    // mine.position.z = 2;
+    camera.addDrawable(mine.draw.bind(mine), mine.position);
   }
-  return drawFns;
 };
 
 MinesCollection.prototype.update = function() {

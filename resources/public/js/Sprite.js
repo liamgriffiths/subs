@@ -39,8 +39,6 @@ Sprite.prototype.cache = function() {};
 Sprite.prototype.cacheFrame = function() {
 };
 
-Sprite.prototype.frames = [];
-
 
 
 

@@ -26,33 +26,17 @@ Board.prototype.generateTiles = function() {
   return this.tiles;
 };
 
+// add all the tile draw functions to the draw queue along with the position
 Board.prototype.draw = function() {
-  // draw all tiles
-  // TODO: move this logic into something else, maybe a Camera obj?
-  // var distToYEdge = Math.ceil((canvas.height / TILESIZE) / 2);
-  // var distToXEdge = Math.ceil((canvas.width / TILESIZE) / 2);
-
-  // // origin of current canvas view (in tiles not pixels)
-  // var start = new Vector(currentPlayer.position.x, currentPlayer.position.y);
-  // start.x = start.x - distToXEdge - 1;
-  // start.y = start.y - distToYEdge - 1;
-  // var end = new Vector(start.x + 2 * distToXEdge + 1, start.y + 2 * distToYEdge + 1);
-
   for(var x = 0; x < this.w; x++){
     for(var y = 0; y < this.h; y++){
-      // if(x > start.x && x < end.x && y > start.y && y < end.y) {
-      //   this.tiles[x][y].draw();
-      // }
       var tile = this.tiles[x][y];
       camera.addDrawable(tile.draw.bind(tile), tile.position);
-
     }
   }
 };
 
-Board.prototype.update = function(options) {
-  this.handleZoom(options.keys);
-};
+Board.prototype.update = function() { };
 
 // Check whether tile exists on board
 Board.prototype.exists = function(x, y){
@@ -65,12 +49,4 @@ Board.prototype.exists = function(x, y){
   }
   return false;
 };
-
-Board.prototype.handleZoom = function(keys) {
-  for(var i = 0; i < keys.length; i++){
-    if(keys[i] == 'zoomin') TILESIZE += 1;
-    if(keys[i] == 'zoomout') TILESIZE -= 1;
-  }
-};
-
 

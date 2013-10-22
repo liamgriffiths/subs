@@ -2,7 +2,7 @@
 // http://en.wikipedia.org/wiki/Priority_queue
 //
 // Not sure if this is the best way to do it, but using my BinaryHeap to
-// organize my queue. This object is basically a thin layer of the heap to 
+// organize my queue. This object is basically a thin layer of the heap to
 // compare nodes by a priority key.
 
 function PriorityQueue() {
