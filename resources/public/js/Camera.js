@@ -33,12 +33,7 @@ Camera.prototype.draw = function() {
   // remove from queue and execute function
   while(this.drawQueue.size()){
     var fn = this.drawQueue.dequeue();
-    if(fn instanceof Function){
-      // FIXME: for some reason there are undefs being added into my queue, not
-      // sure if there is a prob with the queue implementation or if they are
-      // sneaking in another way - so far only seems to be Tile objects
-      fn();
-    }
+    if(fn instanceof Function) fn();
   }
 };
 
