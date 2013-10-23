@@ -1,6 +1,5 @@
 var TILESIZE = 40,
     PRESSED_KEYS = [],
-    FPS = 0,
     lastFrameTime = 0,
     playersCollection = new PlayersCollection(),
     minesCollection = new MinesCollection(),
@@ -44,14 +43,15 @@ function draw() {
   var newY = player.position.y * TILESIZE - (canvas.height / 2);
   context.translate(-newX, -newY);
 
+  // Queues up all the drawing functions from all the objects
   board.draw();
   playersCollection.draw();
   minesCollection.draw();
+
+  // Camera.draw runs all the queued draw functions
   camera.draw();
 
-  // context.translate(newX, newY);
   context.restore();
-  document.getElementById('debug').innerHTML = Math.floor(FPS) + 'fps';
 }
 
 // updates the current objects
