@@ -27,12 +27,10 @@ MinesCollection.prototype.update = function() {
 MinesCollection.prototype.newMine = function(position) {
   var mine = new Mine(position);
   this.mines.push(mine);
-  board.tiles[position.x][position.y].addItem(mine);
 };
 
 MinesCollection.prototype.removeMine = function(i) {
   var minePosition = this.mines[i].position;
-  board.tiles[minePosition.x][minePosition.y].removeAllItems();
   this.mines[i].finishExplosion();
   this.mines.splice(i, 1);
 };

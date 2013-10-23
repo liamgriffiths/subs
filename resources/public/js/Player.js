@@ -74,14 +74,14 @@ Player.prototype.canMoveTo = function(x, y){
   }
 
   // TODO: come up with a better name for this
-  var blockingTypes = [Mine];
-  for(var j = 0; j < board.tiles[x][y].items.length; j++){
-    for(var i = 0; i < blockingTypes.length; i++){
-      if(board.tiles[x][y].items[j].constructor === blockingTypes[i]){
-       return false;
-      }
-    }
-  }
+  // var blockingTypes = [Mine];
+  // for(var j = 0; j < board.tiles[x][y].items.length; j++){
+  //   for(var i = 0; i < blockingTypes.length; i++){
+  //     if(board.tiles[x][y].items[j].constructor === blockingTypes[i]){
+  //      return false;
+  //     }
+  //   }
+  // }
 
   return true;
 };
