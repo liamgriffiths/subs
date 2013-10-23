@@ -30,10 +30,10 @@ Board.prototype.generateTiles = function() {
 Board.prototype.draw = function() {
   for(var x = camera.start.x; x < camera.end.x; x++){
     for(var y = camera.start.y; y < camera.end.y; y++){
-      try{
-      var tile = this.tiles[x][y];
-      camera.addDrawable(tile.draw.bind(tile), tile.position);
-      }catch(e){ debugger; }
+      if(board.exists(x,y)){
+        var tile = this.tiles[x][y];
+        camera.addDrawable(tile.draw.bind(tile), tile.position);
+      }
     }
   }
 };
@@ -48,8 +48,8 @@ Board.prototype.update = function() {
 
 // Check whether tile exists on board
 Board.prototype.exists = function(x, y){
-  if(x < 0 || x > this.w) return false;
-  if(y < 0 || y > this.h) return false;
+  if(this.tiles[x] === undefined) return false;
+  if(this.tiles[x][y] === undefined) return false;
   return true;
 };
 

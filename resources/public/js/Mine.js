@@ -60,6 +60,11 @@ Mine.prototype.finishExplosion = function() {
 
 
 Mine.prototype.explodeTo = function(toX, toY) {
+  if(toX > board.w) toX = board.w;
+  if(toX < 0) toX = 0;
+  if(toY > board.h) toY = board.h;
+  if(toY < 0) toY = 0;
+
   // explode horizontally
   if(this.position.x < toX){
     for(x = this.position.x; x < toX; x++){
@@ -84,6 +89,11 @@ Mine.prototype.explodeTo = function(toX, toY) {
 };
 
 Mine.prototype.finishExplosionTo = function(toX, toY) {
+  if(toX > board.w) toX = board.w;
+  if(toX < 0) toX = 0;
+  if(toY > board.h) toY = board.h;
+  if(toY < 0) toY = 0;
+
   if(this.position.x < toX){
     for(x = this.position.x; x < toX; x++){
       stopExplodingTile(x, toY);
