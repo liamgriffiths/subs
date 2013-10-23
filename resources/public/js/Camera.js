@@ -1,21 +1,21 @@
 function Camera(position) {
-  this.position = position;
+  this.position = new Vector(0,0);
   this.drawQueue = new PriorityQueue();
   this.start = new Vector(0,0); // top left of the board
   this.end = new Vector(0,0);   // bottom right of the board
+
 }
 
-Camera.prototype.update = function(position) {
-  this.position = position;
+Camera.prototype.setup = function() {
   // Tiles from center of board to edge of board
-  var distToYEdge = Math.ceil((canvas.height / TILESIZE) / 2) + 1;
-  var distToXEdge = Math.ceil((canvas.width / TILESIZE) / 2) + 1;
+  this.distToEdge = new Vector(Math.ceil((canvas.width / TILESIZE) / 2) + 1,
+                               Math.ceil((canvas.height / TILESIZE) / 2) + 1);
+};
 
+Camera.prototype.update = function(position) {
   // origin of current canvas view (in tiles not pixels)
-  this.start = new Vector(this.position.x, this.position.y);
-  this.start.x = this.start.x - distToXEdge;
-  this.start.y = this.start.y - distToYEdge;
-  this.end = new Vector(this.start.x + 2 * distToXEdge, this.start.y + 2 * distToYEdge);
+  this.start = new Vector(position.x, position.y).sub(this.distToEdge);
+  this.end = new Vector(position.x, position.y).add(this.distToEdge);
 };
 
 Camera.prototype.addDrawable = function(drawFn, position){

@@ -14,7 +14,12 @@ function Vector(/* vector values */) {
 
 // add vectors
 Vector.prototype.add = function(n) {
-  if(typeof(n) == 'object'){
+  if(n instanceof Vector && this.length == n.length){
+    var a = [];
+    for(var i = 0; i < this.value.length; i++){
+      a.push(this.value[i] + n.value[i]);
+    }
+    return new Vector(a);
   }else if(typeof(n) == 'number'){
     return new Vector(this.value.map(function(i){ return i + n; }));
   }
@@ -22,7 +27,12 @@ Vector.prototype.add = function(n) {
 
 // subtract vectors
 Vector.prototype.sub = function(n) {
-  if(typeof(n) == 'object'){
+  if(n instanceof Vector && this.length == n.length){
+    var a = [];
+    for(var i = 0; i < this.value.length; i++){
+      a.push(this.value[i] - n.value[i]);
+    }
+    return new Vector(a);
   }else if(typeof(n) == 'number'){
     return new Vector(this.value.map(function(i){ return i - n; }));
   }
@@ -30,7 +40,12 @@ Vector.prototype.sub = function(n) {
 
 // multiply vectors
 Vector.prototype.mul = function(n) {
-  if(typeof(n) == 'object'){
+  if(n instanceof Vector && this.length == n.length){
+    var a = [];
+    for(var i = 0; i < this.value.length; i++){
+      a.push(this.value[i] * n.value[i]);
+    }
+    return new Vector(a);
   }else if(typeof(n) == 'number'){
     return new Vector(this.value.map(function(i){ return i * n; }));
   }
