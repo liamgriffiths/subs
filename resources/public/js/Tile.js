@@ -58,18 +58,10 @@ Tile.prototype.update = function() {
 };
 
 Tile.prototype.draw = function() {
-  if(this.exploding){
-    return this.drawExplosion();
-  }else{
-    if(this.type == 'water') return function(){};
-    if(this.type == 'hardwall'){
-
-      return this.sprite.draw();
-    }else{
-      return this.sprite.draw();
-
-    }
-  }
+  if(this.exploding) return this.drawExplosion();
+  if(this.type == 'water') return function(){};
+  if(this.type == 'hardwall') return this.sprite.draw();
+  return this.sprite.draw();
 };
 
 Tile.prototype.addItem = function (item) {
@@ -82,51 +74,6 @@ Tile.prototype.removeItem = function(i) {
 
 Tile.prototype.removeAllItems = function() {
   this.items = [];
-};
-
-Tile.prototype.setupSprites = function() {
-  var scanvas = document.createElement('canvas');
-  scanvas.setAttribute('id', 'wall');
-  var scontext = scanvas.getContext('2d');
-
-  var sectionSize = Math.floor(TILESIZE/2);
-  var colors = ['rgba(0, 255, 200, 0.5)'];
-
-  context.moveTo(0, 0);
-
-  for(var x = 0; x < TILESIZE; x + sectionSize){
-    for(var y = 0; 0 < TILESIZE; y + sectionSize){
-      // var color = colors[Math.floor(Math.random() * colors.length)];
-      // context.fillStyle = color.replace("[[opacity]]", Math.random());
-      var color = colors[0];
-      scontext.beginPath();
-      scontext.fillStyle = color;
-      scontext.moveTo(x, y); // move pen to top left corner of tile
-      scontext.lineTo(x + sectionSize, y); // move pen to the top right corner
-      scontext.lineTo(x + sectionSize, y + sectionSize); //  opposite corner
-      scontext.lineTo(x, y + sectionSize); // move to 'bottom left'
-      scontext.closePath(); // move back to start path (moveTo)
-      scontext.fill(); // fill in the shape with the fillStyleColor
-    }
-  }
-  SPRITES.wall = true;
-};
-
-Tile.prototype.drawHardWall = function(x, y) {
-  context.moveTo(this.position.x * TILESIZE, this.position.y * TILESIZE);
-
-  var startX = this.position.x * TILESIZE;
-  var startY = this.position.y * TILESIZE;
-  var pixelSize = Math.floor(TILESIZE / 4);
-  var p = 0;
-
-  for(var x = startX; x < startX + TILESIZE; x += pixelSize){
-    for(var y = startY; y < startY + TILESIZE; y += pixelSize){
-      context.fillStyle = this.colors[p];
-      context.fillRect(x, y, pixelSize, pixelSize);
-      p++;
-    }
-  }
 };
 
 Tile.prototype.drawExplosion = function(x, y) {
@@ -145,22 +92,3 @@ Tile.prototype.drawExplosion = function(x, y) {
     }
   }
 };
-
-
-Tile.prototype.drawTile = function() {
-  context.moveTo(this.position.x * TILESIZE, this.position.y * TILESIZE);
-
-  var startX = this.position.x * TILESIZE;
-  var startY = this.position.y * TILESIZE;
-  var pixelSize = Math.floor(TILESIZE / 4);
-  var p = 0;
-
-  for(var x = startX; x < startX + TILESIZE; x += pixelSize){
-    for(var y = startY; y < startY + TILESIZE; y += pixelSize){
-      context.fillStyle = this.colors[p];
-      context.fillRect(x, y, pixelSize, pixelSize);
-      p++;
-    }
-  }
-};
-
