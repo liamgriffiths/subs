@@ -44,6 +44,7 @@ Mine.prototype.update = function() {
   if(board.tiles[this.position.x][this.position.y].exploding){
     this.countdown = 0;
   }
+  this.sprite.update();
 };
 
 Mine.prototype.explode = function() {

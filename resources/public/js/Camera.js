@@ -3,7 +3,6 @@ function Camera(position) {
   this.drawQueue = new PriorityQueue();
   this.start = new Vector(0,0); // top left of the board
   this.end = new Vector(0,0);   // bottom right of the board
-
 }
 
 Camera.prototype.setup = function() {
