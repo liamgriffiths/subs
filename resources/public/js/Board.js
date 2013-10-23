@@ -28,8 +28,8 @@ Board.prototype.generateTiles = function() {
 
 // add all the tile draw functions to the draw queue along with the position
 Board.prototype.draw = function() {
-  for(var x = 0; x < this.w; x++){
-    for(var y = 0; y < this.h; y++){
+  for(var x = camera.start.x; x < camera.end.x; x++){
+    for(var y = camera.start.y; y < camera.end.y; y++){
       var tile = this.tiles[x][y];
       camera.addDrawable(tile.draw.bind(tile), tile.position);
     }
