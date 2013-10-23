@@ -1,7 +1,7 @@
 // Generic vector class
-function Vector(/* vector values */) {
+function Vector(/* vector values as args or array */) {
   var args = Array.prototype.slice.call(arguments);
-  if(args.length == 1 && typeof(args) == 'object'){
+  if(args.length == 1 && args.constructor == Array){
     this.value = args[0];
   }else{
     this.value = args;
