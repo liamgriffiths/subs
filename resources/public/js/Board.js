@@ -36,7 +36,13 @@ Board.prototype.draw = function() {
   }
 };
 
-Board.prototype.update = function() { };
+Board.prototype.update = function() { 
+  for(var x = 0; x < this.w; x++){
+    for(var y = 0; y < this.h; y++){
+      this.tiles[x][y].update();
+    }
+  }
+};
 
 // Check whether tile exists on board
 Board.prototype.exists = function(x, y){
