@@ -46,13 +46,8 @@ Board.prototype.update = function() {
 
 // Check whether tile exists on board
 Board.prototype.exists = function(x, y){
-  if(typeof(this.tiles) != 'undefined'){
-    if(typeof(this.tiles[x]) != 'undefined'){
-      if(typeof(this.tiles[x][y]) != 'undefined'){
-        return true;
-      }
-    }
-  }
-  return false;
+  if(x < 0 || x > this.w) return false;
+  if(y < 0 || y > this.h) return false;
+  return true;
 };
 
