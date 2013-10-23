@@ -42,29 +42,38 @@ Sprite.prototype.draw = function() {
   }
 };
 
-Sprite.prototype.cacheIt = function() {
+// TODO: fix this function, the idea here is to cache this sprite by drawing
+// it to a hidden canvas, so that when we do the drawing on the visible
+// canvas we can do a drawImage using the image that we have predrawn.
+// this is theoretically much faster
+Sprite.prototype.cacheFrames = function() {
+  // cCanvas is a sprite sheet containing the drawn frames
   var cCanvas = document.createElement('canvas');
   cCanvas.height = TILESIZE;
-  cCanvas.width = TILESIZE;
+  cCanvas.width = TILESIZE * this.frames.length;
   var cContext = cCanvas.getContext('2d');
-  cContext.moveTo(0,0);
   var pixelSize = Math.floor(TILESIZE / this.size);
 
-  // TODO: refactor this one
-  for(var x = 0, tx = 0; x < TILESIZE; x += pixelSize, tx++){
-    for(var y = 0, ty = 0; y < TILESIZE; y += pixelSize, ty++){
-      try{
-        cContext.fillStyle = this.frames[this.currentFrame][tx][ty];
-        cContext.fillRect(x, y, pixelSize, pixelSize);
-      }catch(e){
-        // FIXME: sometimes drawX or drawY exceeds the frame dimensions, why?
+  for(var frame = 0; frame < this.frames.length; frame++){
+    cContext.moveTo(frame * TILESIZE, 0);
+
+    // draw frame to section of sprite sheet canvas
+    for(var x = 0, tx = 0; x < TILESIZE; x += pixelSize, tx++){
+      for(var y = 0, ty = 0; y < TILESIZE; y += pixelSize, ty++){
+        try{
+          cContext.fillStyle = this.frames[frame][tx][ty];
+          cContext.fillRect(x, y, pixelSize, pixelSize);
+        }catch(e){
+          // FIXME: sometimes drawX or drawY exceeds the frame dimensions, why?
+        }
       }
     }
-  }
 
-  cContext.drawImage(cCanvas, 0, 0, TILESIZE, TILESIZE);
-  this.cache[this.currentFrame] = cCanvas;
-  return true;
+    // use frame contents as cache-key
+    cacheKey = this.frames[frame].join('');
+    Sprite.cache[cacheKey] = cCanvas;
+  }
+  return Sprite.cache;
 };
 
 
