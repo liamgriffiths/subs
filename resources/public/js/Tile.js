@@ -8,14 +8,16 @@ function Tile(type, position) {
   switch(this.type){
     case 'wall':
       this.explodable = true;
-      var frame = [];
+      this.sprite = new Sprite(4, this.position);
+      var frame = [[],[],[],[]];
       for(var x = 0; x < 4; x++){
         for(var y = 0; y < 4; y++){
           var rcolors = [Color.WHITE(Utils.getRandomInt(5,10)/10),
-            Color.CYAN(Utils.getRandomInt(5,10)/10)];
-          this.colors.push(rcolors[Math.floor(Math.random() * rcolors.length)]);
+                         Color.CYAN(Utils.getRandomInt(5,10)/10)];
+          frame[x][y] = rcolors[Math.floor(Math.random() * rcolors.length)];
         }
       }
+      this.sprite.frames.push(frame);
       break;
 
     case 'hardwall':
@@ -27,18 +29,13 @@ function Tile(type, position) {
                                [c2, c2, c2, c2],
                                [c1, c1, c1, c1],
                                [c2, c2, c2, c2]]);
-      this.sprite.frames.push([[c1, c1, c1, c1],
-                               [c2, c2, c2, c2],
-                               [c1, c1, c1, c1],
-                               [c2, c2, c2, c2]]);
-      this.sprite.frames.push([[c2, c2, c2, c2],
-                               [c1, c1, c1, c1],
-                               [c2, c2, c2, c2],
-                               [c1, c1, c1, c1]]);
-      this.sprite.frames.push([[c2, c2, c2, c2],
-                               [c1, c1, c1, c1],
-                               [c2, c2, c2, c2],
-                               [c1, c1, c1, c1]]);
+      break;
+
+    case 'water':
+      this.explodable = true;
+      this.sprite = new Sprite(1, this.position);
+      var watercolor = Color.CLEAR();
+      this.sprite.frames.push([[watercolor]]);
       break;
 
     case 'explosion':

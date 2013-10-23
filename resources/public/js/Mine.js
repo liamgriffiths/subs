@@ -7,33 +7,22 @@ function Mine(position, countdown, power, explodingTime){
   this.explodingTime = explodingTime || 50;
   this.exploding = false;
 
-  this.sprite = new Sprite(5, this.position);
-  var c1 = Color.BLACK();
+  this.sprite = new Sprite(8, this.position);
+  var c1 = Color.CLEAR();
   var c2 = Color.RED();
+  var c3 = Color.DPURPLE();
 
-  this.sprite.frames.push([[c1, c1, c1, c1, c1],
-                           [c1, c2, c2, c2, c1],
-                           [c1, c2, c2, c2, c1],
-                           [c1, c2, c2, c2, c1],
-                           [c1, c1, c1, c1, c1]]);
+  this.sprite.frames.push([[c1, c1, c1, c1, c1, c1, c1, c1],
+                           [c1, c1, c3, c3, c1, c3, c3, c1],
+                           [c1, c1, c3, c3, c3, c3, c3, c1],
+                           [c1, c1, c1, c3, c2, c3, c1, c1],
+                           [c1, c1, c3, c3, c3, c3, c3, c1],
+                           [c1, c1, c3, c3, c1, c3, c3, c1],
+                           [c1, c1, c1, c1, c1, c1, c1, c1]]);
 }
 
 Mine.prototype.draw = function() {
   return this.sprite.draw();
-  var x = this.position.x * TILESIZE + TILESIZE / 4;
-  var y = this.position.y * TILESIZE + TILESIZE / 4;
-
-  var size1 = Math.floor(TILESIZE * 0.6);
-  context.fillStyle = '#eee';
-  context.fillRect(x, y, size1, size1);
-
-  var size = Math.floor(TILESIZE * 0.5);
-  context.fillStyle = '#000';
-  context.fillRect(x, y, size, size);
-
-  var size3 = Math.floor(TILESIZE * 0.2);
-  context.fillStyle = '#ddd';
-  context.fillRect(x + 5, y + 5, size3, size3);
 };
 
 Mine.prototype.update = function() {
