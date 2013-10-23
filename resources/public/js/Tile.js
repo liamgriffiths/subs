@@ -53,7 +53,8 @@ Utils.mixin(Tile, Eventable);
 Utils.mixin(Tile, Explodable);
 
 Tile.prototype.update = function() {
-  if(this.exploding) this.items = [];
+  // if(this.exploding) this.items = [];
+  this.sprite.update();
 };
 
 Tile.prototype.draw = function() {
@@ -65,7 +66,7 @@ Tile.prototype.draw = function() {
 
       return this.sprite.draw();
     }else{
-      return this.drawTile();
+      return this.sprite.draw();
 
     }
   }
