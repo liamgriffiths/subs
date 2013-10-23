@@ -1,7 +1,6 @@
 function Tile(type, position) {
   this.position = position;
   this.type = type;
-  this.items = [];
   this.explodable = false;
   this.colors = [];
 
@@ -64,19 +63,7 @@ Tile.prototype.draw = function() {
   return this.sprite.draw();
 };
 
-Tile.prototype.addItem = function (item) {
-  this.items.push(item);
-};
-
-Tile.prototype.removeItem = function(i) {
-  this.items.splice(i, 1);
-};
-
-Tile.prototype.removeAllItems = function() {
-  this.items = [];
-};
-
-Tile.prototype.drawExplosion = function(x, y) {
+Tile.prototype.drawExplosion = function() {
   context.moveTo(this.position.x * TILESIZE, this.position.y * TILESIZE);
 
   var startX = this.position.x * TILESIZE;
