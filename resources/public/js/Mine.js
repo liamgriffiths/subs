@@ -7,18 +7,15 @@ function Mine(position, countdown, power, explodingTime){
   this.explodingTime = explodingTime || 50;
   this.exploding = false;
 
-  this.sprite = new Sprite(8, this.position);
+  this.sprite = new Sprite(4, this.position);
   var c1 = Color.CLEAR();
   var c2 = Color.RED();
   var c3 = Color.DPURPLE();
 
-  this.sprite.frames.push([[c1, c1, c1, c1, c1, c1, c1, c1],
-                           [c1, c1, c3, c3, c1, c3, c3, c1],
-                           [c1, c1, c3, c3, c3, c3, c3, c1],
-                           [c1, c1, c1, c3, c2, c3, c1, c1],
-                           [c1, c1, c3, c3, c3, c3, c3, c1],
-                           [c1, c1, c3, c3, c1, c3, c3, c1],
-                           [c1, c1, c1, c1, c1, c1, c1, c1]]);
+  this.sprite.frames.push([[c3, c3, c3, c3],
+                           [c3, c2, c2, c3],
+                           [c3, c2, c2, c3],
+                           [c3, c3, c3, c3]]);
 }
 
 Mine.prototype.draw = function() {
