@@ -1,6 +1,12 @@
 var Utils = {
   // TODO: figure out why this clears the canvas
-  clearCanvas: function(c) { c.width = c.width; },
+  clearCanvas: function() {
+    // hacky-slow way to clear canvas
+    // canvas.width = canvas.width;
+
+    // marginally faster, easier to understand canvas-clearing
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  },
 
   // returns a random integer between min and max
   // using math.round() will give you a non-uniform distribution!
