@@ -26,7 +26,8 @@ function main() {
 function setup() {
   canvas.width = 800;
   canvas.height = 600;
-  board = new Board(40, 40);
+  board = new Board(70, 70);
+  camera.setup();
 
   // Create a new Player and add to the middle of the board
   var playerPos = new Vector(board.w, board.h).mul(0.5);
@@ -54,7 +55,7 @@ function draw() {
 // updates the current objects
 function update() {
   camera.update(currentPlayer.position);
-  board.update({keys: PRESSED_KEYS});
+  board.update();
   minesCollection.update();
   playersCollection.update({keys: PRESSED_KEYS});
   PRESSED_KEYS = []; // clear all pressed keys for this frame
