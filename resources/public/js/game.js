@@ -38,6 +38,7 @@ function setup() {
 function draw() {
   Utils.clearCanvas(canvas);
 
+  context.save();
   var player = currentPlayer;
   var newX = player.position.x * TILESIZE - (canvas.width / 2);
   var newY = player.position.y * TILESIZE - (canvas.height / 2);
@@ -48,7 +49,8 @@ function draw() {
   minesCollection.draw();
   camera.draw();
 
-  context.translate(newX, newY);
+  // context.translate(newX, newY);
+  context.restore();
   document.getElementById('debug').innerHTML = Math.floor(FPS) + 'fps';
 }
 
