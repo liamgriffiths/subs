@@ -8,19 +8,19 @@ var TILESIZE = 40,
     currentPlayer,
     canvas,
     context,
+    delta, // time difference between frames
     board;
 
 
 // main game loop
 function main() {
   var currentTime = new Date().getTime();
-  var diff = (currentTime - lastFrameTime) / 1000; // divide by msecs
+  delta = (currentTime - lastFrameTime);
   lastFrameTime = currentTime;
-  FPS = 1.0 / diff;
 
   draw();
   update();
-  window.requestAnimationFrame(main);
+  window.requestAnimFrame(main);
 }
 
 function setup() {

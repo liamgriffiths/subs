@@ -1,28 +1,35 @@
-function Sprite(size, position) {
+function Sprite(size, position, animationSpeed, frames) {
   this.size = size; // in "pixels" per tile
   this.position = position; // 2d Vector
   this.currentFrame = 0;
   this.tick = 0;
-  this.frames = [];
+  this.frames = frames || [];
   this.cache = {};
+  this.animationDelta = 0;
+  this.animationSpeed = animationSpeed || (Math.random() * 400) + 100;
 }
 
+// globally shared sprite cache
+Sprite.cache = {};
+
 Sprite.prototype.update = function() {
-  this.currentFrame = this.tick % this.frames.length;
-  this.tick++;
+  if(this.animationDelta > this.animationSpeed){
+    this.currentFrame = this.tick % this.frames.length;
+    this.tick++;
+    this.animationDelta = 0;
+  }else{
+     this.animationDelta += delta;
+  }
+
   this.pixelSize = Math.floor(TILESIZE / this.size);
 };
 
 Sprite.prototype.draw = function() {
-  // this.cacheIt();
-
   var start = this.position.mul(TILESIZE); // pixel location on canvas
   var end = start.add(TILESIZE); // this is the opposite corner of the tile
   context.moveTo(start.x, start.y);
   // debugger;
-  // context.drawImage(this.cache[this.currentFrame], 0, 0, TILESIZE, TILESIZE);
-
-  // // TODO: refactor this one
+  // TODO: refactor this one
   for(var x = start.x, tx = 0; x < end.x; x += this.pixelSize, tx++){
     for(var y = start.y, ty = 0; y < end.y; y += this.pixelSize, ty++){
       try{
