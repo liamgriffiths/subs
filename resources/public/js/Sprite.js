@@ -29,8 +29,8 @@ Sprite.prototype.draw = function() {
   context.moveTo(start.x, start.y);
   // debugger;
   // TODO: refactor this one
-  for(var x = start.x, tx = 0; x < end.x; x += this.pixelSize, tx++){
-    for(var y = start.y, ty = 0; y < end.y; y += this.pixelSize, ty++){
+  for(var x = start.x, tx = 0; x < end.x && tx < this.size; x += this.pixelSize, tx++){
+    for(var y = start.y, ty = 0; y < end.y && ty < this.size; y += this.pixelSize, ty++){
       try{
         context.fillStyle = this.frames[this.currentFrame][tx][ty];
         context.fillRect(x, y, this.pixelSize, this.pixelSize);
