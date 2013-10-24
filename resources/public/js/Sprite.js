@@ -1,4 +1,4 @@
-function Sprite(size, position, animationSpeed, frames) {
+function Sprite(size, position, frames, animationSpeed) {
   this.size = size; // in "pixels" per tile
   this.position = position; // 2d Vector
   this.currentFrame = 0;
