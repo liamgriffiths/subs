@@ -6,7 +6,7 @@ function Sprite(size, position, animationSpeed, frames) {
   this.frames = frames || [];
   this.cache = {};
   this.animationDelta = 0;
-  this.animationSpeed = animationSpeed || (Math.random() * 400) + 100;
+  this.animationSpeed = animationSpeed || 100;
 }
 
 // globally shared sprite cache
