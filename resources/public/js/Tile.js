@@ -31,7 +31,7 @@ function Tile(type, position) {
                 [c1, c1, c1, c1],
                 [c2, c2, c2, c2],
                 [c1, c1, c1, c1]];
-      this.sprite.frames = [f1, f2];
+      this.sprite.frames = [f1];
       break;
 
     case 'water':
