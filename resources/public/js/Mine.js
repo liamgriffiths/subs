@@ -1,6 +1,6 @@
 function Mine(position, countdown, power, explodingTime){
   this.position = new Vector(position.x, position.y, position.z);
-  this.position.z = position.z || 2;
+  this.position.z = position.z || 1;
   this.countdown = countdown || 100;
   this.power = power || 10; // how many adjacent tiles it will affect
   this.live = true;
