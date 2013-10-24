@@ -1,12 +1,13 @@
 function Sprite(size, position, animationSpeed) {
   this.size = size; // in "pixels" per tile
-  this.position = position; // 2d Vector
+  this.position = new Vector(position.x, position.y, position.z);
   this.currentFrame = 0;
   this.tick = 0;
   this.frames = [];
   this.cache = {};
+  this.direction = 'up';
   this.animationDelta = 0;
-  this.animationSpeed = animationSpeed || 100;
+  this.animationSpeed = animationSpeed || 50;
 }
 
 Sprite.prototype.update = function() {
@@ -22,6 +23,7 @@ Sprite.prototype.update = function() {
 };
 
 Sprite.prototype.draw = function() {
+  if(! this.frames.length) return false;
   var start = this.position.mul(TILESIZE); // pixel location on canvas
   var end = start.add(TILESIZE); // this is the opposite corner of the tile
   context.moveTo(start.x, start.y);
