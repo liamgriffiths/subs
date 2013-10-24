@@ -35,7 +35,7 @@ function setup() {
 
 // does the screen drawing
 function draw() {
-  Utils.clearCanvas(canvas);
+  Utils.clearCanvas();
 
   context.save();
   var player = currentPlayer;
