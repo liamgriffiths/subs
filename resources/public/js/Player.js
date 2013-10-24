@@ -61,6 +61,8 @@ Player.prototype.update = function(options) {
   if(board.tiles[this.position.x][this.position.y].exploding){
     this.alive = false;
   }
+  this.sprite.update();
+  this.sprite.position = new Vector(this.position.x, this.position.y, this.position.z);
 };
 
 Player.prototype.canMoveTo = function(x, y){
@@ -84,73 +86,4 @@ Player.prototype.canMoveTo = function(x, y){
   // }
 
   return true;
-};
-
-
-Player.prototype.drawUp = function() {
-  context.beginPath();
-  context.fillStyle = 'green';
-  context.moveTo(this.position.x * TILESIZE + (TILESIZE/2), this.position.y * TILESIZE);
-  context.lineTo(this.position.x * TILESIZE + TILESIZE - (TILESIZE/2), this.position.y * TILESIZE);
-  context.lineTo(this.position.x * TILESIZE + TILESIZE, this.position.y * TILESIZE + TILESIZE);
-  context.lineTo(this.position.x * TILESIZE, this.position.y * TILESIZE + TILESIZE);
-  context.closePath();
-  context.fill();
-};
-
-Player.prototype.drawDown = function() {
-  context.beginPath();
-  context.fillStyle = 'green';
-  context.moveTo(this.position.x * TILESIZE, this.position.y * TILESIZE);
-  context.lineTo(this.position.x * TILESIZE + TILESIZE, this.position.y * TILESIZE);
-  context.lineTo(this.position.x * TILESIZE + (TILESIZE/2), this.position.y * TILESIZE + TILESIZE);
-  context.lineTo(this.position.x * TILESIZE + (TILESIZE/2), this.position.y * TILESIZE + TILESIZE);
-  context.closePath();
-  context.fill();
-};
-
-Player.prototype.drawLeft = function() {
-  context.beginPath();
-  context.fillStyle = 'green';
-  // take the pen and move to top left corner of tile
-  context.moveTo(this.position.x * TILESIZE,
-                 this.position.y * TILESIZE + (TILESIZE/2));
-
-  // take the pen and move to the top right corner
-  context.lineTo(this.position.x * TILESIZE + TILESIZE,
-                 this.position.y * TILESIZE);
-
-  // move to the opposite corner
-  context.lineTo(this.position.x * TILESIZE + TILESIZE,
-                 this.position.y * TILESIZE + TILESIZE);
-
-  // move to 'bottom left'
-  context.lineTo(this.position.x * TILESIZE,
-                 this.position.y * TILESIZE + (TILESIZE/2));
-
-  context.closePath();
-  context.fill();
-};
-
-Player.prototype.drawRight = function() {
-  context.beginPath();
-  context.fillStyle = 'green';
-  // take the pen and move to top left corner of tile
-  context.moveTo(this.position.x * TILESIZE,
-                 this.position.y * TILESIZE);
-
-  // take the pen and move to the top right corner
-  context.lineTo(this.position.x * TILESIZE + TILESIZE,
-                 this.position.y * TILESIZE + (TILESIZE/2));
-
-  // move to the opposite corner
-  context.lineTo(this.position.x * TILESIZE + TILESIZE,
-                 this.position.y * TILESIZE + (TILESIZE/2));
-
-  // move to 'bottom left'
-  context.lineTo(this.position.x * TILESIZE,
-                 this.position.y * TILESIZE + TILESIZE);
-
-  context.closePath();
-  context.fill();
 };

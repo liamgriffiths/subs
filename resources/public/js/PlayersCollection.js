@@ -21,3 +21,4 @@ PlayersCollection.prototype.draw = function() {
 PlayersCollection.prototype.update = function(options) {
   this.players['liam'].update(options);
 };
+
