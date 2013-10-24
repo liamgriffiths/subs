@@ -11,11 +11,37 @@ function Mine(position, countdown, power, explodingTime){
   var c1 = Color.CLEAR();
   var c2 = Color.RED();
   var c3 = Color.DPURPLE();
+  var c4 = Color.YELLOW();
 
-  this.sprite.frames.push([[c3, c3, c3, c3],
-                           [c3, c2, c2, c3],
-                           [c3, c2, c2, c3],
-                           [c3, c3, c3, c3]]);
+  var f1 = [[c3, c3, c3, c3],
+            [c3, c2, c2, c3],
+            [c3, c3, c3, c3],
+            [c3, c3, c3, c3]];
+  var f2 = [[c3, c3, c3, c3],
+            [c3, c4, c4, c3],
+            [c3, c2, c2, c3],
+            [c3, c3, c3, c3]];
+  var f3 = [[c3, c3, c3, c3],
+            [c3, c4, c4, c3],
+            [c3, c4, c4, c3],
+            [c3, c3, c3, c3]];
+  var f4 = [[c4, c4, c4, c4],
+            [c4, c3, c3, c4],
+            [c4, c4, c4, c4],
+            [c4, c4, c4, c4]];
+  var f5 = [[c4, c4, c4, c4],
+            [c4, c3, c3, c4],
+            [c4, c3, c3, c4],
+            [c4, c4, c4, c4]];
+  var f6 = [[c4, c4, c4, c4],
+            [c4, c2, c2, c4],
+            [c4, c3, c3, c4],
+            [c4, c4, c4, c4]];
+  var f7 = [[c2, c2, c2, c2],
+            [c2, c2, c2, c2],
+            [c2, c3, c3, c2],
+            [c2, c2, c2, c2]];
+  this.sprite.frames = [f1, f2, f3, f4, f5, f6, f7];
 }
 
 Mine.prototype.draw = function() {
