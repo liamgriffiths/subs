@@ -59,9 +59,15 @@ Utils.mixin(Tile, Explodable);
 Tile.prototype.update = function() {
   // if(this.exploding) this.items = [];
   this.sprite.update();
+  for(var i = 0; i < this.items.length; i++){
+    this.items[i].update();
+  }
 };
 
 Tile.prototype.draw = function() {
+  for(var i = 0; i < this.items.length; i++){
+    this.items[i].draw();
+  }
   if(this.exploding) return this.drawExplosion();
   if(this.type == 'water') return function(){};
   if(this.type == 'hardwall') return this.sprite.draw();

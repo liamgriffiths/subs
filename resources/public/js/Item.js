@@ -1,15 +1,17 @@
 // Items are things that exist inside a game tile and can be collected by
 // and used by a player
-function Item(position, type) {
-  this.position = new Vector(position.x, position.y);
+function Item(type, position) {
+  this.position = new Vector(position.x, position.y, position.z);
   this.type = type;
   this.sprite = this.makeSprite();
 }
 
 Item.prototype.draw = function() {
+  return this.sprite.draw();
 };
 
 Item.prototype.update = function() {
+  this.sprite.update();
 };
 
 Item.prototype.makeSprite = function() {
@@ -22,17 +24,25 @@ Item.prototype.makeSprite = function() {
     var c3 = Color.YELLOW('rand');
     var c4 = Color.BLACK('rand');
 
-    var f1 = [[c1, c1, c1, c1, c1],
-              [c1, c1, c1, c1, c1],
-              [c1, c1, c1, c1, c1],
-              [c1, c1, c1, c1, c1],
-              [c1, c1, c1, c1, c1]];
+    var f1 = [[c2, c2, c2, c2, c2],
+              [c2, c3, c4, c3, c2],
+              [c2, c3, c3, c3, c2],
+              [c2, c3, c3, c3, c2],
+              [c2, c2, c2, c2, c2]];
+    var f2 = [[c2, c2, c2, c2, c2],
+              [c2, c4, c3, c3, c2],
+              [c2, c3, c3, c3, c2],
+              [c2, c3, c3, c3, c2],
+              [c2, c2, c2, c2, c2]];
+    var f3 = [[c2, c2, c2, c2, c2],
+              [c2, c3, c3, c4, c2],
+              [c2, c3, c3, c3, c2],
+              [c2, c3, c3, c3, c2],
+              [c2, c2, c2, c2, c2]];
 
-    frames = [f1,f2];
+    frames = [f1,f2,f3];
   }
 
   sprite.frames = frames;
   return sprite;
-
-
 };
