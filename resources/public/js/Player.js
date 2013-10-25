@@ -15,29 +15,29 @@ function Player(position) {
   var c5 = Color.YELLOW(5/10);
 
   this.aliveSprite = new Sprite(5, this.position);
-  var a1 = [[c0, c6, c6, c0, c4],
-            [c2, c2, c2, c2, c0],
-            [c2, c2, c0, c2, c0],
-            [c2, c2, c2, c2, c0],
-            [c0, c6, c6, c0, c4]];
-  var a2 = [[c0, c6, c6, c0, c5],
-            [c2, c2, c2, c2, c0],
-            [c2, c2, c0, c2, c0],
-            [c2, c2, c2, c2, c0],
-            [c0, c6, c6, c0, c5]];
+  var a1 = [[c0, c2, c2, c2, c0],
+            [c6, c2, c2, c2, c6],
+            [c6, c2, c0, c2, c6],
+            [c0, c2, c2, c2, c0],
+            [c4, c0, c0, c0, c4]];
+  var a2 = [[c0, c2, c2, c2, c0],
+            [c6, c2, c2, c2, c6],
+            [c6, c2, c0, c2, c6],
+            [c0, c2, c2, c2, c0],
+            [c5, c0, c0, c0, c5]];
   this.aliveSprite.frames = [a1,a2];
 
   this.deadSprite = new Sprite(5, this.position);
-  var d1 = [[c0, c1, c1, c1, c1],
-            [c1, c0, c1, c1, c0],
+  var d1 = [[c0, c1, c1, c1, c0],
+            [c1, c0, c1, c0, c1],
             [c1, c1, c1, c1, c1],
-            [c1, c0, c1, c1, c0],
-            [c0, c1, c1, c1, c1]];
-  var d2 = [[c0, c3, c3, c3, c3],
-            [c3, c0, c3, c3, c0],
+            [c1, c1, c1, c1, c1],
+            [c1, c0, c1, c0, c1]];
+  var d2 = [[c0, c3, c3, c3, c0],
+            [c3, c0, c3, c0, c3],
             [c3, c3, c3, c3, c3],
-            [c3, c0, c3, c3, c0],
-            [c0, c3, c3, c3, c3]];
+            [c3, c3, c3, c3, c3],
+            [c3, c0, c3, c0, c3]];
   this.deadSprite.frames = [d1, d2];
 }
 
