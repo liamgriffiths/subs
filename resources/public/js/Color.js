@@ -25,3 +25,11 @@ Color.CYAN   = function(a){ return Color.rgba( 40, 161, 151, a); };
 Color.PINK   = function(a){ return Color.rgba(213,  56, 128, a); };
 Color.CLEAR  = function() { return Color.rgba(0,  0, 0, 0); };
 Color.DPURPLE = function(a){ return Color.rgba(77, 41, 66, a); };
+
+Color.Rand = function(){
+  var colors = ['RED', 'LRED', 'GREEN', 'ORANGE', 'CYAN', 'BLUE', 'BBLUE', 
+                'LBLUE', 'PINK', 'DPURPLE', 'WHITE'];
+
+  var rcolor = colors[Math.floor(Math.random() * colors.length)];
+  return Color[rcolor]('rand');
+};

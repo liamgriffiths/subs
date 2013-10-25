@@ -7,41 +7,34 @@ function Mine(position, countdown, power, explodingTime){
   this.explodingTime = explodingTime || 50;
   this.exploding = false;
 
-  this.sprite = new Sprite(4, this.position);
+  this.sprite = new Sprite(5, this.position,100);
   var c1 = Color.CLEAR();
   var c2 = Color.RED();
   var c3 = Color.DPURPLE();
   var c4 = Color.YELLOW();
+  var c5 = Color.ORANGE();
 
-  var f1 = [[c3, c3, c3, c3],
-            [c3, c2, c2, c3],
-            [c3, c3, c3, c3],
-            [c3, c3, c3, c3]];
-  var f2 = [[c3, c3, c3, c3],
-            [c3, c4, c4, c3],
-            [c3, c2, c2, c3],
-            [c3, c3, c3, c3]];
-  var f3 = [[c3, c3, c3, c3],
-            [c3, c4, c4, c3],
-            [c3, c4, c4, c3],
-            [c3, c3, c3, c3]];
-  var f4 = [[c4, c4, c4, c4],
-            [c4, c3, c3, c4],
-            [c4, c4, c4, c4],
-            [c4, c4, c4, c4]];
-  var f5 = [[c4, c4, c4, c4],
-            [c4, c3, c3, c4],
-            [c4, c3, c3, c4],
-            [c4, c4, c4, c4]];
-  var f6 = [[c4, c4, c4, c4],
-            [c4, c2, c2, c4],
-            [c4, c3, c3, c4],
-            [c4, c4, c4, c4]];
-  var f7 = [[c2, c2, c2, c2],
-            [c2, c2, c2, c2],
-            [c2, c3, c3, c2],
-            [c2, c2, c2, c2]];
-  this.sprite.frames = [f1, f2, f3, f4, f5, f6, f7];
+  var f1 = [[c3, c3, c3, c3, c3],
+            [c3, c2, c2, c2, c3],
+            [c3, c5, c5, c5, c3],
+            [c3, c4, c4, c4, c3],
+            [c3, c3, c3, c3, c3]];
+  var f2 = [[c4, c4, c4, c4, c4],
+            [c4, c3, c3, c3, c4],
+            [c4, c2, c2, c2, c4],
+            [c4, c5, c5, c5, c4],
+            [c4, c4, c4, c4, c4]];
+  var f3 = [[c5, c5, c5, c5, c5],
+            [c5, c4, c4, c4, c5],
+            [c5, c3, c3, c3, c5],
+            [c5, c2, c2, c2, c5],
+            [c5, c5, c5, c5, c5]];
+  var f4 = [[c2, c2, c2, c2, c2],
+            [c2, c5, c5, c5, c2],
+            [c2, c4, c4, c4, c2],
+            [c2, c3, c3, c3, c2],
+            [c2, c2, c2, c2, c2]];
+  this.sprite.frames = [f1,f2,f3,f4];
 }
 
 Mine.prototype.draw = function() {

@@ -1,25 +1,51 @@
-function Player( position) {
+function Player(position) {
   this.alive = true;
   this.position = position; // 2d vector
   this.position.z = 1;
   this.direction = 'up';
 
-  this.ghostImage = new Image();
-  this.ghostImage.src = '/images/ghost.png';
-  // this.image.onload = this.draw;
+  var c0 = Color.BLACK(1/10);
+  var c1 = Color.WHITE(8/10);
+
+  var c2 = Color.Rand();
+  var c6 = Color.Rand();
+
+  var c3 = Color.WHITE(9/10);
+  var c4 = Color.YELLOW();
+  var c5 = Color.YELLOW(5/10);
+
+  this.aliveSprite = new Sprite(5, this.position);
+  var a1 = [[c0, c6, c6, c0, c4],
+            [c2, c2, c2, c2, c0],
+            [c2, c2, c0, c2, c0],
+            [c2, c2, c2, c2, c0],
+            [c0, c6, c6, c0, c4]];
+  var a2 = [[c0, c6, c6, c0, c5],
+            [c2, c2, c2, c2, c0],
+            [c2, c2, c0, c2, c0],
+            [c2, c2, c2, c2, c0],
+            [c0, c6, c6, c0, c5]];
+  this.aliveSprite.frames = [a1,a2];
+
+  this.deadSprite = new Sprite(5, this.position);
+  var d1 = [[c0, c1, c1, c1, c1],
+            [c1, c0, c1, c1, c0],
+            [c1, c1, c1, c1, c1],
+            [c1, c0, c1, c1, c0],
+            [c0, c1, c1, c1, c1]];
+  var d2 = [[c0, c3, c3, c3, c3],
+            [c3, c0, c3, c3, c0],
+            [c3, c3, c3, c3, c3],
+            [c3, c0, c3, c3, c0],
+            [c0, c3, c3, c3, c3]];
+  this.deadSprite.frames = [d1, d2];
 }
 
 Player.prototype.draw = function() {
   if(this.alive){
-    //context.drawImage(this.image, this.position.x * TILESIZE, this.position.y * TILESIZE, TILESIZE, TILESIZE);
-    // context.drawImage(this.image, canvas.width/2, canvas.height/2, TILESIZE, TILESIZE);
-
-    if(this.direction == 'up') this.drawUp();
-    if(this.direction == 'down') this.drawDown();
-    if(this.direction == 'left') this.drawLeft();
-    if(this.direction == 'right') this.drawRight();
+    return this.aliveSprite.draw();
   }else{
-    context.drawImage(this.ghostImage, this.position.x * TILESIZE, this.position.y * TILESIZE, TILESIZE, TILESIZE);
+    return this.deadSprite.draw();
   }
 };
 
@@ -28,30 +54,30 @@ Player.prototype.update = function(options) {
     for(var i = 0; i < options.keys.length; i++){
       if(options.keys[i] == 'left'){
         this.direction = 'left';
-        if(this.canMoveTo(this.position.x - 1, this.position.y)){
+        if(this.canMoveTo(this.position.x - 1, this.position.y) || !this.alive){
           this.position.x -= 1;
         }
       }
       if(options.keys[i] == 'right'){
         this.direction = 'right';
-        if(this.canMoveTo(this.position.x + 1, this.position.y)){
+        if(this.canMoveTo(this.position.x + 1, this.position.y) || !this.alive){
           this.position.x += 1;
         }
       }
       if(options.keys[i] == 'up'){
         this.direction = 'up';
-        if(this.canMoveTo(this.position.x, this.position.y - 1)){
+        if(this.canMoveTo(this.position.x, this.position.y - 1) || !this.alive){
           this.position.y -= 1;
         }
       }
       if(options.keys[i] == 'down'){
         this.direction = 'down';
-        if(this.canMoveTo(this.position.x, this.position.y + 1)){
+        if(this.canMoveTo(this.position.x, this.position.y + 1) || !this.alive){
           this.position.y += 1;
         }
       }
 
-      if(options.keys[i] == 'leavemine'){
+      if(options.keys[i] == 'leavemine' && this.alive){
         minesCollection.newMine(this.position);
       }
     }
@@ -61,8 +87,13 @@ Player.prototype.update = function(options) {
   if(board.tiles[this.position.x][this.position.y].exploding){
     this.alive = false;
   }
-  this.sprite.update();
-  this.sprite.position = new Vector(this.position.x, this.position.y, this.position.z);
+  if(this.alive){
+    this.aliveSprite.update();
+    this.aliveSprite.position = new Vector(this.position.x, this.position.y, this.position.z);
+  }else{
+    this.deadSprite.update();
+    this.deadSprite.position = new Vector(this.position.x, this.position.y, this.position.z);
+  }
 };
 
 Player.prototype.canMoveTo = function(x, y){

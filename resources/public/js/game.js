@@ -1,4 +1,4 @@
-var TILESIZE = 80,
+var TILESIZE = 60,
     PRESSED_KEYS = [],
     lastFrameTime = 0,
     playersCollection = new PlayersCollection(),
@@ -25,7 +25,7 @@ function main() {
 function setup() {
   canvas.width = 800;
   canvas.height = 600;
-  board = new Board(70, 70);
+  board = new Board(100, 100);
   camera.setup();
 
   // Create a new Player and add to the middle of the board
@@ -39,8 +39,10 @@ function draw() {
 
   context.save();
   var player = currentPlayer;
+  // find the pixel position of the current player
   var newX = player.position.x * TILESIZE - (canvas.width / 2);
   var newY = player.position.y * TILESIZE - (canvas.height / 2);
+  // set origin in relation to current player position
   context.translate(-newX, -newY);
 
   // Queues up all the drawing functions from all the objects
@@ -50,7 +52,6 @@ function draw() {
 
   // Camera.draw runs all the queued draw functions
   camera.draw();
-
   context.restore();
 }
 
@@ -80,6 +81,7 @@ window.addEventListener('keydown', function (event) {
     case 65: PRESSED_KEYS.push('zoomin'); break; // a
     case 83: PRESSED_KEYS.push('zoomout'); break; // s
     case 32: PRESSED_KEYS.push('leavemine'); break; // space
+    case 68: debugger; break;
   }
   // event.preventDefault();
 });
