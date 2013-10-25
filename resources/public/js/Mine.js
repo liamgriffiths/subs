@@ -2,10 +2,11 @@ function Mine(position, countdown, power, explodingTime){
   this.position = new Vector(position.x, position.y, position.z);
   this.position.z = position.z || 1;
   this.countdown = countdown || 100;
-  this.power = power || 10; // how many adjacent tiles it will affect
+  this.power = power || 2; // how many adjacent tiles it will affect
   this.live = true;
   this.explodingTime = explodingTime || 50;
   this.exploding = false;
+  this.animationDelta = 0;
 
   this.sprite = new Sprite(5, this.position,100);
   var c1 = Color.CLEAR();
@@ -42,18 +43,23 @@ Mine.prototype.draw = function() {
 };
 
 Mine.prototype.update = function() {
-  if(this.countdown > 0){
-    this.countdown -= 1;
-  }else{
-    this.live = false;
-    this.exploding = true;
-  }
 
-  if(this.exploding){
-    if(this.explodingTime > 0){
-      this.explodingTime -= 1;
+  if(this.live){
+    if(this.animationDelta > 2000){
+      this.animationDelta = 0;
+      this.live = false;
+      this.exploding = true;
     }else{
-      this.exploding = false;
+       this.animationDelta += delta;
+    }
+  }else{
+    if(this.exploding){
+      if(this.animationDelta > 1000){
+        this.animationDelta = 0;
+        this.exploding = false;
+      }else{
+        this.animationDelta += delta;
+      }
     }
   }
 
