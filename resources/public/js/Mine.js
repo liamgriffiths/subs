@@ -1,12 +1,13 @@
-function Mine(position, who){
+function Mine(position, owner){
   this.position = new Vector(position.x, position.y, position.z);
   this.position.z = position.z || 1;
-  this.countdown = who.countdown || 100;
-  this.power = who.power || 2; // how many adjacent tiles it will affect
+  this.countdown = owner.countdown || 100;
+  this.power = owner.power || 2; // how many adjacent tiles it will affect
   this.live = true;
-  this.explodingTime = who.explodingTime || 50;
+  this.explodingTime = owner.explodingTime || 50;
   this.exploding = false;
   this.animationDelta = 0;
+  this.owner = owner;
 
   this.sprite = new Sprite(5, this.position,100);
   var c1 = Color.CLEAR();

@@ -43,6 +43,31 @@ Item.prototype.makeSprite = function() {
     frames = [f1,f2,f3];
   }
 
+  if(this.type === 'mine'){
+    var c1 = Color.CLEAR();
+    var c2 = Color.BLUE();
+    var c3 = Color.DPURPLE('rand');
+    var c4 = Color.BLACK('rand');
+
+    var f1 = [[c2, c2, c2, c2, c2],
+              [c2, c3, c4, c3, c2],
+              [c2, c3, c3, c3, c2],
+              [c2, c3, c3, c3, c2],
+              [c2, c2, c2, c2, c2]];
+    var f2 = [[c2, c2, c2, c2, c2],
+              [c2, c4, c3, c3, c2],
+              [c2, c3, c3, c3, c2],
+              [c2, c3, c3, c3, c2],
+              [c2, c2, c2, c2, c2]];
+    var f3 = [[c2, c2, c2, c2, c2],
+              [c2, c3, c3, c4, c2],
+              [c2, c3, c3, c3, c2],
+              [c2, c3, c3, c3, c2],
+              [c2, c2, c2, c2, c2]];
+
+    frames = [f1,f2,f3];
+  }
+
   sprite.frames = frames;
   return sprite;
 };

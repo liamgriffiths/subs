@@ -23,8 +23,13 @@ Board.prototype.generateTiles = function() {
       this.tiles[x][y] = new Tile(type, new Vector(x, y, 1));
 
       if(type == 'wall'){
-        var newItem = new Item('fire', new Vector(x, y, 1));
-        this.tiles[x][y].items.push(newItem);
+        var hasItem = Math.floor(Math.random() * 10) < 2;
+        if(hasItem){
+          var itemTypes = ['fire','mine'];
+          var whatItem = itemTypes[Math.floor(Math.random() * itemTypes.length)];
+          var newItem = new Item(whatItem, new Vector(x, y, 1));
+          this.tiles[x][y].items.push(newItem);
+        }
       }
     }
   }
@@ -43,7 +48,7 @@ Board.prototype.draw = function() {
   }
 };
 
-Board.prototype.update = function() { 
+Board.prototype.update = function() {
   for(var x = 0; x < this.w; x++){
     for(var y = 0; y < this.h; y++){
       this.tiles[x][y].update();

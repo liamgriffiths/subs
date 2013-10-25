@@ -29,5 +29,6 @@ MinesCollection.prototype.newMine = function(position, who) {
 MinesCollection.prototype.removeMine = function(i) {
   var minePosition = this.mines[i].position;
   this.mines[i].finishExplosion();
+  this.mines[i].owner.availableMines++;
   this.mines.splice(i, 1);
 };

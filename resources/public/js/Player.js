@@ -2,8 +2,9 @@ function Player(position) {
   this.isAlive = true;
   this.position = position;
   this.position.z = 1;
-  this.direction = 'up';
   this.power = 2;
+  this.maxMines = 1;
+  this.availableMines = 1;
   this.countdown = undefined;
   this.explodeTile = undefined;
 
@@ -56,32 +57,32 @@ Player.prototype.update = function(options) {
   if(options.keys.length){
     for(var i = 0; i < options.keys.length; i++){
       if(options.keys[i] == 'left'){
-        this.direction = 'left';
         if(this.canMoveTo(this.position.x - 1, this.position.y) || !this.isAlive){
           this.position.x -= 1;
         }
       }
       if(options.keys[i] == 'right'){
-        this.direction = 'right';
         if(this.canMoveTo(this.position.x + 1, this.position.y) || !this.isAlive){
           this.position.x += 1;
         }
       }
       if(options.keys[i] == 'up'){
-        this.direction = 'up';
         if(this.canMoveTo(this.position.x, this.position.y - 1) || !this.isAlive){
           this.position.y -= 1;
         }
       }
       if(options.keys[i] == 'down'){
-        this.direction = 'down';
         if(this.canMoveTo(this.position.x, this.position.y + 1) || !this.isAlive){
           this.position.y += 1;
         }
       }
 
       if(options.keys[i] == 'leavemine' && this.isAlive){
-        minesCollection.newMine(this.position, this);
+        // if(this.availableMines < this.maxMines){
+        if(this.availableMines > 0){
+          minesCollection.newMine(this.position, this);
+          this.availableMines--;
+        }
       }
 
       var tileItems = board.tiles[this.position.x][this.position.y].items;
@@ -131,7 +132,6 @@ Player.prototype.canMoveTo = function(x, y){
 };
 
 Player.prototype.addItem = function(item) {
-  if(item.type == 'fire'){
-    this.power++;
-  }
+  if(item.type == 'fire') this.power++;
+  if(item.type == 'mine') this.availableMines++;
 };
