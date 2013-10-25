@@ -21,8 +21,8 @@ MinesCollection.prototype.update = function() {
   }
 };
 
-MinesCollection.prototype.newMine = function(position) {
-  var mine = new Mine(position);
+MinesCollection.prototype.newMine = function(position, who) {
+  var mine = new Mine(position, who);
   this.mines.push(mine);
 };
 

@@ -1,10 +1,10 @@
-function Mine(position, countdown, power, explodingTime){
+function Mine(position, who){
   this.position = new Vector(position.x, position.y, position.z);
   this.position.z = position.z || 1;
-  this.countdown = countdown || 100;
-  this.power = power || 2; // how many adjacent tiles it will affect
+  this.countdown = who.countdown || 100;
+  this.power = who.power || 2; // how many adjacent tiles it will affect
   this.live = true;
-  this.explodingTime = explodingTime || 50;
+  this.explodingTime = who.explodingTime || 50;
   this.exploding = false;
   this.animationDelta = 0;
 
