@@ -21,6 +21,11 @@ Board.prototype.generateTiles = function() {
       }
 
       this.tiles[x][y] = new Tile(type, new Vector(x, y, 1));
+
+      if(type == 'wall'){
+        var newItem = new Item('fire', new Vector(x, y, 1));
+        this.tiles[x][y].items.push(newItem);
+      }
     }
   }
   return this.tiles;

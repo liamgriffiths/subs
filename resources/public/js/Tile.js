@@ -2,6 +2,7 @@ function Tile(type, position) {
   this.position = position;
   this.type = type;
   this.explodable = false;
+  this.items = [];
 
   switch(this.type){
     case 'wall':
