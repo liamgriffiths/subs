@@ -5,9 +5,6 @@ var MinesCollection = function() {
 MinesCollection.prototype.draw = function() {
   for(var i = 0; i < this.mines.length; i++){
     var mine = this.mines[i];
-    // camera.addDrawable(mine.draw.bind(mine), mine.position);
-    // var p = new Vector(currentPlayer.position.x, currentPlayer.position.y, 2);
-    // mine.position.z = 2;
     camera.addDrawable(mine.draw.bind(mine), mine.position);
   }
 };
