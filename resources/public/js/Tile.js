@@ -24,15 +24,15 @@ function Tile(type, position) {
       this.sprite = new Sprite(4, this.position, 600);
       var c1 = Color.BLUE();
       var c2 = Color.RED();
-      var f1 = [[c1, c1, c1, c1],
-                [c2, c2, c2, c2],
-                [c1, c1, c1, c1],
-                [c2, c2, c2, c2]];
-      var f2 = [[c2, c2, c2, c2],
-                [c1, c1, c1, c1],
-                [c2, c2, c2, c2],
-                [c1, c1, c1, c1]];
-      this.sprite.frames = [f1, f2];
+      var f1 = [[c1, c2, c1, c2],
+                [c1, c2, c1, c2],
+                [c1, c2, c1, c2],
+                [c1, c2, c1, c2]];
+      var f2 = [[c2, c1, c2, c1],
+                [c2, c1, c2, c1],
+                [c2, c1, c2, c1],
+                [c2, c1, c2, c1]];
+      this.sprite.frames = [f1];
       break;
 
     case 'water':
