@@ -1,4 +1,4 @@
-var TILESIZE = 60,
+var TILESIZE = 40,
     PRESSED_KEYS = [],
     lastFrameTime = 0,
     playersCollection = new PlayersCollection(),
