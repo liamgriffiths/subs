@@ -5,8 +5,6 @@ function Player(position) {
   this.power = 2;
   this.maxMines = 1;
   this.availableMines = 1;
-  this.countdown = undefined;
-  this.explodeTile = undefined;
 
   var c0 = Color.BLACK(1/10);
   var c1 = Color.WHITE(8/10);
@@ -56,29 +54,25 @@ Player.prototype.draw = function() {
 Player.prototype.update = function(options) {
   if(options.keys.length){
     for(var i = 0; i < options.keys.length; i++){
-      if(options.keys[i] == 'left'){
-        if(this.canMoveTo(this.position.x - 1, this.position.y) || !this.isAlive){
-          this.position.x -= 1;
-        }
-      }
-      if(options.keys[i] == 'right'){
-        if(this.canMoveTo(this.position.x + 1, this.position.y) || !this.isAlive){
-          this.position.x += 1;
-        }
-      }
-      if(options.keys[i] == 'up'){
-        if(this.canMoveTo(this.position.x, this.position.y - 1) || !this.isAlive){
-          this.position.y -= 1;
-        }
-      }
-      if(options.keys[i] == 'down'){
-        if(this.canMoveTo(this.position.x, this.position.y + 1) || !this.isAlive){
-          this.position.y += 1;
-        }
+      // var newPosition = new Vector(this.position.x, this.position.y);
+      var newPosition = this.position;
+
+      var left = new Vector(-1, 0);
+      var right = new Vector(1, 0);
+      var up = new Vector(0, -1);
+      var down = new Vector(0, 1);
+
+      if(options.keys[i] == 'left')  newPosition = newPosition.add(left);
+      if(options.keys[i] == 'right') newPosition = newPosition.add(right);
+      if(options.keys[i] == 'up')    newPosition = newPosition.add(up);
+      if(options.keys[i] == 'down')  newPosition = newPosition.add(down);
+
+
+      if(this.canMoveTo(newPosition.x, newPosition.y) || !this.isAlive){
+        this.position = newPosition;
       }
 
       if(options.keys[i] == 'leavemine' && this.isAlive){
-        // if(this.availableMines < this.maxMines){
         if(this.availableMines > 0){
           minesCollection.newMine(this.position, this);
           this.availableMines--;
@@ -109,25 +103,11 @@ Player.prototype.update = function(options) {
 };
 
 Player.prototype.canMoveTo = function(x, y){
-  if(! board.exists(x,y)){ return false; }
-
-  var cannotAccess = ['wall', 'hardwall'];
-  for(var i = 0; i < cannotAccess.length; i++){
-    if(board.tiles[x][y].type == cannotAccess[i]){
-      return false;
-    }
-  }
-
-  // TODO: come up with a better name for this
-  // var blockingTypes = [Mine];
-  // for(var j = 0; j < board.tiles[x][y].items.length; j++){
-  //   for(var i = 0; i < blockingTypes.length; i++){
-  //     if(board.tiles[x][y].items[j].constructor === blockingTypes[i]){
-  //      return false;
-  //     }
-  //   }
-  // }
-
+  if(! board.exists(x,y)) return false;
+  var tile = board.tiles[x][y];
+  if(tile.type == 'wall') return false;
+  if(tile.type == 'hardwall') return false;
+  if(tile.hasMine) return false;
   return true;
 };
 

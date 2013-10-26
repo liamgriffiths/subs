@@ -1,4 +1,4 @@
-function Mine(position, owner){
+function Mine(position, owner, tile){
   this.position = new Vector(position.x, position.y, position.z);
   this.position.z = position.z || 1;
   this.countdown = owner.countdown || 100;
@@ -8,6 +8,7 @@ function Mine(position, owner){
   this.exploding = false;
   this.animationDelta = 0;
   this.owner = owner;
+  board.tiles[position.x][position.y].hasMine = true;;
 
   this.sprite = new Sprite(5, this.position,100);
   var c1 = Color.CLEAR();

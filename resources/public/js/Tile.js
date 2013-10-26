@@ -3,6 +3,7 @@ function Tile(type, position) {
   this.type = type;
   this.explodable = false;
   this.items = [];
+  this.hasMine = false;
 
   switch(this.type){
     case 'wall':
@@ -62,6 +63,7 @@ Tile.prototype.update = function() {
   for(var i = 0; i < this.items.length; i++){
     this.items[i].update();
   }
+  if(this.exploding) this.hasMine = false;
 };
 
 Tile.prototype.draw = function() {

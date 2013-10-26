@@ -5,7 +5,6 @@ function Sprite(size, position, animationSpeed) {
   this.tick = 0;
   this.frames = [];
   this.cache = {};
-  this.direction = 'up';
   this.animationDelta = 0;
   this.animationSpeed = animationSpeed || 50;
 }
