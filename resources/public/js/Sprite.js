@@ -24,19 +24,16 @@ Sprite.prototype.update = function() {
 
 Sprite.prototype.draw = function() {
   if(! this.frames.length) return false;
+
+  var frame = this.frames[this.currentFrame];
+
   var start = this.position.mul(TILESIZE); // pixel location on canvas
   var end = start.add(TILESIZE); // this is the opposite corner of the tile
   context.moveTo(start.x, start.y);
-  // debugger;
-  // TODO: refactor this one
-  for(var x = start.x, ty = 0; x < end.x && ty < this.size; x += this.pixelSize, ty++){
-    for(var y = start.y, tx = 0; y < end.y && tx < this.size; y += this.pixelSize, tx++){
-      try{
-        context.fillStyle = this.frames[this.currentFrame][tx][ty];
+  for(var x = start.x, ty = 0; x < end.x; x += this.pixelSize, ty++){
+    for(var y = start.y, tx = 0; y < end.y; y += this.pixelSize, tx++){
+        context.fillStyle = frame[tx][ty];
         context.fillRect(x, y, this.pixelSize, this.pixelSize);
-      }catch(e){
-        // FIXME: sometimes drawX or drawY exceeds the frame dimensions, why?
-      }
     }
   }
 };

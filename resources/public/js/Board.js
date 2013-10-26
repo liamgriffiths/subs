@@ -40,7 +40,7 @@ Board.prototype.generateTiles = function() {
 Board.prototype.draw = function() {
   for(var x = camera.start.x; x < camera.end.x; x++){
     for(var y = camera.start.y; y < camera.end.y; y++){
-      if(board.exists(x,y)){
+      if(this.exists(x,y)){
         var tile = this.tiles[x][y];
         camera.addDrawable(tile.draw.bind(tile), tile.position);
       }

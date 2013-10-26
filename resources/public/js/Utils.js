@@ -5,7 +5,7 @@ var Utils = {
     // canvas.width = canvas.width;
 
     // marginally faster, easier to understand canvas-clearing
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    return context.clearRect(0, 0, canvas.width, canvas.height);
   },
 
   // returns a random integer between min and max
