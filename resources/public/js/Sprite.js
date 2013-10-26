@@ -7,6 +7,7 @@ function Sprite(size, position, animationSpeed) {
   this.cache = {};
   this.animationDelta = 0;
   this.animationSpeed = animationSpeed || 50;
+  this.pixelSize = Math.floor(TILESIZE / this.size);
 }
 
 Sprite.prototype.update = function() {
@@ -17,23 +18,30 @@ Sprite.prototype.update = function() {
   }else{
      this.animationDelta += delta;
   }
-
-  this.pixelSize = Math.floor(TILESIZE / this.size);
 };
 
 Sprite.prototype.draw = function() {
   if(! this.frames.length) return false;
-
   var frame = this.frames[this.currentFrame];
 
-  var start = this.position.mul(TILESIZE); // pixel location on canvas
-  var end = start.add(TILESIZE); // this is the opposite corner of the tile
-  context.moveTo(start.x, start.y);
-  for(var x = start.x, ty = 0; x < end.x; x += this.pixelSize, ty++){
-    for(var y = start.y, tx = 0; y < end.y; y += this.pixelSize, tx++){
-        context.fillStyle = frame[tx][ty];
-        context.fillRect(x, y, this.pixelSize, this.pixelSize);
+  var pos = this.position.mul(TILESIZE); // pixel location on canvas
+  var key = this.currentFrame;
+
+  if(this.cache[key] === undefined){
+    // create a new canvas to cache the this frame drawing
+    var cCanvas = document.createElement('canvas');
+    var cContext = cCanvas.getContext('2d');
+    cCanvas.width  = cCanvas.height = TILESIZE;
+    for(var x = 0, ty = 0; x < TILESIZE; x += this.pixelSize, ty++){
+      for(var y = 0, tx = 0; y < TILESIZE; y += this.pixelSize, tx++){
+        cContext.fillStyle = frame[tx][ty];
+        cContext.fillRect(x, y, this.pixelSize, this.pixelSize);
+      }
     }
+    context.drawImage(cCanvas, pos.x, pos.y);
+    this.cache[key] = cCanvas;
+  }else{
+    context.drawImage(this.cache[key], pos.x, pos.y);
   }
 };
 
