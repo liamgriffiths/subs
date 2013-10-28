@@ -1,5 +1,4 @@
 var TILESIZE = 40,
-    PRESSED_KEYS = [],
     lastFrameTime = 0,
     playersCollection = new PlayersCollection(),
     minesCollection = new MinesCollection(),
@@ -60,29 +59,22 @@ function update() {
   camera.update(currentPlayer.position);
   board.update();
   minesCollection.update();
-  playersCollection.update({keys: PRESSED_KEYS});
-  PRESSED_KEYS = []; // clear all pressed keys for this frame
+  playersCollection.update({keys: []});
 }
 
 // set up the game and run it
 window.onload = function herewego() {
   canvas = document.getElementById('canvas');
   context = canvas.getContext('2d');
-  setup();
-  main();
+  ws.onclose = function() { console.log("websocket closed down."); };
+  ws.onerror = function() { console.log("websocket had an error."); };
+  ws.onopen = function() {};
+  ws.onmessage = function(e) {
+    ws.send("open connection");
+    var data = JSON.parse(e.data);
+    serverState = data;
+    setup();
+    main();
+  };
 };
-
-window.addEventListener('keydown', function (event) {
-  switch (event.keyCode) {
-    case 37: PRESSED_KEYS.push('left'); break;
-    case 38: PRESSED_KEYS.push('up'); break;
-    case 39: PRESSED_KEYS.push('right'); break;
-    case 40: PRESSED_KEYS.push('down'); break;
-    case 65: PRESSED_KEYS.push('zoomin'); break; // a
-    case 83: PRESSED_KEYS.push('zoomout'); break; // s
-    case 32: PRESSED_KEYS.push('leavemine'); break; // space
-    case 68: debugger; break;
-  }
-  // event.preventDefault();
-});
 
