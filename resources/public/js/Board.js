@@ -1,41 +1,27 @@
-function Board(w, h) {
-  this.w = w;
-  this.h = h;
-  this.tiles = [];
-  this.generateTiles();
-}
+// function Board(w, h) {
+//   this.w = w;
+//   this.h = h;
+//   this.tiles = [];
+//   this.generateTiles();
+// }
 
-// TODO: replace this with a function that uses data from server
-Board.prototype.generateTiles = function() {
-  // build up an array of arrays that hold a hash
+function Board(board) {
+  this.w = board.length;
+  this.h = board[0].length;
+  this.tiles = new Array(this.w);
+
   for(var x = 0; x < this.w; x++){
-    this.tiles[x]= [];
+    this.tiles[x] = [];
     for(var y = 0; y < this.h; y++){
-
-      var rand = Math.floor(Math.random() * 10);
-      var type = 'water';
-      if(rand > 7){
-        type = 'wall';
-      }else if(rand < 2){
-        type = 'hardwall';
-      }
-      var tile = new Tile(type, new Vector(x, y, 1));
-      this.tiles[x][y] = tile;
-      tile.predraw();
-
-      if(type == 'wall'){
-        var hasItem = Math.floor(Math.random() * 10) < 2;
-        if(hasItem){
-          var itemTypes = ['fire','mine'];
-          var whatItem = itemTypes[Math.floor(Math.random() * itemTypes.length)];
-          var newItem = new Item(whatItem, new Vector(x, y, 1));
-          this.tiles[x][y].items.push(newItem);
-        }
+      var btile = board[x][y];
+      this.tiles[x][y] = new Tile(btile.type, new Vector(x, y, 1));
+      for(var i = 0; i < btile.items.length; i++){
+        var newItem = new Item(btile.items[i].type, new Vector(x, y, 1));
+        this.tiles[x][y].items.push(newItem);
       }
     }
   }
-  return this.tiles;
-};
+}
 
 // add all the tile draw functions to the draw queue along with the position
 Board.prototype.draw = function() {

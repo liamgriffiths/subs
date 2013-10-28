@@ -9,22 +9,15 @@ var TILESIZE = 40,
     delta, // time difference between frames
     board;
 
+var serverState;
 
-// main game loop
-function main() {
-  var currentTime = new Date().getTime();
-  delta = (currentTime - lastFrameTime);
-  lastFrameTime = currentTime;
 
-  draw();
-  update();
-  window.requestAnimFrame(main);
-}
+var ws = new WebSocket("ws://localhost:9000");
 
 function setup() {
   canvas.width = 800;
   canvas.height = 600;
-  board = new Board(100, 100);
+  board = new Board(serverState.board);
   camera.setup();
 
   // Create a new Player and add to the middle of the board
