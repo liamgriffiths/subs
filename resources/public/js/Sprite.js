@@ -20,6 +20,15 @@ Sprite.prototype.update = function() {
   }
 };
 
+Sprite.prototype.predraw = function() {
+  var len = this.frames.length;
+  for(var i = 0; i < len; i++){
+    this.currentFrame = i;
+    this.draw();
+  }
+  this.currentFrame = 0;
+};
+
 Sprite.prototype.draw = function() {
   if(! this.frames.length) return false;
   var frame = this.frames[this.currentFrame];

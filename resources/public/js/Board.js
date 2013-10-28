@@ -21,6 +21,7 @@ Board.prototype.generateTiles = function() {
       }
       var tile = new Tile(type, new Vector(x, y, 1));
       this.tiles[x][y] = tile;
+      tile.predraw();
 
       if(type == 'wall'){
         var hasItem = Math.floor(Math.random() * 10) < 2;
