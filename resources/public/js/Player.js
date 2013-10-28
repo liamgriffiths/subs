@@ -1,3 +1,8 @@
+var left = new Vector(-1, 0);
+var right = new Vector(1, 0);
+var up = new Vector(0, -1);
+var down = new Vector(0, 1);
+
 function Player(position) {
   this.isAlive = true;
   this.position = position;
@@ -54,13 +59,7 @@ Player.prototype.draw = function() {
 Player.prototype.update = function(options) {
   if(options.keys.length){
     for(var i = 0; i < options.keys.length; i++){
-      var newPosition = new Vector(this.position.x, this.position.y);
       var newPosition = this.position;
-
-      var left = new Vector(-1, 0);
-      var right = new Vector(1, 0);
-      var up = new Vector(0, -1);
-      var down = new Vector(0, 1);
 
       if(options.keys[i] == 'left')  newPosition = newPosition.add(left);
       if(options.keys[i] == 'right') newPosition = newPosition.add(right);

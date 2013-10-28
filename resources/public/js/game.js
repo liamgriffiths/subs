@@ -32,6 +32,18 @@ function setup() {
   currentPlayer = playersCollection.newPlayer('liam', playerPos);
 }
 
+
+// main game loop
+function main() {
+  var currentTime = new Date().getTime();
+  delta = (currentTime - lastFrameTime);
+  lastFrameTime = currentTime;
+
+  draw();
+  update();
+  window.requestAnimFrame(main);
+}
+
 // does the screen drawing
 function draw() {
   Utils.clearCanvas();

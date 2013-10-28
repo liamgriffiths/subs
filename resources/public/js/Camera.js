@@ -13,8 +13,10 @@ Camera.prototype.setup = function() {
 
 Camera.prototype.update = function(position) {
   // origin of current canvas view (in tiles not pixels)
-  this.start = new Vector(position.x, position.y).sub(this.distToEdge);
-  this.end = new Vector(position.x, position.y).add(this.distToEdge);
+  this.start.x = position.x - this.distToEdge.x;
+  this.start.y = position.y - this.distToEdge.y;
+  this.end.x = position.x + this.distToEdge.x;
+  this.end.y = position.y + this.distToEdge.y;
 };
 
 Camera.prototype.addDrawable = function(drawFn, position){
@@ -25,7 +27,6 @@ Camera.prototype.addDrawable = function(drawFn, position){
        //prioritize by position.z, the lower the sooner it is drawn
        this.drawQueue.enqueue(drawFn, position.z);
   }
-  // this.debug(drawFn);
 };
 
 Camera.prototype.draw = function() {
@@ -34,12 +35,4 @@ Camera.prototype.draw = function() {
     var fn = this.drawQueue.dequeue();
     if(fn instanceof Function) fn();
   }
-};
-
-// TODO: fix this crazy function
-Camera.prototype.zoom = function(amount) {
-  // for(var i = 0; i < keys.length; i++){
-  //   if(keys[i] == 'zoomin') TILESIZE += 1;
-  //   if(keys[i] == 'zoomout') TILESIZE -= 1;
-  // }
 };
