@@ -66,6 +66,10 @@ Tile.prototype.update = function() {
   if(this.exploding) this.hasMine = false;
 };
 
+Tile.prototype.predraw = function() {
+  this.sprite.predraw();
+};
+
 Tile.prototype.draw = function() {
   for(var i = 0; i < this.items.length; i++){
     this.items[i].draw();

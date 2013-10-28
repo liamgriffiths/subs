@@ -8,7 +8,7 @@ function Mine(position, owner, tile){
   this.exploding = false;
   this.animationDelta = 0;
   this.owner = owner;
-  board.tiles[position.x][position.y].hasMine = true;;
+  board.tiles[position.x][position.y].hasMine = true;
 
   this.sprite = new Sprite(5, this.position,100);
   var c1 = Color.CLEAR();

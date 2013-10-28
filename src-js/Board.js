@@ -19,7 +19,8 @@ Board.prototype.generateTiles = function() {
       }else if(rand < 2){
         type = 'hardwall';
       }
-      var tile = new Tile(type, new Vector(x, y, 1));
+      // var tile = new Tile(type, new Vector(x, y, 1));
+      var tile = {items: [], type: type};
       this.tiles[x][y] = tile;
 
       if(type == 'wall'){
@@ -27,25 +28,14 @@ Board.prototype.generateTiles = function() {
         if(hasItem){
           var itemTypes = ['fire','mine'];
           var whatItem = itemTypes[Math.floor(Math.random() * itemTypes.length)];
-          var newItem = new Item(whatItem, new Vector(x, y, 1));
+          // var newItem = new Item(whatItem, new Vector(x, y, 1));
+          var newItem = {type: whatItem};
           this.tiles[x][y].items.push(newItem);
         }
       }
     }
   }
   return this.tiles;
-};
-
-// add all the tile draw functions to the draw queue along with the position
-Board.prototype.draw = function() {
-  for(var x = camera.start.x; x < camera.end.x; x++){
-    for(var y = camera.start.y; y < camera.end.y; y++){
-      if(this.exists(x,y)){
-        var tile = this.tiles[x][y];
-        camera.addDrawable(tile.draw.bind(tile), tile.position);
-      }
-    }
-  }
 };
 
 Board.prototype.update = function() {
@@ -63,3 +53,5 @@ Board.prototype.exists = function(x, y){
   return true;
 };
 
+
+module.exports = Board;

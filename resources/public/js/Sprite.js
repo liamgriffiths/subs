@@ -4,7 +4,7 @@ function Sprite(size, position, animationSpeed) {
   this.currentFrame = 0;
   this.tick = 0;
   this.frames = [];
-  this.cache = {};
+  this.cache = [];
   this.animationDelta = 0;
   this.animationSpeed = animationSpeed || 50;
   this.pixelSize = Math.floor(TILESIZE / this.size);
@@ -24,7 +24,8 @@ Sprite.prototype.draw = function() {
   if(! this.frames.length) return false;
   var frame = this.frames[this.currentFrame];
 
-  var pos = this.position.mul(TILESIZE); // pixel location on canvas
+  var pos = {x: this.position.x * TILESIZE,
+             y: this.position.y * TILESIZE}; // pixel location on canvas
   var key = this.currentFrame;
 
   if(this.cache[key] === undefined){

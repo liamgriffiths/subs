@@ -54,7 +54,7 @@ Player.prototype.draw = function() {
 Player.prototype.update = function(options) {
   if(options.keys.length){
     for(var i = 0; i < options.keys.length; i++){
-      // var newPosition = new Vector(this.position.x, this.position.y);
+      var newPosition = new Vector(this.position.x, this.position.y);
       var newPosition = this.position;
 
       var left = new Vector(-1, 0);
