@@ -5,7 +5,6 @@ function Board(w, h) {
   this.generateTiles();
 }
 
-// TODO: replace this with a function that uses data from server
 Board.prototype.generateTiles = function() {
   // build up an array of arrays that hold a hash
   for(var x = 0; x < this.w; x++){

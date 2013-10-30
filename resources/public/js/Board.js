@@ -1,10 +1,3 @@
-// function Board(w, h) {
-//   this.w = w;
-//   this.h = h;
-//   this.tiles = [];
-//   this.generateTiles();
-// }
-
 function Board(board) {
   this.w = board.length;
   this.h = board[0].length;

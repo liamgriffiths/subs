@@ -3,7 +3,11 @@ function PlayersCollection() {
 }
 
 PlayersCollection.prototype.newPlayer = function(name, position) {
-  this.players[name] = new Player(position);
+  // this.players[name] = new Player(position);
+  this.players[name] = {isAlive: true,
+                        position: position,
+                        power: 2,
+                        availableMines: 1};
   return this.players[name];
 };
 
