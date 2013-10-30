@@ -8,9 +8,11 @@ function Player(position) {
   this.position = position;
   this.position.z = 1;
   this.power = 2;
-  this.maxMines = 1;
   this.availableMines = 1;
+  this.makeSprites();
+}
 
+Player.prototype.makeSprites = function () {
   var c0 = Color.BLACK(1/10);
   var c1 = Color.WHITE(8/10);
 
@@ -46,7 +48,7 @@ function Player(position) {
             [c3, c3, c3, c3, c3],
             [c3, c0, c3, c0, c3]];
   this.deadSprite.frames = [d1, d2];
-}
+};
 
 Player.prototype.draw = function() {
   if(this.isAlive){

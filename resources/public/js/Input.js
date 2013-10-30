@@ -5,7 +5,7 @@ window.addEventListener('keydown', function (event) {
     case 38: ws.send('up'); break;
     case 39: ws.send('right'); break;
     case 40: ws.send('down'); break;
-    case 32: ws.send('bomb'); break; // space
+    case 32: ws.send('mine'); break; // space
     // case 68: debugger; break;
   }
 });
