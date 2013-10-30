@@ -1,0 +1,17 @@
+{
+  "name": "subs",
+  "version": "0.0.0",
+  "description": "fun game",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/liamgriffiths/subs"
+  },
+  "author": "liam griffiths",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/liamgriffiths/subs/issues"
+  },
+  "dependencies": {
+    "ws": "latest"
+  }
+}
