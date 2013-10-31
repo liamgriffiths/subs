@@ -1,10 +1,10 @@
 use Rack::Static,
   :urls => ["/js"],
-  :root => "public"
+  :root => "client"
 
 
 def index
-  File.open('public/index.html', File::RDONLY)
+  File.open('./index.html', File::RDONLY)
 end
 
-run lambda { |env| [ 200, {'Content-Type' => 'text/html'}, index ] }
+run lambda { |env| [200, {'Content-Type' => 'text/html'}, index] }

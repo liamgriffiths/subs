@@ -13,5 +13,8 @@
   },
   "dependencies": {
     "ws": "latest"
+  },
+  "scripts": {
+    "hello": "echo hello world"
   }
 }
