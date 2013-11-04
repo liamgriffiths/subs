@@ -1,12 +1,7 @@
+var Board = require('../shared/Board');
 var Tile = require('./Tile');
 
-function Board(w, h) {
-  this.w = w;
-  this.h = h;
-  this.tiles = [];
-  this.generateTiles();
-}
-
+// Create a new board w/ Tiles
 Board.prototype.generateTiles = function() {
   // build up an array of arrays that hold a hash
   for(var x = 0; x < this.w; x++){
@@ -38,6 +33,7 @@ Board.prototype.generateTiles = function() {
   return this.tiles;
 };
 
+// Update all the tiles on the board
 Board.prototype.update = function() {
   for(var x = 0; x < this.w; x++){
     for(var y = 0; y < this.h; y++){

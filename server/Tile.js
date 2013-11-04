@@ -1,22 +1,12 @@
-var Utils = require('./Utils');
-var Explodable = require('./Explodable');
+var Tile = require('../shared/Tile');
 
-function Tile(type, position) {
-  this.position = position;
-  this.type = type;
-  this.explodable = false;
-  this.items = [];
-  this.hasMine = false;
-
-  switch(this.type){
-    case 'wall': this.explodable = true; break;
-    case 'hardwall': this.explodable = false; break;
-    case 'water': this.explodable = true; break;
-    case 'explosion': this.explodable = true; break;
-    default: this.explodable = true; break;
-  }
-
-}
+// switch(this.type){
+//   case 'wall': this.explodable = true; break;
+//   case 'hardwall': this.explodable = false; break;
+//   case 'water': this.explodable = true; break;
+//   case 'explosion': this.explodable = true; break;
+//   default: this.explodable = true; break;
+// }
 
 Tile.prototype.explode = function() {
   this.exploding = true;

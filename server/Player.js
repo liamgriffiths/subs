@@ -1,10 +1,4 @@
-function Player(position) {
-  this.isAlive = true;
-  this.position = new Vector(position.x, position.y, position.z);
-  this.position.z = 1;
-  this.power = 2;
-  this.availableMines = 1;
-}
+var Player = require('../shared/Player');
 
 Player.prototype.update = function(options) {
   if(options.keys.length){
