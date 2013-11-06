@@ -1,57 +1,62 @@
 var Player = require('../shared/Player');
 
-Player.prototype.update = function(options) {
-  if(options.keys.length){
-    for(var i = 0; i < options.keys.length; i++){
-      var newPosition = {x: this.position.x, y: this.position.y};
+Player.prototype.connect = function() {
+  this.ws.sendJSON({hi: {id: this.id}});
+  console.log('%s connected', this.id);
+};
 
-      if(options.keys[i] == 'left'){  
-        newPosition.x -= 1;
-      }
-      if(options.keys[i] == 'right'){ 
-        newPosition.x += 1;
-      }
-      if(options.keys[i] == 'up'){  
-        newPosition.y -= 1;
-      }
-      if(options.keys[i] == 'down'){ 
-        newPosition.y += 1;
-      }
+Player.prototype.disconnect = function() {
+  console.log('%s disconnected', this.id);
+};
 
-      if(this.canMoveTo(newPosition.x, newPosition.y) || !this.isAlive){
-        this.position = newPosition;
-      }
+Player.prototype.message = function(message) {
+  message = message.trim().toLowerCase();
+  if(! message) return;
+  console.log(message);
 
-      if(options.keys[i] == 'mine' && this.isAlive){
-        if(this.availableMines > 0){
-          minesCollection.newMine(this.position, this);
-          this.availableMines--;
-        }
-      }
-
-      var tileItems = board.tiles[this.position.x][this.position.y].items;
-      if(tileItems.length){
-        for(var ti = 0; ti < tileItems.length; ti++){
-          this.addItem(tileItems[ti]);
-        }
-        board.tiles[this.position.x][this.position.y].items = [];
-      }
+  if (message == 'mine') {
+    if(this.availableMines > 0){
+      minesCollection.newMine(this.position, this);
+      this.availableMines--;
     }
-  }
-
-  // player is caught in the explosion
-  if(board.tiles[this.position.x][this.position.y].exploding){
-    this.isAlive = false;
+  } else if (message == 'left') {
+    this.move({x: this.position.x - 1, y: this.position.y});
+  } else if (message == 'right') {
+    this.move({x: this.position.x + 1, y: this.position.y});
+  } else if (message == 'up') {
+    this.move({x: this.position.x, y: this.position.y - 1});
+  } else if (message == 'down') {
+    this.move({x: this.position.x, y: this.position.y + 1});
   }
 };
 
-Player.prototype.canMoveTo = function(x, y){
-  if(! board.exists(x,y)) return false;
-  var tile = board.tiles[x][y];
-  if(tile.type == 'wall') return false;
-  if(tile.type == 'hardwall') return false;
-  if(tile.hasMine) return false;
+Player.prototype.update = function(options) {
+  // player is caught in the explosion
+  // if(board.tiles[this.position.x][this.position.y].exploding){
+  //   this.isAlive = false;
+  // }
+};
+
+Player.prototype.canMoveTo = function(position) {
+  var tile = board.tile(position);
+  if (!tile || tile.type == 'wall' || tile.type == 'hardwall' || tile.hasMine) {
+    return false;
+  }
   return true;
+};
+
+Player.prototype.move = function(position){
+  if (this.canMoveTo(position)) {
+    // move to new position
+    this.position = position;
+    // collect items at tile location
+    // var items = board.tile(this.position).items;
+    // while (items) {
+    //   this.addItem(items.shift());
+    // }
+    return true;
+  }
+  return false;
 };
 
 Player.prototype.addItem = function(item) {

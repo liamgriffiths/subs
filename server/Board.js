@@ -1,53 +1,67 @@
-var Board = require('../shared/Board');
-var Tile = require('./Tile');
+var Board = require('../shared/Board'),
+    Tile = require('./Tile'),
+    Player = require('./Player'),
+    Utils = require('../shared/Utils');
 
 // Create a new board w/ Tiles
-Board.prototype.generateTiles = function() {
-  // build up an array of arrays that hold a hash
-  for(var x = 0; x < this.w; x++){
-    this.tiles[x]= [];
-    for(var y = 0; y < this.h; y++){
+Board.prototype.reticulateSplines = function() {
+  for (var i = 0; i < this.size; i++) {
+    var type = 'water';
+    var rand = Math.floor(Math.random() * 10);
+    if (rand > 7) type = 'wall';
+    if (rand < 2) type = 'hardwall';
+    this.tiles[i] = new Tile({ id: Utils.guid(), type: type });
 
-      var rand = Math.floor(Math.random() * 10);
-      var type = 'water';
-      if(rand > 7){
-        type = 'wall';
-      }else if(rand < 2){
-        type = 'hardwall';
-      }
-      // var tile = new Tile(type, new Vector(x, y, 1));
-      this.tiles[x][y] = new Tile(type, x, y);
-
-      if(type == 'wall'){
-        // var hasItem = Math.floor(Math.random() * 10) < 2;
-        // if(hasItem){
-        //   var itemTypes = ['fire','mine'];
-        //   var whatItem = itemTypes[Math.floor(Math.random() * itemTypes.length)];
-        //   // var newItem = new Item(whatItem, new Vector(x, y, 1));
-        //   var newItem = {type: whatItem};
-        //   this.tiles[x][y].items.push(newItem);
-        // }
-      }
+    if(type == 'wall'){
+      // var hasItem = Math.floor(Math.random() * 10) < 2;
+      // if(hasItem){
+      //   var itemTypes = ['fire','mine'];
+      //   var whatItem = itemTypes[Math.floor(Math.random() * itemTypes.length)];
+      //   // var newItem = new Item(whatItem, new Vector(x, y, 1));
+      //   var newItem = {type: whatItem};
+      //   this.tiles[x][y].items.push(newItem);
+      // }
     }
   }
-  return this.tiles;
+
+  // check we have a playable board
+  if (this.spawnPosition) {
+    return this;
+  } else {
+    return this.reticulateSplines();
+  }
 };
 
 // Update all the tiles on the board
 Board.prototype.update = function() {
-  for(var x = 0; x < this.w; x++){
-    for(var y = 0; y < this.h; y++){
-      this.tiles[x][y].update();
-    }
+  for (var i = 0; i < this.size; i++) {
+    this.tiles[i].update();
   }
 };
 
-// Check whether tile exists on board
-Board.prototype.exists = function(x, y){
-  if(this.tiles[x] === undefined) return false;
-  if(this.tiles[x][y] === undefined) return false;
-  return true;
-};
+// Look up a good location to spawn a new player, a position where the player
+// can move around to at least 2 other adjacent tiles
+Board.prototype.spawnPosition = function() {
+  var index = Math.floor(Math.random() * this.size);
+  var attempts = 0;
+  while (attempts < this.size) {
+    attempts++;
+    index = index > this.size ? 0 : index + 1;
+    var pos = this.coords(index);
 
+    if (Player.prototype.canMoveTo(pos)) {
+      var cnt = 0;
+      if (Player.prototype.canMoveTo({x: pos.x + 1, y: pos.y})) cnt++;
+      if (Player.prototype.canMoveTo({x: pos.x + 1, y: pos.y})) cnt++;
+      if (Player.prototype.canMoveTo({x: pos.x, y: pos.y + 1})) cnt++;
+      if (Player.prototype.canMoveTo({x: pos.x, y: pos.y - 1})) cnt++;
+      if (cnt > 1) {
+        return pos; // found a good position
+      }
+    }
+  }
+  // bad board, no suitable spawn positions
+  return undefined;
+};
 
 module.exports = Board;

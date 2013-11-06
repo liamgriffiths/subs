@@ -1,8 +1,12 @@
 var Utils = {
   // returns a random integer between min and max
   // via: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random?redirectlocale=en-US&redirectslug=JavaScript%2FReference%2FGlobal_Objects%2FMath%2Frandom
-  getRandomInt: function(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
+  randBetween: function(min, max, floating) {
+    if (floating) {
+      return Math.random() * (max - min + 1) + min;
+    } else {
+      return Math.floor(Math.random() * (max - min + 1) + min);
+    }
   },
 
   // mixin function, gives objects new functons from other objects
