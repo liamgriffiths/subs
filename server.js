@@ -22,7 +22,7 @@ function setup() {
   global.entities = new Entities();
 
   delta = 0;
-  board = new Board({h: 10, w: 10}).reticulateSplines();
+  board = new Board({h: 15, w: 15}).reticulateSplines();
 }
 
 function update() {
@@ -35,7 +35,7 @@ function update() {
 }
 
 setup();
-var interval = setInterval(update, 60);
+var interval = setInterval(update, 20);
 console.log(global.entities);
 
 WebSocket.prototype.sendJSON = function(data) {

@@ -33,12 +33,6 @@ Entities.prototype.remove = function(id) {
   return delete this.objects[id];
 };
 
-Entities.prototype.update = function() {
-  for (var id in this.objects) {
-    this.objects[id].update();
-  }
-};
-
 Entities.prototype._in = function(entities) {
   for (var id in entities) {
     var entity = entities[id];

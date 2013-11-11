@@ -3,7 +3,7 @@ var Player = require('../shared/Player');
 Player.prototype.message = function(message, entities, board) {
   message = message.trim().toLowerCase();
   if(! message) return;
-  console.log('Message recieved from %s: %s', this.id, message);
+  console.log('Message recieved: %s', message);
 
   if (message == 'mine') {
     if(this.availableMines > 0){
@@ -25,15 +25,17 @@ Player.prototype.message = function(message, entities, board) {
   } else if (message == 'down') {
     this.move({x: this.position.x, y: this.position.y + 1}, board);
   }
-  console.log(this.position);
 };
 
 Player.prototype.update = function(options) {
-
 };
 
 Player.prototype.canMoveTo = function(position, board) {
   var tileId = board.tile(position);
+  if (! tileId) return false;
+
+  // console.log('position is', position);
+  // console.log('tileId is', tileId);
   var tile = entities.find(tileId);
   console.log(tileId, tile.type, position);
   if (!tile || tile.type == 'wall' || tile.type == 'hardwall' || tile.hasMine) {

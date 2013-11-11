@@ -12,14 +12,19 @@ Board.prototype.exists = function(position){
 
 // Look up tile for {x,y} coords
 Board.prototype.tile = function(position) {
-  var tileId = this.tiles[this.w * position.x + position.y];
-  return tileId;
+  if (position.x >= 0 && position.x < this.w &&
+      position.y >= 0 && position.y < this.h){
+      var tileId = this.tiles[this.w * position.x + position.y];
+      return tileId;
+  } else {
+    return undefined;
+  }
 };
 
 // Look up {x,y} coords for tile index
 Board.prototype.coords = function(index) {
-  var y = Math.floor(index / this.w);
-  var x = index - (y * this.h);
+  var x = Math.floor(index / this.w);
+  var y = index - (x * this.h);
   return {x: x, y: y};
 };
 
