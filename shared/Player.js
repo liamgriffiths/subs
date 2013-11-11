@@ -4,14 +4,11 @@ function Player(settings) {
   this.isAlive = settings.isAlive;
   this.availableMines = settings.availableMines;
 
-  // web socket hooks
-  if (settings.ws) {
-    this.ws = settings.ws;
-    this.connect.bind(this)();
-    this.ws.on('close', this.disconnect.bind(this));
-    this.ws.on('message', this.message.bind(this));
-  }
 }
+
+Player.prototype.set = function(settings) {
+  this.constructor(settings);
+};
 
 Player.prototype._out = function() {
   return [

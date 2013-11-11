@@ -7,7 +7,10 @@ Board.prototype.reticulateSplines = function() {
     var rand = Math.floor(Math.random() * 10);
     if (rand > 7) type = 'wall';
     if (rand < 2) type = 'hardwall';
-    var tileId = entities.create('Tile', {type: type});
+    var tileId = entities.create('Tile', {
+      type: type,
+      position: this.coords(i)
+    });
     this.tiles[i] = tileId;
 
     if(type == 'wall'){
@@ -22,12 +25,11 @@ Board.prototype.reticulateSplines = function() {
   }
 
   // check we have a playable board
-  // if (this.spawnPosition()) {
-  //   return this;
-  // } else {
-  //   return this.reticulateSplines();
-  // }
-  return this;
+  if (this.spawnPosition()) {
+    return this;
+  } else {
+    return this.reticulateSplines();
+  }
 };
 
 // Update all the tiles on the board

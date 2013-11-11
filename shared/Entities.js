@@ -1,9 +1,9 @@
 var root = typeof global != 'undefined' ? global : window;
 
 function Entities(root) {
-  this.objects = {};
   // ex.
-  // { 'guid-1234' : { constructor: 'Tile', object: [Object object] }
+  // { 'guid-1234-abcd' : { constructor: 'Tile', object: [Object object] }
+  this.objects = {};
 }
 
 Entities.prototype.guid = function() {
@@ -45,14 +45,23 @@ Entities.prototype._in = function(entities) {
     var settings = root[entity.constructor].prototype._in(entity.object);
 
     if (this.objects[id]) {
-      console.log(entity);
+      // update existing object with new settings from the server
+      if (this.objects[id].object.set) {
+        this.objects[id].object.set(settings);
+      }
     } else {
+      // create new object in objects array
       this.objects[id] = {
         constructor: entity.constructor,
-        object: new root[entities[id].constructor](settings)
+        object: new root[entity.constructor](settings)
       };
+
+      if ('makeSprites' in root[entity.constructor].prototype) {
+        root[entity.constructor].prototype.makeSprites.call(this.objects[id].object);
+      }
     }
   }
+  return this;
 };
 
 Entities.prototype._out = function() {

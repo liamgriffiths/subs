@@ -22,13 +22,7 @@ function setup() {
   global.entities = new Entities();
 
   delta = 0;
-  board = new Board({h: 4, w: 4}).reticulateSplines();
-  // global.game = {
-  //   board: board,
-  //   players: wss.clients.map(function(c) { return c.player; }),
-  //   mines: mines
-  // };
-  // console.log(game);
+  board = new Board({h: 10, w: 10}).reticulateSplines();
 }
 
 function update() {
@@ -41,7 +35,7 @@ function update() {
 }
 
 setup();
-var interval = setInterval(update, 4000);
+var interval = setInterval(update, 60);
 console.log(global.entities);
 
 WebSocket.prototype.sendJSON = function(data) {
