@@ -7,13 +7,13 @@ Player.prototype.message = function(message, entities, board) {
 
   if (message == 'mine') {
     if(this.availableMines > 0){
-      mines.push(new Mine({
-        position: this.position,
+      entities.create('Mine', {
+        position: {x: this.position.x, y: this.position.y},
         countdown: 3000,
         power: this.power,
         explodingTime: 1000,
-        owner: this
-      }));
+        owner: this.id
+      });
       this.availableMines--;
     }
   } else if (message == 'left') {
@@ -34,11 +34,10 @@ Player.prototype.canMoveTo = function(position, board) {
   var tileId = board.tile(position);
   if (! tileId) return false;
 
-  // console.log('position is', position);
-  // console.log('tileId is', tileId);
   var tile = entities.find(tileId);
-  console.log(tileId, tile.type, position);
-  if (!tile || tile.type == 'wall' || tile.type == 'hardwall' || tile.hasMine) {
+  if (! tile) return false;
+
+  if (tile.type == 'wall' || tile.type == 'hardwall' || tile.hasMine) {
     return false;
   }
   return true;

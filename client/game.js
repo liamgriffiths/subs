@@ -10,7 +10,7 @@ window.requestAnimFrame = (function(){
 
 })();
 
-var TILESIZE = 40,
+var TILESIZE = 60,
     STARTED = false,
     lastFrameTime = 0,
     // playersCollection = new PlayersCollection(),
@@ -30,7 +30,7 @@ window.onload = function herewego() {
 
 
 function Game() {
-  this.conn = new WebSocket("ws://localhost:9000");
+  this.conn = new WebSocket("ws://10.0.1.44:9000");
   if (this.conn) {
     this.conn.onopen = this.connected.bind(this);
     this.conn.onclose = this.disconnected.bind(this);
@@ -49,8 +49,8 @@ function Game() {
 
   window.addEventListener('keydown', this.sendCommand.bind(this));
 
-  canvas.width = 800;
-  canvas.height = 600;
+  canvas.width = screen.width;
+  canvas.height = screen.height * 0.7;
   this.camera.setup();
 
 }
@@ -117,21 +117,23 @@ Game.prototype = {
 
     context.save();
     var player = this.currentPlayer();
-    // find the pixel position of the current player
-    var newX = player.position.x * TILESIZE - (canvas.width / 2);
-    var newY = player.position.y * TILESIZE - (canvas.height / 2);
-    // set origin in relation to current player position
-    context.translate(-newX, -newY);
+    if (player) {
+      // find the pixel position of the current player
+      var newX = player.position.x * TILESIZE - (canvas.width / 2);
+      var newY = player.position.y * TILESIZE - (canvas.height / 2);
+      // set origin in relation to current player position
+      context.translate(-newX, -newY);
 
-    // Queues up all the drawing functions from all the objects
-    for (var id in this.entities.objects) {
-      var object = this.entities.objects[id].object;
-      if (object.position !== undefined && object.draw !== undefined) {
-        this.camera.addDrawing(object.draw.bind(object), object.position);
+      // Queues up all the drawing functions from all the objects
+      for (var id in this.entities.objects) {
+        var object = this.entities.objects[id].object;
+        if (object.position !== undefined && object.draw !== undefined) {
+          this.camera.addDrawing(object.draw.bind(object), object.position);
+        }
       }
-    }
 
-    this.camera.draw();
+      this.camera.draw();
+    }
     context.restore();
   },
 

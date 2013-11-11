@@ -22,7 +22,7 @@ function setup() {
   global.entities = new Entities();
 
   delta = 0;
-  board = new Board({h: 15, w: 15}).reticulateSplines();
+  board = new Board({h: 30, w: 30}).reticulateSplines();
 }
 
 function update() {
