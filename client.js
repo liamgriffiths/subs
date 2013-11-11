@@ -30,15 +30,16 @@ Sub.prototype = {
   error: function(err, description) { throw err; },
 
   recieve: function(message, flags) {
-    if (message) {
-      var currentTime = new Date().getTime();
-      this.updateSpeed = currentTime - this.lastUpdate;
-      this.lastUpdate = currentTime;
+    console.log(message);
+    // if (message) {
+    //   var currentTime = new Date().getTime();
+    //   this.updateSpeed = currentTime - this.lastUpdate;
+    //   this.lastUpdate = currentTime;
 
-      message = JSON.parse(message);
-      if (message.hi) this.id = message.hi.id;
-      if (message.game) this.game = message.game;
-    }
+    //   message = JSON.parse(message);
+    //   if (message.hi) this.id = message.hi.id;
+    //   this.update = message;
+    // }
   },
 
   show: function() {
