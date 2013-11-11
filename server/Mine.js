@@ -1,40 +1,6 @@
-function Mine(position, owner, tile){
-  this.position = new Vector(position.x, position.y);
-  this.position.z = position.z || 1;
-  this.countdown = owner.countdown || 100;
-  this.power = owner.power || 2; // how many adjacent tiles it will affect
-  this.live = true;
-  this.explodingTime = owner.explodingTime || 50;
-  this.exploding = false;
-  this.animationDelta = 0;
-  this.owner = owner;
-  board.tiles[position.x][position.y].hasMine = true;
-}
+var Mine = require('../shared/Mine');
 
 Mine.prototype.update = function() {
-
-  if(this.live){
-    if(this.animationDelta > 2000){
-      this.animationDelta = 0;
-      this.live = false;
-      this.exploding = true;
-    }else{
-       this.animationDelta += delta;
-    }
-  }else{
-    if(this.exploding){
-      if(this.animationDelta > 1000){
-        this.animationDelta = 0;
-        this.exploding = false;
-      }else{
-        this.animationDelta += delta;
-      }
-    }
-  }
-
-  if(board.tiles[this.position.x][this.position.y].exploding){
-    this.countdown = 0;
-  }
 };
 
 Mine.prototype.explode = function() {

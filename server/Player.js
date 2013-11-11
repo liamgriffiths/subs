@@ -1,22 +1,28 @@
 var Player = require('../shared/Player');
 
 Player.prototype.connect = function() {
-  this.ws.sendJSON({hi: {id: this.id}});
-  console.log('%s connected', this.id);
+  this.ws.sendJSON({hi: "hello"});
+  console.log('player connected');
 };
 
 Player.prototype.disconnect = function() {
-  console.log('%s disconnected', this.id);
+  console.log('player disconnected');
 };
 
 Player.prototype.message = function(message) {
   message = message.trim().toLowerCase();
   if(! message) return;
-  console.log(message);
+  console.log('Message recieved from %s: %s', this.id, message);
 
   if (message == 'mine') {
     if(this.availableMines > 0){
-      minesCollection.newMine(this.position, this);
+      mines.push(new Mine({
+        position: this.position,
+        countdown: 3000,
+        power: this.power,
+        explodingTime: 1000,
+        owner: this
+      }));
       this.availableMines--;
     }
   } else if (message == 'left') {
@@ -31,15 +37,13 @@ Player.prototype.message = function(message) {
 };
 
 Player.prototype.update = function(options) {
-  // player is caught in the explosion
-  // if(board.tiles[this.position.x][this.position.y].exploding){
-  //   this.isAlive = false;
-  // }
+
 };
 
-Player.prototype.canMoveTo = function(position) {
-  var tile = board.tile(position);
-  if (!tile || tile.type == 'wall' || tile.type == 'hardwall' || tile.hasMine) {
+Player.prototype.canMoveTo = function(position, board) {
+  var tileId = board.tile(position);
+  var tile = entities.find(tileId);
+  if (!tile.object || tile.type == 'wall' || tile.type == 'hardwall' || tile.hasMine) {
     return false;
   }
   return true;

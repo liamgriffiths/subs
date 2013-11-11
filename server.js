@@ -1,23 +1,35 @@
 var WebSocket = require('ws'),
     WebSocketServer = WebSocket.Server,
     wss = new WebSocketServer({port: 9000}),
+    Entities = require('./shared/Entities'),
     Board = require('./server/Board'),
-    // PlayersCollection = require('./server/PlayersCollection'),
-    // MinesCollection = require('./server/MinesCollection'),
-    Player = require('./server/Player.js'),
+    Tile = require('./server/Tile'),
+    Item = require('./shared/Item'),
+    Mine = require('./server/Mine'),
+    Player = require('./server/Player'),
     Utils = require('./shared/Utils'),
     lastTime = new Date().getTime();
 
-function setup() {
-  global.delta = 0;
-  global.board = new Board({h: 10, w: 10}).reticulateSplines();
-  global.game = {
-    board: board,
-    players: wss.clients.map(function(c) { return c.player; })
-  };
-}
+var entities,
+    delta,
+    board;
 
-setup();
+function setup() {
+  global.Tile = Tile;
+  global.Item = Item;
+  global.Player = Player;
+  global.Mine = Mine;
+  global.entities = new Entities();
+
+  delta = 0;
+  board = new Board({h: 4, w: 4}).reticulateSplines();
+  // global.game = {
+  //   board: board,
+  //   players: wss.clients.map(function(c) { return c.player; }),
+  //   mines: mines
+  // };
+  // console.log(game);
+}
 
 function update() {
   var currentTime = new Date().getTime();
@@ -25,17 +37,18 @@ function update() {
   lastTime = currentTime;
 
   // board.update();
-  // playersCollection.update();
-  // minesCollection.update();
 
-  wss.broadcast({game: {
-    board: board,
-    players: wss.clients.map(function(c) { return c.player; }),
-    mines: []
-  }});
+  // // send to all players
+  // wss.broadcast({game: {
+  //   board: board,
+  //   players: wss.clients.map(function(c) { return c.player; }),
+  //   mines: mines
+  // }});
+  wss.broadcast(entities);
 }
 
-var interval = setInterval(update, 2);
+setup();
+// var interval = setInterval(update, 4000);
 
 WebSocket.prototype.sendJSON = function(data) {
   this.send(JSON.stringify(data));
@@ -49,14 +62,19 @@ WebSocketServer.prototype.broadcast = function(data) {
 
 wss.on('connection', function(ws) {
   // client connected, create new player
-  ws.player = new Player({
-    id: Utils.guid(),
+  var playerId = global.entities.create('Player', {
     ws: ws,
     position: board.spawnPosition(),
     power: 2,
     isAlive: true,
     availableMines: 1
   });
+
+  if (playerId) {
+    var player = global.entities.find(playerId);
+    ws.player = player;
+    ws.send(JSON.stringify(global.entities._out()));
+  }
 });
 
 

@@ -1,5 +1,4 @@
 function Player(settings) {
-  this.id = settings.id;
   this.position = settings.position;
   this.power = settings.power;
   this.isAlive = settings.isAlive;
@@ -14,16 +13,14 @@ function Player(settings) {
   }
 }
 
-Player.prototype.toJSON = function() {
-  return {
-    id: this.id,
-    position: this.position,
-    power: this.power,
-    isAlive: this.isAlive,
-    availableMines: this.availableMines
-  };
+Player.prototype._out = function() {
+  return [
+    this.position,
+    this.power,
+    this.isAlive,
+    this.availableMines
+  ];
 };
 
-
-module.exports = Player;
+if (typeof module !== 'undefined') module.exports = Player;
 

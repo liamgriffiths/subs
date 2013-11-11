@@ -1,7 +1,4 @@
-var Board = require('../shared/Board'),
-    Tile = require('./Tile'),
-    Player = require('./Player'),
-    Utils = require('../shared/Utils');
+var Board = require('../shared/Board');
 
 // Create a new board w/ Tiles
 Board.prototype.reticulateSplines = function() {
@@ -10,26 +7,27 @@ Board.prototype.reticulateSplines = function() {
     var rand = Math.floor(Math.random() * 10);
     if (rand > 7) type = 'wall';
     if (rand < 2) type = 'hardwall';
-    this.tiles[i] = new Tile({ id: Utils.guid(), type: type });
+    var tileId = entities.create('Tile', {type: type});
+    this.tiles[i] = tileId;
 
     if(type == 'wall'){
-      // var hasItem = Math.floor(Math.random() * 10) < 2;
-      // if(hasItem){
-      //   var itemTypes = ['fire','mine'];
-      //   var whatItem = itemTypes[Math.floor(Math.random() * itemTypes.length)];
-      //   // var newItem = new Item(whatItem, new Vector(x, y, 1));
-      //   var newItem = {type: whatItem};
-      //   this.tiles[x][y].items.push(newItem);
-      // }
+      var hasItem = Math.floor(Math.random() * 10) < 2;
+      if(hasItem){
+        var itemTypes = ['fire','mine'];
+        var whatItem = itemTypes[Math.floor(Math.random() * itemTypes.length)];
+        var itemId = entities.create('Item', {type: whatItem});
+        entities.find(tileId).items.push(itemId);
+      }
     }
   }
 
   // check we have a playable board
-  if (this.spawnPosition) {
-    return this;
-  } else {
-    return this.reticulateSplines();
-  }
+  // if (this.spawnPosition()) {
+  //   return this;
+  // } else {
+  //   return this.reticulateSplines();
+  // }
+  return this;
 };
 
 // Update all the tiles on the board
@@ -49,12 +47,12 @@ Board.prototype.spawnPosition = function() {
     index = index > this.size ? 0 : index + 1;
     var pos = this.coords(index);
 
-    if (Player.prototype.canMoveTo(pos)) {
+    if (Player.prototype.canMoveTo(pos, this)) {
       var cnt = 0;
-      if (Player.prototype.canMoveTo({x: pos.x + 1, y: pos.y})) cnt++;
-      if (Player.prototype.canMoveTo({x: pos.x + 1, y: pos.y})) cnt++;
-      if (Player.prototype.canMoveTo({x: pos.x, y: pos.y + 1})) cnt++;
-      if (Player.prototype.canMoveTo({x: pos.x, y: pos.y - 1})) cnt++;
+      if (Player.prototype.canMoveTo({x: pos.x + 1, y: pos.y}, this)) cnt++;
+      if (Player.prototype.canMoveTo({x: pos.x + 1, y: pos.y}, this)) cnt++;
+      if (Player.prototype.canMoveTo({x: pos.x, y: pos.y + 1}, this)) cnt++;
+      if (Player.prototype.canMoveTo({x: pos.x, y: pos.y - 1}, this)) cnt++;
       if (cnt > 1) {
         return pos; // found a good position
       }

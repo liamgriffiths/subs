@@ -2,7 +2,7 @@ function Board(settings) {
   this.w = settings.w;
   this.h = settings.h;
   this.size = this.w * this.h;
-  this.tiles = settings.tiles || new Array(this.size);
+  this.tiles = new Array(this.size);
 }
 
 // Check whether tile exists on board
@@ -12,7 +12,8 @@ Board.prototype.exists = function(position){
 
 // Look up tile for {x,y} coords
 Board.prototype.tile = function(position) {
-  return this.tiles[this.w * position.x + position.y];
+  var tileId = this.tiles[this.w * position.x + position.y];
+  return tileId;
 };
 
 // Look up {x,y} coords for tile index
@@ -22,4 +23,4 @@ Board.prototype.coords = function(index) {
   return {x: x, y: y};
 };
 
-module.exports = Board;
+if (typeof module !== 'undefined') module.exports = Board;
