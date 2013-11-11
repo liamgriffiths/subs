@@ -1,0 +1,3 @@
+Tile.prototype.draw = function() {
+
+};

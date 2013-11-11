@@ -18,7 +18,7 @@ function Sub() {
   }
 
   // what to expect
-  this.game = { board: {}, players: [], mines: [] };
+  this.update = undefined;
   this.id = undefined;
   this.lastUpdate = new Date().getTime();
   this.updateSpeed = 0;
@@ -56,7 +56,13 @@ Sub.prototype = {
   r: function() { this.send('right'); },
   m: function() { this.send('mine'); },
 
-  send: function(message) { this.conn.send(message); }
+  send: function(message) { 
+    if (this.conn.readyState === 1) {
+      this.conn.send(message);
+    } else {
+      throw 'Not connected!';
+    }
+  }
 };
 
 
