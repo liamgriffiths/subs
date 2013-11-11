@@ -3,7 +3,7 @@ var Color = {
   rgb: function(r, g, b) { return 'rgb('+r+','+g+','+b+')'; },
   rgba: function(r, g, b, a) {
     if(a){
-      a = a == 'rand' ? (Utils.getRandomInt(5,10)/2) : a;
+      a = a == 'rand' ? (Utils.randBetween(5,10)/2) : a;
       return 'rgba('+r+','+g+','+b+','+a+')'; 
     }else{
       return this.rgb(r, g, b);
