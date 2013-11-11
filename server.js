@@ -36,15 +36,8 @@ function update() {
   delta = currentTime - lastTime;
   lastTime = currentTime;
 
-  // board.update();
-
-  // // send to all players
-  // wss.broadcast({game: {
-  //   board: board,
-  //   players: wss.clients.map(function(c) { return c.player; }),
-  //   mines: mines
-  // }});
-  wss.broadcast(entities);
+  // send to all players
+  wss.broadcast({entities: global.entities._out()});
 }
 
 setup();
@@ -73,7 +66,7 @@ wss.on('connection', function(ws) {
   if (playerId) {
     var player = global.entities.find(playerId);
     ws.player = player;
-    ws.send(JSON.stringify(global.entities._out()));
+    ws.sendJSON(global.entities._out());
   }
 });
 

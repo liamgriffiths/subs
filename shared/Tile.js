@@ -1,5 +1,3 @@
-var types = ['fire', 'mine'];
-
 function Tile(settings) {
   this.type = settings.type;
   this.explodable = settings.explodable;
