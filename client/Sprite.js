@@ -1,6 +1,6 @@
 function Sprite(size, position, animationSpeed) {
   this.size = size; // in "pixels" per tile
-  this.position = new Vector(position.x, position.y, position.z);
+  this.position = {x: position.x, y: position.y, z: position.z};
   this.currentFrame = 0;
   this.tick = 0;
   this.frames = [];

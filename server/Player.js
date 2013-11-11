@@ -1,15 +1,6 @@
 var Player = require('../shared/Player');
 
-Player.prototype.connect = function() {
-  this.ws.sendJSON({hi: "hello"});
-  console.log('player connected');
-};
-
-Player.prototype.disconnect = function() {
-  console.log('player disconnected');
-};
-
-Player.prototype.message = function(message) {
+Player.prototype.message = function(message, entities, board) {
   message = message.trim().toLowerCase();
   if(! message) return;
   console.log('Message recieved from %s: %s', this.id, message);
@@ -26,14 +17,15 @@ Player.prototype.message = function(message) {
       this.availableMines--;
     }
   } else if (message == 'left') {
-    this.move({x: this.position.x - 1, y: this.position.y});
+    this.move({x: this.position.x - 1, y: this.position.y}, board);
   } else if (message == 'right') {
-    this.move({x: this.position.x + 1, y: this.position.y});
+    this.move({x: this.position.x + 1, y: this.position.y}, board);
   } else if (message == 'up') {
-    this.move({x: this.position.x, y: this.position.y - 1});
+    this.move({x: this.position.x, y: this.position.y - 1}, board);
   } else if (message == 'down') {
-    this.move({x: this.position.x, y: this.position.y + 1});
+    this.move({x: this.position.x, y: this.position.y + 1}, board);
   }
+  console.log(this.position);
 };
 
 Player.prototype.update = function(options) {
@@ -43,14 +35,15 @@ Player.prototype.update = function(options) {
 Player.prototype.canMoveTo = function(position, board) {
   var tileId = board.tile(position);
   var tile = entities.find(tileId);
-  if (!tile.object || tile.type == 'wall' || tile.type == 'hardwall' || tile.hasMine) {
+  console.log(tileId, tile.type, position);
+  if (!tile || tile.type == 'wall' || tile.type == 'hardwall' || tile.hasMine) {
     return false;
   }
   return true;
 };
 
-Player.prototype.move = function(position){
-  if (this.canMoveTo(position)) {
+Player.prototype.move = function(position, board){
+  if (this.canMoveTo(position, board)) {
     // move to new position
     this.position = position;
     // collect items at tile location

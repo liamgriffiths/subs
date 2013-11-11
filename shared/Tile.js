@@ -3,6 +3,7 @@ function Tile(settings) {
   this.explodable = settings.explodable;
   this.items = settings.items || [];
   this.mine = settings.mine;
+  this.position = settings.position || {x: undefined, y: undefined};
 }
 
 Tile.prototype._out = function() {
@@ -10,7 +11,8 @@ Tile.prototype._out = function() {
     this.type,
     this.explodable,
     this.mine ? this.mine._out() : undefined,
-    this.items
+    this.items,
+    this.position
   ];
 };
 
@@ -19,7 +21,8 @@ Tile.prototype._in = function(data) {
     type: data[0],
     explodable: data[1],
     mine: data[2],
-    items: data[3]
+    items: data[3],
+    position: data[4]
   };
 };
 

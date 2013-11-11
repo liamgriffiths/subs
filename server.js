@@ -57,15 +57,28 @@ WebSocketServer.prototype.broadcast = function(data) {
 wss.on('connection', function(ws) {
   // client connected, create new player
   var playerId = global.entities.create('Player', {
-    ws: ws,
     position: board.spawnPosition(),
     power: 2,
     isAlive: true,
     availableMines: 1
   });
 
+
   if (playerId) {
+    console.log('%s connected', playerId);
     var player = global.entities.find(playerId);
+
+    ws.on('close', function() {
+      console.log('%s disconnected', playerId);
+      // remove from entities
+      global.entities.remove(playerId);
+    });
+
+    ws.on('message', function(message) {
+      return player.message(message, entities, board);
+    });
+
+    ws.sendJSON({hi: {id: playerId}});
     ws.player = player;
     ws.sendJSON({entities: global.entities._out()});
   }
