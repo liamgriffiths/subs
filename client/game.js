@@ -64,13 +64,16 @@ Game.prototype = {
 
   recieve: function(e, flags) {
     if (e.data) {
+      console.log('recieving data');
       var currentTime = new Date().getTime();
       this.updateSpeed = currentTime - this.lastUpdate;
       this.lastUpdate = currentTime;
 
       var message = JSON.parse(e.data);
       if (message.hi) this.id = message.hi.id;
-      if (message.entities) this.entities._in(message.entities);
+      if (message.entities) {
+        this.entities._in(message.entities);
+      }
     }
   },
 
