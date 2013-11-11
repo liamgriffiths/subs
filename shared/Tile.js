@@ -14,4 +14,13 @@ Tile.prototype._out = function() {
   ];
 };
 
+Tile.prototype._in = function(data) {
+  return {
+    type: data[0],
+    explodable: data[1],
+    mine: data[2],
+    items: data[3]
+  };
+};
+
 if (typeof module !== 'undefined') module.exports = Tile;

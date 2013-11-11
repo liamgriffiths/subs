@@ -1,4 +1,4 @@
-var root = global || window;
+var root = typeof global != 'undefined' ? global : window;
 
 function Entities(root) {
   this.objects = {};
@@ -18,7 +18,7 @@ Entities.prototype.guid = function() {
 Entities.prototype.create = function(constructor, settings) {
   var id = this.guid();
   this.objects[id] = {
-    constructor: constructor, 
+    constructor: constructor,
     object: new root[constructor](settings)
   };
   return id;
@@ -41,12 +41,16 @@ Entities.prototype.update = function() {
 
 Entities.prototype._in = function(entities) {
   for (var id in entities) {
+    var entity = entities[id];
+    var settings = root[entity.constructor].prototype._in(entity.object);
+
     if (this.objects[id]) {
-      // update object with new settings
-      this.objects[id]._in(entities[id].settings);
+      console.log(entity);
     } else {
-      // create new object using settings
-      this.create(entities[id].constructor, entities[id].settings);
+      this.objects[id] = {
+        constructor: entity.constructor,
+        object: new root[entities[id].constructor](settings)
+      };
     }
   }
 };

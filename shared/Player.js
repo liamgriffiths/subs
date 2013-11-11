@@ -5,8 +5,8 @@ function Player(settings) {
   this.availableMines = settings.availableMines;
 
   // web socket hooks
-  this.ws = settings.ws || undefined;
-  if(this.ws) {
+  if (settings.ws) {
+    this.ws = settings.ws;
     this.connect.bind(this)();
     this.ws.on('close', this.disconnect.bind(this));
     this.ws.on('message', this.message.bind(this));
@@ -21,6 +21,16 @@ Player.prototype._out = function() {
     this.availableMines
   ];
 };
+
+Player.prototype._in = function(data) {
+  return {
+    position: data[0],
+    power: data[1],
+    isAlive: data[2],
+    availableMines: data[3]
+  };
+};
+
 
 if (typeof module !== 'undefined') module.exports = Player;
 

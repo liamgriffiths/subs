@@ -41,7 +41,8 @@ function update() {
 }
 
 setup();
-var interval = setInterval(update, 400);
+var interval = setInterval(update, 4000);
+console.log(global.entities);
 
 WebSocket.prototype.sendJSON = function(data) {
   this.send(JSON.stringify(data));

@@ -31,15 +31,14 @@ Sub.prototype = {
 
   recieve: function(message, flags) {
     if (message) {
-    //   var currentTime = new Date().getTime();
-    //   this.updateSpeed = currentTime - this.lastUpdate;
-    //   this.lastUpdate = currentTime;
+      var currentTime = new Date().getTime();
+      this.updateSpeed = currentTime - this.lastUpdate;
+      this.lastUpdate = currentTime;
 
-    message = JSON.parse(message);
-    if (message.hi) this.id = message.hi.id;
-    // if (message.entities) this.id = message.hi.id;
-    this.update = message;
-    console.log(message);
+      message = JSON.parse(message);
+      if (message.hi) this.id = message.hi.id;
+      // if (message.entities) this.id = message.hi.id;
+      this.update = message;
     }
   },
 

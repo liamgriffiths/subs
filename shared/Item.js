@@ -8,5 +8,9 @@ Item.prototype._out = function() {
   return [this.type];
 };
 
+Item.prototype._in = function(data) {
+  return {type: data[0]};
+};
+
 if (typeof module != 'undefined') module.exports = Item;
 

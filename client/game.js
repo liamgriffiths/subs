@@ -41,10 +41,7 @@ function Game() {
     throw "No connection! :-(";
   }
 
-  this.state = { board: {}, players: [], mines: [] };
-  this.board = undefined;
-  this.players = [];
-  this.mines = [];
+  this.entities = new Entities();
   this.id = undefined;
   this.lastUpdate = new Date().getTime();
   this.updateSpeed = 0;
@@ -73,7 +70,7 @@ Game.prototype = {
 
       var message = JSON.parse(e.data);
       if (message.hi) this.id = message.hi.id;
-      if (message.game) this.state = message.game;
+      if (message.entities) this.entities._in(message.entities);
     }
   },
 
