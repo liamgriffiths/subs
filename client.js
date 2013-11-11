@@ -30,16 +30,17 @@ Sub.prototype = {
   error: function(err, description) { throw err; },
 
   recieve: function(message, flags) {
-    console.log(message);
-    // if (message) {
+    if (message) {
     //   var currentTime = new Date().getTime();
     //   this.updateSpeed = currentTime - this.lastUpdate;
     //   this.lastUpdate = currentTime;
 
-    //   message = JSON.parse(message);
-    //   if (message.hi) this.id = message.hi.id;
-    //   this.update = message;
-    // }
+    message = JSON.parse(message);
+    if (message.hi) this.id = message.hi.id;
+    // if (message.entities) this.id = message.hi.id;
+    this.update = message;
+    console.log(message);
+    }
   },
 
   show: function() {
@@ -57,7 +58,7 @@ Sub.prototype = {
   r: function() { this.send('right'); },
   m: function() { this.send('mine'); },
 
-  send: function(message) { 
+  send: function(message) {
     if (this.conn.readyState === 1) {
       this.conn.send(message);
     } else {

@@ -41,7 +41,7 @@ function update() {
 }
 
 setup();
-// var interval = setInterval(update, 4000);
+var interval = setInterval(update, 400);
 
 WebSocket.prototype.sendJSON = function(data) {
   this.send(JSON.stringify(data));
@@ -66,7 +66,7 @@ wss.on('connection', function(ws) {
   if (playerId) {
     var player = global.entities.find(playerId);
     ws.player = player;
-    ws.sendJSON(global.entities._out());
+    ws.sendJSON({entities: global.entities._out()});
   }
 });
 
