@@ -19,14 +19,14 @@ Camera.prototype.update = function(position) {
   this.end.y = position.y + this.distToEdge.y;
 };
 
-Camera.prototype.addDrawable = function(drawFn, position){
+Camera.prototype.addDrawing = function(drawFn, position){
   // if the position to draw is within the camera view, add the draw function
   // to the draw queue
   if(position.x >= this.start.x && position.x <= this.end.x &&
      position.y >= this.start.y && position.y <= this.end.y) {
        //prioritize by position.z, the lower the sooner it is drawn
        this.drawQueue.enqueue(drawFn, position.z);
-  }
+   }
 };
 
 Camera.prototype.draw = function() {

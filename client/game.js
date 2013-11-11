@@ -15,7 +15,6 @@ var TILESIZE = 40,
     lastFrameTime = 0,
     // playersCollection = new PlayersCollection(),
     // minesCollection = new MinesCollection(),
-    camera = new Camera(),
     currentPlayer,
     canvas,
     context,
@@ -42,16 +41,17 @@ function Game() {
   }
 
   this.entities = new Entities();
+  this.camera = new Camera();
   this.id = undefined;
   this.lastUpdate = new Date().getTime();
   this.updateSpeed = 0;
 
 
-  window.addEventListener('keydown', this.sendCommand);
+  window.addEventListener('keydown', this.sendCommand.bind(this));
 
   canvas.width = 800;
   canvas.height = 600;
-  camera.setup();
+  this.camera.setup();
 
 }
 
@@ -93,49 +93,43 @@ Game.prototype = {
   },
 
   currentPlayer: function() {
-    for(var i = 0; i < this.state.players.length; i++) {
-      if (this.state.players[i].id === this.id ) {
-        return this.state.players[i];
-      }
-    }
+    return this.entities.find(this.id);
   },
 
   update: function() {
     var player = this.currentPlayer();
-    if (player) {
-      camera.update(player.position);
+    this.camera.update(player.position);
 
-      if (! this.board && this.state.board) {
-        this.board = new Board(this.state.board);
-      } else {
-        this.board.updateFromJSON(this.state.board);
+    for (var id in this.entities.objects) {
+      var object = this.entities.objects[id].object;
+      if (object.update) {
+        object.update();
       }
     }
 
-    // minesCollection.update(serverState.mines);
-    // playersCollection.update(serverState.players);
   },
 
   draw: function() {
-    if (this.board) {
-      Utils.clearCanvas();
+    Utils.clearCanvas();
 
-      context.save();
-      var player = currentPlayer;
-      // find the pixel position of the current player
-      var newX = camera.position.x * TILESIZE - (canvas.width / 2);
-      var newY = camera.position.y * TILESIZE - (canvas.height / 2);
-      // set origin in relation to current player position
-      context.translate(-newX, -newY);
+    context.save();
+    var player = this.currentPlayer();
+    // find the pixel position of the current player
+    var newX = player.position.x * TILESIZE - (canvas.width / 2);
+    var newY = player.position.y * TILESIZE - (canvas.height / 2);
+    // set origin in relation to current player position
+    context.translate(-newX, -newY);
 
-      // Queues up all the drawing functions from all the objects
-      // this.board.draw();
-      // playersCollection.draw();
-      // minesCollection.draw();
-
-      // camera.draw();
-      context.restore();
+    // Queues up all the drawing functions from all the objects
+    for (var id in this.entities.objects) {
+      var object = this.entities.objects[id].object;
+      if (object.position !== undefined && object.draw !== undefined) {
+        this.camera.addDrawing(object.draw.bind(object), object.position);
+      }
     }
+
+    this.camera.draw();
+    context.restore();
   },
 
   run: function() {
@@ -143,11 +137,11 @@ Game.prototype = {
     delta = (currentTime - lastFrameTime);
     this.lastFrameTime = currentTime;
 
-    // if (this.id) {
-    //   this.draw();
-    //   this.update();
-    // }
-    // window.requestAnimFrame(this.run.bind(this));
+    if (this.id) {
+      this.draw();
+      this.update();
+    }
+    window.requestAnimFrame(this.run.bind(this));
   }
 };
 
