@@ -3,7 +3,7 @@ function Player(settings) {
   this.power = settings.power;
   this.isAlive = settings.isAlive;
   this.availableMines = settings.availableMines;
-
+  this.createdAt = settings.createdAt || new Date().getTime();
 }
 
 Player.prototype.set = function(settings) {
@@ -15,7 +15,8 @@ Player.prototype._out = function() {
     this.position,
     this.power,
     this.isAlive,
-    this.availableMines
+    this.availableMines,
+    this.createdAt
   ];
 };
 
@@ -24,7 +25,8 @@ Player.prototype._in = function(data) {
     position: data[0],
     power: data[1],
     isAlive: data[2],
-    availableMines: data[3]
+    availableMines: data[3],
+    createdAt: data[4]
   };
 };
 

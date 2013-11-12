@@ -2,14 +2,21 @@
 // and used by a player
 function Item(settings) {
   this.type = settings.type || '';
+  this.createdAt = settings.createdAt || new Date().getTime();
 }
 
 Item.prototype._out = function() {
-  return [this.type];
+  return [
+    this.type,
+    this.createdAt
+  ];
 };
 
 Item.prototype._in = function(data) {
-  return {type: data[0]};
+  return {
+    type: data[0],
+    createdAt: data[1]
+  };
 };
 
 if (typeof module != 'undefined') module.exports = Item;

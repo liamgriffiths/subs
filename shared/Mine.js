@@ -9,7 +9,27 @@ function Mine(settings){
 }
 
 Mine.prototype._out = function() {
-  return [];
+  return [
+    this.position,
+    this.countdown,
+    this.power,
+    this.live,
+    this.explodingTime,
+    this.exploding,
+    this.owner
+  ];
+};
+
+Mine.prototype._in = function(data) {
+  return {
+    position: data[0],
+    countdown: data[1],
+    power: data[2],
+    live: data[3],
+    explodingTime: data[4],
+    exploding: data[5],
+    owner: data[6]
+  };
 };
 
 
