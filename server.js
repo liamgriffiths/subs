@@ -30,6 +30,14 @@ function update() {
   delta = currentTime - lastTime;
   lastTime = currentTime;
 
+
+  for (var id in global.entities.objects) {
+    var object = global.entities.objects[id].object;
+    if (object.update) {
+      object.update(delta);
+    }
+  }
+
   // send to all players
   wss.broadcast({entities: global.entities._out()});
 }

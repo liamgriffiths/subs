@@ -1,6 +1,8 @@
 var Mine = require('../shared/Mine');
 
-Mine.prototype.update = function() {
+Mine.prototype.update = function(delta) {
+
+
 };
 
 Mine.prototype.explode = function() {

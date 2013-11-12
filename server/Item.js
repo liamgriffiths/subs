@@ -1,0 +1,2 @@
+Item.prototype.update = function() {
+};
