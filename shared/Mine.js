@@ -1,4 +1,5 @@
 function Mine(settings) {
+  this.id = settings.id;
   this.position = settings.position;
   this.countdown = settings.countdown;
   this.power = settings.power;
@@ -9,6 +10,10 @@ function Mine(settings) {
   this.createdAt = settings.createdAt || new Date().getTime();
 }
 
+Mine.prototype.set = function(settings) {
+  this.constructor(settings);
+};
+
 Mine.prototype._out = function() {
   return [
     this.position,
@@ -17,7 +22,8 @@ Mine.prototype._out = function() {
     this.live,
     this.explodingTime,
     this.isExploding,
-    this.owner
+    this.owner,
+    this.id
   ];
 };
 
@@ -29,7 +35,8 @@ Mine.prototype._in = function(data) {
     live: data[3],
     explodingTime: data[4],
     isExploding: data[5],
-    owner: data[6]
+    owner: data[6],
+    id: data[7]
   };
 };
 

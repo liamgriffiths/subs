@@ -33,7 +33,7 @@ function update() {
 
   for (var id in global.entities.objects) {
     var object = global.entities.objects[id].object;
-    if (object.update) {
+    if (object && object.update) {
       object.update(now, delta, board);
     }
   }

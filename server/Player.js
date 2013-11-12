@@ -33,7 +33,14 @@ Player.prototype.message = function(message, playerId, board) {
   }
 };
 
-Player.prototype.update = function(now, delta) {
+Player.prototype.update = function(now, delta, board) {
+  var tileId = board.tile(this.position);
+  if (tileId) {
+    var tile = entities.find(tileId);
+    if (tile) {
+      if (tile.isExploding) this.isAlive = false;
+    }
+  }
 };
 
 Player.prototype.canMoveTo = function(position, board) {

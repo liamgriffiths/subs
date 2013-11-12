@@ -8,6 +8,10 @@ function Tile(settings) {
   this.createdAt = settings.createdAt || new Date().getTime();
 }
 
+Tile.prototype.set = function(settings) {
+  this.constructor(settings);
+};
+
 Tile.prototype._out = function() {
   return [
     this.type,

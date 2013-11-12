@@ -18,6 +18,7 @@ Entities.prototype.guid = function() {
 Entities.prototype.create = function(constructor, settings) {
   var id = this.guid();
   if (id) {
+    settings.id = id;
     this.objects[id] = {
       constructor: constructor,
       object: new root[constructor](settings)
@@ -35,13 +36,16 @@ Entities.prototype.find = function(id) {
 };
 
 Entities.prototype.remove = function(id) {
-  console.log('Removed <%s %s>', this.objects[id].constructor, id);
-  return delete this.objects[id];
+  // mark for deletion
+  console.log('Marked for removal <%s %s>', this.objects[id].constructor, id);
+  this.objects[id].object = undefined;
+  return this;
 };
 
 Entities.prototype._in = function(entities) {
-  for (var id in entities) {
-    var entity = entities[id];
+  // do create or update
+  for (var id in entities.update) {
+    var entity = entities.update[id];
     var settings = root[entity.constructor].prototype._in(entity.object);
 
     if (this.objects[id]) {
@@ -63,16 +67,33 @@ Entities.prototype._in = function(entities) {
       }
     }
   }
+
+  // do deletes
+  for (var i = 0; i < entities.remove.length; i++) {
+    console.log(entities.remove[i]);
+    delete this.objects[entities.remove[i]];
+  }
+
   return this;
 };
 
 Entities.prototype._out = function() {
-  var out = {};
+  var out = {
+    update: {},
+    remove: []
+  };
   for (var id in this.objects) {
-    out[id] = {
-      constructor: this.objects[id].constructor,
-      object: this.objects[id].object._out()
-    };
+    if (! this.objects[id].object) {
+      // if marked for removal, delete
+      console.log('Removal <%s %s>', this.objects[id].constructor, id);
+      delete this.objects[id];
+      out.remove.push(id);
+    } else {
+      out.update[id] = {
+        constructor: this.objects[id].constructor,
+        object: this.objects[id].object._out()
+      };
+    }
   }
   return out;
 };

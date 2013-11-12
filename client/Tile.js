@@ -40,7 +40,7 @@ Tile.prototype.makeSprites = function() {
 };
 
 Tile.prototype.draw = function() {
-  if(this.isExploding) { debugger; return this.drawExplosion(); }
+  if(this.isExploding) { return this.drawExplosion(); }
   if(this.type == 'water') return function(){};
   return this.sprite.draw();
 };
