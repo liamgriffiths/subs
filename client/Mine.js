@@ -35,24 +35,16 @@ Mine.prototype.draw = function() {
 };
 
 Mine.prototype.update = function() {
-   if(this.live){
-    if(this.animationDelta > 2000){
-      this.animationDelta = 0;
-      this.live = false;
-      this.exploding = true;
-    }else{
-       this.animationDelta += delta;
-    }
-  }else{
-    if(this.exploding){
-      if(this.animationDelta > 1000){
-        this.animationDelta = 0;
-        this.exploding = false;
-      }else{
-        this.animationDelta += delta;
-      }
-    }
-  }
+  //  if(this.live){
+  //   if(this.animationDelta > 2000){
+  //     this.animationDelta = 0;
+  //     this.live = false;
+  //     this.exploding = true;
+  //   }else{
+  //      this.animationDelta += delta;
+  //   }
+  // }else{
+  // }
 
   this.sprite.update();
 };

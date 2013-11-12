@@ -1,19 +1,26 @@
 var Player = require('../shared/Player');
 
-Player.prototype.message = function(message, entities, board) {
+Player.prototype.message = function(message, playerId, board) {
   message = message.trim().toLowerCase();
   if(! message) return;
 
   if (message == 'mine') {
     if(this.availableMines > 0){
-      entities.create('Mine', {
+      var mineId = global.entities.create('Mine', {
         position: {x: this.position.x, y: this.position.y},
         countdown: 3000,
         power: this.power,
         explodingTime: 1000,
-        owner: this.id
+        owner: playerId
       });
-      this.availableMines--;
+      if (mineId) {
+        this.availableMines--;
+        var tileId = board.tile({x: this.position.x, y: this.position.y});
+        var tile = entities.find(tileId);
+        if (tile) {
+          tile.mine = mineId;
+        }
+      }
     }
   } else if (message == 'left') {
     this.move({x: this.position.x - 1, y: this.position.y}, board);
@@ -26,7 +33,7 @@ Player.prototype.message = function(message, entities, board) {
   }
 };
 
-Player.prototype.update = function(options) {
+Player.prototype.update = function(now, delta) {
 };
 
 Player.prototype.canMoveTo = function(position, board) {

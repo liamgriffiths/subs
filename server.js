@@ -26,15 +26,15 @@ function setup() {
 }
 
 function update() {
-  var currentTime = new Date().getTime();
-  delta = currentTime - lastTime;
-  lastTime = currentTime;
+  var now = new Date().getTime();
+  delta = now - lastTime;
+  lastTime = now;
 
 
   for (var id in global.entities.objects) {
     var object = global.entities.objects[id].object;
     if (object.update) {
-      object.update(delta);
+      object.update(now, delta, board);
     }
   }
 
@@ -67,18 +67,18 @@ wss.on('connection', function(ws) {
 
 
   if (playerId) {
-    console.log('%s connected', playerId);
+    console.log('Opened connection: %s', playerId);
     var player = global.entities.find(playerId);
 
     ws.on('close', function() {
-      console.log('%s disconnected', playerId);
+      console.log('Closed connection: %s', playerId);
       // remove from entities
       global.entities.remove(playerId);
     });
 
     ws.on('message', function(message) {
       console.log('Message recieved from %s: %s', playerId, message);
-      return player.message(message, global.entities, board);
+      return player.message(message, playerId, board);
     });
 
     ws.sendJSON({hi: {id: playerId}});

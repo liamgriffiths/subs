@@ -1,2 +1,2 @@
-Item.prototype.update = function() {
+Item.prototype.update = function(now, delta) {
 };

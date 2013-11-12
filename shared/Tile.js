@@ -1,6 +1,7 @@
 function Tile(settings) {
   this.type = settings.type;
-  this.explodable = settings.explodable;
+  this.isExplodable = settings.isExplodable || true;
+  this.isExploding = settings.isExploding || false;
   this.items = settings.items || [];
   this.mine = settings.mine;
   this.position = settings.position || {x: undefined, y: undefined};
@@ -10,22 +11,24 @@ function Tile(settings) {
 Tile.prototype._out = function() {
   return [
     this.type,
-    this.explodable,
-    this.mine ? this.mine._out() : undefined,
+    this.isExplodable,
+    this.mine,
     this.items,
     this.position,
-    this.createdAt
+    this.createdAt,
+    this.isExploding
   ];
 };
 
 Tile.prototype._in = function(data) {
   return {
     type: data[0],
-    explodable: data[1],
+    isExplodable: data[1],
     mine: data[2],
     items: data[3],
     position: data[4],
-    createdAt: data[5]
+    createdAt: data[5],
+    isExploding: data[6]
   };
 };
 

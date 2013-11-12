@@ -18,7 +18,7 @@ Tile.prototype.stopExploding = function() {
   return this;
 };
 
-Tile.prototype.update = function(delta) {
+Tile.prototype.update = function(now, delta) {
   if(this.exploding) this.hasMine = false;
 };
 

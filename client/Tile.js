@@ -40,7 +40,24 @@ Tile.prototype.makeSprites = function() {
 };
 
 Tile.prototype.draw = function() {
-  // if(this.exploding) return this.drawExplosion();
+  if(this.isExploding) { debugger; return this.drawExplosion(); }
   if(this.type == 'water') return function(){};
   return this.sprite.draw();
+};
+
+Tile.prototype.drawExplosion = function() {
+  context.moveTo(this.position.x * TILESIZE, this.position.y * TILESIZE);
+
+  var startX = this.position.x * TILESIZE;
+  var startY = this.position.y * TILESIZE;
+  var pixelSize = Math.floor(TILESIZE / 4);
+  var p = 0;
+
+  for(var x = startX; x < startX + TILESIZE; x += pixelSize){
+    for(var y = startY; y < startY + TILESIZE; y += pixelSize){
+      context.fillStyle = "rgba(255,0,0, "+(Utils.randBetween(0,10)/2)+")";
+      context.fillRect(x, y, pixelSize, pixelSize);
+      p++;
+    }
+  }
 };

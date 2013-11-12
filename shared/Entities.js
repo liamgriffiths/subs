@@ -17,11 +17,16 @@ Entities.prototype.guid = function() {
 
 Entities.prototype.create = function(constructor, settings) {
   var id = this.guid();
-  this.objects[id] = {
-    constructor: constructor,
-    object: new root[constructor](settings)
-  };
-  return id;
+  if (id) {
+    this.objects[id] = {
+      constructor: constructor,
+      object: new root[constructor](settings)
+    };
+    console.log('Created <%s %s>', constructor, id);
+    return id;
+  } else {
+    return false;
+  }
 };
 
 Entities.prototype.find = function(id) {
@@ -30,6 +35,7 @@ Entities.prototype.find = function(id) {
 };
 
 Entities.prototype.remove = function(id) {
+  console.log('Removed <%s %s>', this.objects[id].constructor, id);
   return delete this.objects[id];
 };
 
@@ -50,6 +56,8 @@ Entities.prototype._in = function(entities) {
         object: new root[entity.constructor](settings)
       };
 
+      // set up client side-specific data
+      // TODO: have an 'init' function to run everything for a particular obj?
       if ('makeSprites' in root[entity.constructor].prototype) {
         root[entity.constructor].prototype.makeSprites.call(this.objects[id].object);
       }

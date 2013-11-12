@@ -9,7 +9,8 @@ Board.prototype.reticulateSplines = function() {
     if (rand < 2) type = 'hardwall';
     var tileId = entities.create('Tile', {
       type: type,
-      position: this.coords(i)
+      position: this.coords(i),
+      explodable: type == 'hardwall' ? false : true
     });
     this.tiles[i] = tileId;
 
