@@ -13,10 +13,12 @@ Camera.prototype.setup = function() {
 
 Camera.prototype.update = function(position) {
   // origin of current canvas view (in tiles not pixels)
-  this.start.x = position.x - this.distToEdge.x;
-  this.start.y = position.y - this.distToEdge.y;
-  this.end.x = position.x + this.distToEdge.x;
-  this.end.y = position.y + this.distToEdge.y;
+  if (position && position.x && position.y) {
+    this.start.x = position.x - this.distToEdge.x;
+    this.start.y = position.y - this.distToEdge.y;
+    this.end.x = position.x + this.distToEdge.x;
+    this.end.y = position.y + this.distToEdge.y;
+  }
 };
 
 Camera.prototype.addDrawing = function(drawFn, position){
