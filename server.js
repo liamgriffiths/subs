@@ -77,6 +77,7 @@ wss.on('connection', function(ws) {
     });
 
     ws.on('message', function(message) {
+      console.log('Message recieved from %s: %s', playerId, message);
       return player.message(message, global.entities, board);
     });
 

@@ -3,7 +3,6 @@ var Player = require('../shared/Player');
 Player.prototype.message = function(message, entities, board) {
   message = message.trim().toLowerCase();
   if(! message) return;
-  console.log('Message recieved: %s', message);
 
   if (message == 'mine') {
     if(this.availableMines > 0){
