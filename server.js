@@ -69,7 +69,7 @@ wss.on('connection', function(ws) {
     });
 
     ws.on('message', function(message) {
-      return player.message(message, entities, board);
+      return player.message(message, global.entities, board);
     });
 
     ws.sendJSON({hi: {id: playerId}});
