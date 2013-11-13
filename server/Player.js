@@ -4,7 +4,7 @@ Player.prototype.message = function(message, playerId, board) {
   message = message.trim().toLowerCase();
   if(! message) return;
 
-  if (message == 'mine') {
+  if (message == 'mine' && this.isAlive) {
     if(this.availableMines > 0){
       var mineId = global.entities.create('Mine', {
         position: {x: this.position.x, y: this.position.y},
@@ -38,9 +38,10 @@ Player.prototype.update = function(now, delta, board) {
   if (tileId) {
     var tile = entities.find(tileId);
     if (tile) {
-      if (tile.isExploding) this.isAlive = false;
+      if (tile.isExploding) this.life -= 0.1;
     }
   }
+  if (this.life < 1) this.isAlive = false;
 };
 
 Player.prototype.canMoveTo = function(position, board) {
@@ -49,6 +50,8 @@ Player.prototype.canMoveTo = function(position, board) {
 
   var tile = entities.find(tileId);
   if (! tile) return false;
+
+  if (! this.isAlive) return true;
 
   if (tile.type == 'wall' || tile.type == 'hardwall' || tile.mine) {
     return false;
@@ -60,12 +63,15 @@ Player.prototype.move = function(position, board){
   if (this.canMoveTo(position, board)) {
     // move to new position
     this.position = position;
-    // collect items at tile location
-    var tileId = board.tile(this.position);
-    var tile = entities.find(tileId);
-    while (tile.items.length) {
-      var itemId = tile.items.shift();
-      this.addItem(itemId);
+
+    if (this.isAlive) {
+      // collect items at tile location
+      var tileId = board.tile(this.position);
+      var tile = entities.find(tileId);
+      while (tile.items.length) {
+        var itemId = tile.items.shift();
+        this.addItem(itemId);
+      }
     }
     return true;
   }
