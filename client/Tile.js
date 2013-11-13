@@ -1,3 +1,7 @@
+Tile.prototype.init = function() {
+  this.makeSprites();
+};
+
 Tile.prototype.makeSprites = function() {
   switch(this.type){
     case 'wall':

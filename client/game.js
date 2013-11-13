@@ -70,6 +70,7 @@ Game.prototype = {
       var message = JSON.parse(e.data);
       if (message.hi) this.id = message.hi.id;
       if (message.entities) {
+        console.log(message.entities);
         this.entities._in(message.entities);
       }
     }

@@ -1,3 +1,7 @@
+Player.prototype.init = function() {
+  this.makeSprites();
+};
+
 Player.prototype.makeSprites = function() {
   var c0 = Color.BLACK(1/10);
   var c1 = Color.WHITE(8/10);

@@ -5,7 +5,10 @@ Tile.prototype.update = function(now, delta) {
     if (this.mine) {
       // mines can explode other mines
       var mine = entities.find(this.mine);
-      mine.countdown = 0;
+      if (! mine.isExploding) {
+        console.log(mine);
+        mine.countdown = 0;
+      }
     }
   }
 };

@@ -1,30 +1,15 @@
 var Mine = require('../shared/Mine');
 
 Mine.prototype.update = function(now, delta, board) {
-  if (this.live) {
+  if (! this.isExploding) {
     if (this.countdown < 0) {
-      this.live = false;
-      this.isExploding = true;
       this.explode(board);
     } else {
       this.countdown -= delta;
     }
-  } else if (this.isExploding) {
+  } else {
     if (this.explodingTime < 0) {
       this.finishExplosion(board);
-      this.isExploding = false;
-
-      // give player back mine
-      var player = entities.find(this.owner);
-      player.availableMines++;
-
-      // mark for deletion
-      entities.remove(this.id);
-
-      // remove from tile
-      var tileId = board.tile(this.position);
-      var tile = entities.find(tileId);
-      tile.mine = undefined;
     } else {
       this.explodingTime -= delta;
     }
@@ -32,6 +17,7 @@ Mine.prototype.update = function(now, delta, board) {
 };
 
 Mine.prototype.explode = function(board) {
+  this.isExploding = true;
   this.explodeTo(this.position.x + this.power, this.position.y, board);
   this.explodeTo(this.position.x - this.power, this.position.y, board);
   this.explodeTo(this.position.x, this.position.y + this.power, board);
@@ -39,6 +25,20 @@ Mine.prototype.explode = function(board) {
 };
 
 Mine.prototype.finishExplosion = function(board) {
+  this.isExploding = false;
+
+  // give player back mine
+  var player = entities.find(this.owner);
+  player.availableMines++;
+
+  // mark for deletion
+  entities.remove(this.id);
+
+  // remove this mine from tile
+  var tileId = board.tile(this.position);
+  var tile = entities.find(tileId);
+  tile.mine = undefined;
+
   this.finishExplosionTo(this.position.x + this.power, this.position.y, board);
   this.finishExplosionTo(this.position.x - this.power, this.position.y, board);
   this.finishExplosionTo(this.position.x, this.position.y + this.power, board);

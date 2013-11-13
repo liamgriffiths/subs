@@ -1,3 +1,7 @@
+Mine.prototype.init = function() {
+  this.makeSprites();
+};
+
 Mine.prototype.makeSprites = function() {
  this.sprite = new Sprite(5, this.position, 50);
   var c1 = Color.CLEAR();

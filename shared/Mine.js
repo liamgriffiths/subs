@@ -3,7 +3,6 @@ function Mine(settings) {
   this.position = settings.position;
   this.countdown = settings.countdown;
   this.power = settings.power;
-  this.live = settings.live || true;
   this.explodingTime = settings.explodingTime;
   this.isExploding = settings.isExploding || false;
   this.owner = settings.owner;
@@ -19,7 +18,6 @@ Mine.prototype._out = function() {
     this.position,
     this.countdown,
     this.power,
-    this.live,
     this.explodingTime,
     this.isExploding,
     this.owner,
@@ -32,11 +30,10 @@ Mine.prototype._in = function(data) {
     position: data[0],
     countdown: data[1],
     power: data[2],
-    live: data[3],
-    explodingTime: data[4],
-    isExploding: data[5],
-    owner: data[6],
-    id: data[7]
+    explodingTime: data[3],
+    isExploding: data[4],
+    owner: data[5],
+    id: data[6]
   };
 };
 

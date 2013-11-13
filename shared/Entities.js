@@ -4,6 +4,7 @@ function Entities(root) {
   // ex.
   // { 'guid-1234-abcd' : { constructor: 'Tile', object: [Object object] }
   this.objects = {};
+  this.previous = {};
 }
 
 Entities.prototype.guid = function() {
@@ -61,23 +62,22 @@ Entities.prototype._in = function(entities) {
       };
 
       // set up client side-specific data
-      // TODO: have an 'init' function to run everything for a particular obj?
-      if ('makeSprites' in root[entity.constructor].prototype) {
-        root[entity.constructor].prototype.makeSprites.call(this.objects[id].object);
+      if ('init' in root[entity.constructor].prototype) {
+        root[entity.constructor].prototype.init.call(this.objects[id].object);
       }
     }
   }
 
   // do deletes
   for (var i = 0; i < entities.remove.length; i++) {
-    console.log(entities.remove[i]);
+    // console.log(entities.remove[i]);
     delete this.objects[entities.remove[i]];
   }
 
   return this;
 };
 
-Entities.prototype._out = function() {
+Entities.prototype._out = function(options) {
   var out = {
     update: {},
     remove: []
@@ -89,10 +89,24 @@ Entities.prototype._out = function() {
       delete this.objects[id];
       out.remove.push(id);
     } else {
-      out.update[id] = {
+      var entity = {
         constructor: this.objects[id].constructor,
         object: this.objects[id].object._out()
       };
+
+      if (options && options.diff) {
+        // output will contain only differences
+        if (this.previous[id] !== entity.object.toString()) {
+          console.log("diff");
+          console.log(this.previous[id]);
+          console.log(entity.toString());
+          out.update[id] =  entity;
+        }
+      } else {
+        // output will contain all entities
+        out.update[id] =  entity;
+      }
+      this.previous[id] = entity.object.toString();
     }
   }
   return out;

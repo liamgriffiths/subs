@@ -6,7 +6,7 @@ function Sprite(size, position, animationSpeed) {
   this.frames = [];
   this.cache = [];
   this.animationDelta = 0;
-  this.animationSpeed = animationSpeed || 500;
+  this.animationSpeed = animationSpeed || 500; // approx msecs/frame
   this.pixelSize = Math.floor(TILESIZE / this.size);
 }
 

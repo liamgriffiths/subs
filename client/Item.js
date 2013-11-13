@@ -1,3 +1,7 @@
+Item.prototype.init = function() {
+  this.makeSprites();
+};
+
 Item.prototype.draw = function() {
   return this.sprite.draw();
 };

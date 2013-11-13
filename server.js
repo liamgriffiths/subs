@@ -38,13 +38,15 @@ function update() {
     }
   }
 
-  // send to all players
-  wss.broadcast({entities: global.entities._out()});
+  // send changes to all players
+  var message = {entities: global.entities._out({diff: false})};
+  // if (message.entities.remove.length || Object.keys(message.entities.update).length) {
+    wss.broadcast(message);
+  // }
 }
 
 setup();
 var interval = setInterval(update, 20);
-console.log(global.entities);
 
 WebSocket.prototype.sendJSON = function(data) {
   this.send(JSON.stringify(data));
@@ -83,6 +85,7 @@ wss.on('connection', function(ws) {
 
     ws.sendJSON({hi: {id: playerId}});
     ws.player = player;
+    // send the whole game state to new player
     ws.sendJSON({entities: global.entities._out()});
   }
 });
