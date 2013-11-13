@@ -19,7 +19,8 @@ Tile.prototype._out = function() {
     this.isExplodable,
     this.mine,
     this.items,
-    this.position,
+    this.position.x,
+    this.position.y,
     this.createdAt,
     this.isExploding,
     this.id
@@ -32,10 +33,10 @@ Tile.prototype._in = function(data) {
     isExplodable: data[1],
     mine: data[2],
     items: data[3],
-    position: data[4],
-    createdAt: data[5],
-    isExploding: data[6],
-    id: data[7]
+    position: {x: data[4], y: data[5]},
+    createdAt: data[6],
+    isExploding: data[7],
+    id: data[8]
   };
 };
 

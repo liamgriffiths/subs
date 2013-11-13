@@ -12,7 +12,8 @@ Item.prototype._out = function() {
     this.type,
     this.createdAt,
     this.id,
-    this.position
+    this.position.x,
+    this.position.y
   ];
 };
 
@@ -21,7 +22,7 @@ Item.prototype._in = function(data) {
     type: data[0],
     createdAt: data[1],
     id: data[2],
-    position: data[3]
+    position: {x: data[3], y: data[4]}
   };
 };
 

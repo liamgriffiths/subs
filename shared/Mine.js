@@ -15,7 +15,8 @@ Mine.prototype.set = function(settings) {
 
 Mine.prototype._out = function() {
   return [
-    this.position,
+    this.position.x,
+    this.position.y,
     this.countdown,
     this.power,
     this.explodingTime,
@@ -27,13 +28,13 @@ Mine.prototype._out = function() {
 
 Mine.prototype._in = function(data) {
   return {
-    position: data[0],
-    countdown: data[1],
-    power: data[2],
-    explodingTime: data[3],
-    isExploding: data[4],
-    owner: data[5],
-    id: data[6]
+    position: {x: data[0], y: data[1]},
+    countdown: data[2],
+    power: data[3],
+    explodingTime: data[4],
+    isExploding: data[5],
+    owner: data[6],
+    id: data[7]
   };
 };
 
