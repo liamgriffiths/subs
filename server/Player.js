@@ -50,7 +50,7 @@ Player.prototype.canMoveTo = function(position, board) {
   var tile = entities.find(tileId);
   if (! tile) return false;
 
-  if (tile.type == 'wall' || tile.type == 'hardwall' || tile.hasMine) {
+  if (tile.type == 'wall' || tile.type == 'hardwall' || tile.mine) {
     return false;
   }
   return true;
