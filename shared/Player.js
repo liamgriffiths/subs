@@ -1,4 +1,5 @@
 function Player(settings) {
+  this.id = settings.id;
   this.position = settings.position;
   this.power = settings.power;
   this.isAlive = settings.isAlive;
@@ -16,7 +17,8 @@ Player.prototype._out = function() {
     this.power,
     this.isAlive,
     this.availableMines,
-    this.createdAt
+    this.createdAt,
+    this.id
   ];
 };
 
@@ -26,7 +28,8 @@ Player.prototype._in = function(data) {
     power: data[1],
     isAlive: data[2],
     availableMines: data[3],
-    createdAt: data[4]
+    createdAt: data[4],
+    id: data[5]
   };
 };
 

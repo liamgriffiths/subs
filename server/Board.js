@@ -19,7 +19,10 @@ Board.prototype.reticulateSplines = function() {
       if(hasItem){
         var itemTypes = ['fire','mine'];
         var whatItem = itemTypes[Math.floor(Math.random() * itemTypes.length)];
-        var itemId = entities.create('Item', {type: whatItem});
+        var itemId = entities.create('Item', {
+          type: whatItem,
+          position: this.coords(i)
+        });
         entities.find(tileId).items.push(itemId);
       }
     }

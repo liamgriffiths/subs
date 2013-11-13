@@ -44,16 +44,16 @@ Player.prototype.draw = function() {
   }
 };
 
-Player.prototype.update = function() {
+Player.prototype.update = function(now, delta) {
   if(this.isAlive){
-    this.aliveSprite.update();
+    this.aliveSprite.update(delta);
     this.aliveSprite.position = {
       x: this.position.x, 
       y: this.position.y, 
       z: this.position.z
     };
   }else{
-    this.deadSprite.update();
+    this.deadSprite.update(delta);
     this.deadSprite.position = {
       x: this.position.x, 
       y: this.position.y, 

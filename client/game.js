@@ -12,9 +12,6 @@ window.requestAnimFrame = (function(){
 
 var TILESIZE = 60,
     STARTED = false,
-    lastFrameTime = 0,
-    // playersCollection = new PlayersCollection(),
-    // minesCollection = new MinesCollection(),
     currentPlayer,
     canvas,
     context,
@@ -44,6 +41,7 @@ function Game() {
   this.camera = new Camera();
   this.id = undefined;
   this.lastUpdate = new Date().getTime();
+  this.lastFrameTime = (new Date()).getTime(),
   this.updateSpeed = 0;
 
 
@@ -99,14 +97,14 @@ Game.prototype = {
     return this.entities.find(this.id);
   },
 
-  update: function() {
+  update: function(now, delta) {
     var player = this.currentPlayer();
     this.camera.update(player.position);
 
     for (var id in this.entities.objects) {
       var object = this.entities.objects[id].object;
       if (object.update) {
-        object.update();
+        object.update(now, delta);
       }
     }
 
@@ -139,12 +137,12 @@ Game.prototype = {
 
   run: function() {
     var currentTime = new Date().getTime();
-    delta = (currentTime - lastFrameTime);
+    delta = currentTime - this.lastFrameTime;
     this.lastFrameTime = currentTime;
 
     if (this.id) {
       this.draw();
-      this.update();
+      this.update(currentTime, delta);
     }
     window.requestAnimFrame(this.run.bind(this));
   }

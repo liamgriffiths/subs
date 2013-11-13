@@ -45,6 +45,10 @@ Tile.prototype.draw = function() {
   return this.sprite.draw();
 };
 
+Tile.prototype.update = function(now, delta) {
+  this.sprite.update(delta);
+};
+
 Tile.prototype.drawExplosion = function() {
   context.moveTo(this.position.x * TILESIZE, this.position.y * TILESIZE);
 

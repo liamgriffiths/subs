@@ -2,12 +2,12 @@ Item.prototype.draw = function() {
   return this.sprite.draw();
 };
 
-Item.prototype.update = function() {
-  this.sprite.update();
+Item.prototype.update = function(now, delta) {
+  this.sprite.update(delta);
 };
 
 Item.prototype.makeSprites = function() {
-  this.sprite = new Sprite(5, this.position, 100);
+  this.sprite = new Sprite(5, this.position, 200);
   var frames = [];
 
   if(this.type === 'fire'){

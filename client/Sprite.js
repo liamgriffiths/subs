@@ -6,17 +6,17 @@ function Sprite(size, position, animationSpeed) {
   this.frames = [];
   this.cache = [];
   this.animationDelta = 0;
-  this.animationSpeed = animationSpeed || 50;
+  this.animationSpeed = animationSpeed || 500;
   this.pixelSize = Math.floor(TILESIZE / this.size);
 }
 
-Sprite.prototype.update = function() {
-  if(this.animationDelta > this.animationSpeed){
+Sprite.prototype.update = function(delta) {
+  if (this.animationDelta > this.animationSpeed) {
     this.currentFrame = this.tick % this.frames.length;
     this.tick++;
     this.animationDelta = 0;
-  }else{
-     this.animationDelta += delta;
+  } else {
+    this.animationDelta += delta;
   }
 };
 

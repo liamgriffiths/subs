@@ -1,5 +1,5 @@
 Mine.prototype.makeSprites = function() {
- this.sprite = new Sprite(5, this.position,100);
+ this.sprite = new Sprite(5, this.position, 50);
   var c1 = Color.CLEAR();
   var c2 = Color.RED();
   var c3 = Color.DPURPLE();
@@ -34,17 +34,6 @@ Mine.prototype.draw = function() {
   return this.sprite.draw();
 };
 
-Mine.prototype.update = function() {
-  //  if(this.live){
-  //   if(this.animationDelta > 2000){
-  //     this.animationDelta = 0;
-  //     this.live = false;
-  //     this.exploding = true;
-  //   }else{
-  //      this.animationDelta += delta;
-  //   }
-  // }else{
-  // }
-
-  this.sprite.update();
+Mine.prototype.update = function(now, delta) {
+  this.sprite.update(delta);
 };

@@ -61,18 +61,25 @@ Player.prototype.move = function(position, board){
     // move to new position
     this.position = position;
     // collect items at tile location
-    // var items = board.tile(this.position).items;
-    // while (items) {
-    //   this.addItem(items.shift());
-    // }
+    var tileId = board.tile(this.position);
+    var tile = entities.find(tileId);
+    while (tile.items.length) {
+      var itemId = tile.items.shift();
+      this.addItem(itemId);
+    }
     return true;
   }
   return false;
 };
 
-Player.prototype.addItem = function(item) {
-  if(item.type == 'fire') this.power++;
-  if(item.type == 'mine') this.availableMines++;
+Player.prototype.addItem = function(itemId) {
+  var item = entities.find(itemId);
+  if (item) {
+    console.log("Adding <Item %s> to <Player %s>", itemId, this.id);
+    if(item.type == 'fire') this.power++;
+    if(item.type == 'mine') this.availableMines++;
+    entities.remove(itemId);
+  }
 };
 
 module.exports = Player;
