@@ -61,7 +61,7 @@ Entities.prototype._in = function(entities) {
         object: new root[entity.constructor](settings)
       };
 
-      // set up client side-specific data
+      // set up client side-specific data, look for and run 'init' function
       if ('init' in root[entity.constructor].prototype) {
         root[entity.constructor].prototype.init.call(this.objects[id].object);
       }
@@ -70,7 +70,6 @@ Entities.prototype._in = function(entities) {
 
   // do deletes
   for (var i = 0; i < entities.remove.length; i++) {
-    // console.log(entities.remove[i]);
     delete this.objects[entities.remove[i]];
   }
 
@@ -82,31 +81,34 @@ Entities.prototype._out = function(options) {
     update: {},
     remove: []
   };
+
   for (var id in this.objects) {
-    if (! this.objects[id].object) {
+    var entity = this.objects[id];
+
+    if (! entity.object) {
       // if marked for removal, delete
-      console.log('Removal <%s %s>', this.objects[id].constructor, id);
+      console.log('Removal <%s %s>', entity.constructor, id);
       delete this.objects[id];
       out.remove.push(id);
+
     } else {
-      var entity = {
-        constructor: this.objects[id].constructor,
-        object: this.objects[id].object._out()
+      var encodedEntity = {
+        constructor: entity.constructor,
+        object: entity.object._out()
       };
+
+      var objString = JSON.stringify(encodedEntity.object);
 
       if (options && options.diff) {
         // output will contain only differences
-        if (this.previous[id] !== entity.object.toString()) {
-          console.log("diff");
-          console.log(this.previous[id]);
-          console.log(entity.toString());
-          out.update[id] =  entity;
+        if (this.previous[id] !== objString) {
+          out.update[id] = encodedEntity;
         }
       } else {
         // output will contain all entities
-        out.update[id] =  entity;
+        out.update[id] =  encodedEntity;
       }
-      this.previous[id] = entity.object.toString();
+      this.previous[id] = objString;
     }
   }
   return out;

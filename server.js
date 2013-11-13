@@ -39,10 +39,12 @@ function update() {
   }
 
   // send changes to all players
-  var message = {entities: global.entities._out({diff: false})};
-  // if (message.entities.remove.length || Object.keys(message.entities.update).length) {
+  var message = {entities: global.entities._out({diff: true})};
+  if (message.entities.remove.length || Object.keys(message.entities.update).length) {
+    console.log(Object.keys(message.entities.update).length);
+    console.log(message.entities.update);
     wss.broadcast(message);
-  // }
+  }
 }
 
 setup();

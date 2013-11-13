@@ -13,7 +13,8 @@ Player.prototype.set = function(settings) {
 
 Player.prototype._out = function() {
   return [
-    this.position,
+    this.position.x,
+    this.position.y,
     this.power,
     this.isAlive,
     this.availableMines,
@@ -24,12 +25,12 @@ Player.prototype._out = function() {
 
 Player.prototype._in = function(data) {
   return {
-    position: data[0],
-    power: data[1],
-    isAlive: data[2],
-    availableMines: data[3],
-    createdAt: data[4],
-    id: data[5]
+    position: {x: data[0], y: data[1]},
+    power: data[2],
+    isAlive: data[3],
+    availableMines: data[4],
+    createdAt: data[5],
+    id: data[6]
   };
 };
 
