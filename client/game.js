@@ -17,6 +17,8 @@ var TILESIZE = 60,
     context,
     delta; // time difference between frames
 
+var oldX = 0, oldY = 0;
+
 // set up the game and run it
 window.onload = function herewego() {
   canvas = document.getElementById('canvas');
@@ -62,7 +64,6 @@ Game.prototype = {
 
   recieve: function(e, flags) {
     if (e.data) {
-      console.log('recieving data');
       var currentTime = new Date().getTime();
       this.updateSpeed = currentTime - this.lastUpdate;
       this.lastUpdate = currentTime;
@@ -70,7 +71,7 @@ Game.prototype = {
       var message = JSON.parse(e.data);
       if (message.hi) this.id = message.hi.id;
       if (message.entities) {
-        console.log(message.entities);
+        // console.log(message.entities);
         this.entities._in(message.entities);
       }
     }
@@ -120,8 +121,13 @@ Game.prototype = {
       // find the pixel position of the current player
       var newX = player.position.x * TILESIZE - (canvas.width / 2);
       var newY = player.position.y * TILESIZE - (canvas.height / 2);
+
+      var x = Utils.linearTween(delta, oldX, newX, 1000, 0.000001);
+      var y = Utils.linearTween(delta, oldY, newY, 500, 0.000001);
       // set origin in relation to current player position
-      context.translate(-newX, -newY);
+      context.translate(-x, -y);
+      oldX = x;
+      oldY = y;
 
       // Queues up all the drawing functions from all the objects
       for (var id in this.entities.objects) {

@@ -52,29 +52,37 @@ Mine.prototype.explodeTo = function(toX, toY, board) {
   if(toY > board.h) toY = board.h;
   if(toY < 0) toY = 0;
 
+  var tileId = board.tile({x: this.position.x, y: this.position.y});
+  if (! tileId) return;
+  if (! this.explodeTile(tileId)) return;
+
   // explode horizontally
   if(this.position.x < toX){
-    for(x = this.position.x; x < toX; x++){
+    for(x = this.position.x + 1; x < toX; x++){
       var tileId = board.tile({x: x, y: toY});
-      if(! this.explodeTile(tileId)){ return; }
+      if (! tileId) return;
+      if (this.explodeTile(tileId)) return;
     }
   }else{
-    for(x = this.position.x; x > toX; x--){
+    for(x = this.position.x - 1; x > toX; x--){
       var tileId = board.tile({x: x, y: toY});
-      if(! this.explodeTile(tileId)){ return; }
+      if (! tileId) return;
+      if (this.explodeTile(tileId)) return;
     }
   }
 
   // explode vertically
   if(this.position.y < toY){
-    for(y = this.position.y; y < toY; y++){
+    for(y = this.position.y + 1; y < toY; y++){
       var tileId = board.tile({x: toX, y: y});
-      if(! this.explodeTile(tileId)){ return; }
+      if (! tileId) return;
+      if (this.explodeTile(tileId)) return;
     }
   }else{
-    for(y = this.position.y; y > toY; y--){
+    for(y = this.position.y - 1; y > toY; y--){
       var tileId = board.tile({x: toX, y: y});
-      if(! this.explodeTile(tileId)){ return; }
+      if (! tileId) return;
+      if (this.explodeTile(tileId)) return;
     }
   }
 };
@@ -112,18 +120,23 @@ Mine.prototype.finishExplosionTo = function(toX, toY, board) {
 
 Mine.prototype.explodeTile = function(tileId) {
   var tile = global.entities.find(tileId);
-  if (! tile || ! tile.isExplodable) return false;
-  tile.isExploding = true;
-  return true;
+  if (tile && tile.isExplodable){
+    tile.isExploding = true;
+    return true;
+  }
+  return false;
 };
 
 Mine.prototype.stopExplodingTile = function(tileId) {
   var tile = global.entities.find(tileId);
-  if (! tile || ! tile.isExploding) return false;
-  tile.isExploding = false;
-  if(tile.isExplodable) {
-    tile.type = 'water';
+  if (tile && tile.isExploding){
+    tile.isExploding = false;
+    if(tile.isExplodable) {
+      tile.type = 'water';
+    }
+    return true;
   }
+  return false;
 };
 
 module.exports = Mine;

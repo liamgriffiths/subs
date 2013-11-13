@@ -1,12 +1,16 @@
 function Player(settings) {
   this.id = settings.id;
   this.position = settings.position;
+  this.prevPosition = settings.prevPosition || settings.position;
   this.power = settings.power;
   this.isAlive = settings.isAlive;
   this.availableMines = settings.availableMines;
   this.createdAt = settings.createdAt || new Date().getTime();
   this.life = settings.life || 3;
+  this.speed = settings.speed || 10;
 }
+
+Player.maxSpeed = 10;
 
 Player.prototype.set = function(settings) {
   this.constructor(settings);
@@ -21,7 +25,9 @@ Player.prototype._out = function() {
     this.availableMines,
     this.createdAt,
     this.id,
-    this.life
+    this.life,
+    this.prevPosition.x,
+    this.prevPosition.y
   ];
 };
 
@@ -33,7 +39,8 @@ Player.prototype._in = function(data) {
     availableMines: data[4],
     createdAt: data[5],
     id: data[6],
-    life: data[7]
+    life: data[7],
+    prevPosition: {x: data[8], y: data[9]}
   };
 };
 

@@ -49,18 +49,23 @@ Player.prototype.draw = function() {
 };
 
 Player.prototype.update = function(now, delta) {
+  this.prevPosition = {
+    x: Utils.linearTween(delta, this.prevPosition.x, this.position.x, 40),
+    y: Utils.linearTween(delta, this.prevPosition.y, this.position.y, 40)
+  };
+
   if(this.isAlive){
     this.aliveSprite.update(delta);
     this.aliveSprite.position = {
-      x: this.position.x, 
-      y: this.position.y, 
+      x: this.prevPosition.x,
+      y: this.prevPosition.y,
       z: this.position.z
     };
   }else{
     this.deadSprite.update(delta);
     this.deadSprite.position = {
-      x: this.position.x, 
-      y: this.position.y, 
+      x: this.prevPosition.x,
+      y: this.prevPosition.y,
       z: this.position.z
     };
   }

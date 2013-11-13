@@ -18,6 +18,14 @@ var Utils = {
     }
   },
 
+  linearTween: function(delta, current, target, duration, thresh) {
+    // taken from: http://jessefreeman.com/game-dev/intro-to-math-for-game-development/
+    var change = target - current;
+    thresh = thresh || 0.01;
+    if (Math.abs(change) < thresh) return target;
+        return change * delta / duration + current;
+  },
+
   clearCanvas: function() {
     return context.clearRect(0, 0, canvas.width, canvas.height);
   }

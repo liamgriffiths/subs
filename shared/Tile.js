@@ -1,7 +1,7 @@
 function Tile(settings) {
   this.type = settings.type;
-  this.isExplodable = settings.isExplodable || true;
-  this.isExploding = settings.isExploding || false;
+  this.isExplodable = settings.isExplodable;
+  this.isExploding = settings.isExploding;
   this.items = settings.items || [];
   this.mine = settings.mine;
   this.position = settings.position || {x: undefined, y: undefined};

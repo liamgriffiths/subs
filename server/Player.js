@@ -22,14 +22,17 @@ Player.prototype.message = function(message, playerId, board) {
         }
       }
     }
-  } else if (message == 'left') {
-    this.move({x: this.position.x - 1, y: this.position.y}, board);
-  } else if (message == 'right') {
-    this.move({x: this.position.x + 1, y: this.position.y}, board);
-  } else if (message == 'up') {
-    this.move({x: this.position.x, y: this.position.y - 1}, board);
-  } else if (message == 'down') {
-    this.move({x: this.position.x, y: this.position.y + 1}, board);
+  } else {
+    var dist = this.speed / Player.maxSpeed;
+    if (message == 'left') {
+      this.move({x: this.position.x - dist, y: this.position.y}, board);
+    } else if (message == 'right') {
+      this.move({x: this.position.x + dist, y: this.position.y}, board);
+    } else if (message == 'up') {
+      this.move({x: this.position.x, y: this.position.y - dist}, board);
+    } else if (message == 'down') {
+      this.move({x: this.position.x, y: this.position.y + dist}, board);
+    }
   }
 };
 
@@ -45,6 +48,15 @@ Player.prototype.update = function(now, delta, board) {
 };
 
 Player.prototype.canMoveTo = function(position, board) {
+
+  if (this.position) {
+    // if moving from another tile, round one way or the other
+    position = {
+      x: position.x < this.position.x ? Math.floor(position.x) : Math.ceil(position.x),
+      y: position.y < this.position.y ? Math.floor(position.y) : Math.ceil(position.y)
+    };
+  }
+
   var tileId = board.tile(position);
   if (! tileId) return false;
 
@@ -62,15 +74,18 @@ Player.prototype.canMoveTo = function(position, board) {
 Player.prototype.move = function(position, board){
   if (this.canMoveTo(position, board)) {
     // move to new position
+    this.prevPosition = this.position;
     this.position = position;
 
     if (this.isAlive) {
       // collect items at tile location
       var tileId = board.tile(this.position);
       var tile = entities.find(tileId);
-      while (tile.items.length) {
-        var itemId = tile.items.shift();
-        this.addItem(itemId);
+      if (tile) {
+        while (tile.items.length) {
+          var itemId = tile.items.shift();
+          this.addItem(itemId);
+        }
       }
     }
     return true;
