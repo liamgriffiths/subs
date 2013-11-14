@@ -6,20 +6,22 @@ Player.prototype.message = function(message, playerId, board) {
 
   if (message == 'mine' && this.isAlive) {
     if(this.availableMines > 0){
-      var mineId = global.entities.create('Mine', {
-        position: {x: this.position.x, y: this.position.y},
-        countdown: 3000,
-        power: this.power,
-        explodingTime: 1000,
-        owner: playerId
-      });
-      if (mineId) {
-        this.availableMines--;
-        var tileId = board.tile({x: this.position.x, y: this.position.y});
-        this.prevPosition = this.position;
-        var tile = entities.find(tileId);
-        if (tile) {
-          tile.mine = mineId;
+      var tileId = board.tile({x: this.position.x, y: this.position.y});
+      var tile = entities.find(tileId);
+      if (! tile.mine) {
+        var mineId = global.entities.create('Mine', {
+          position: {x: this.position.x, y: this.position.y},
+          countdown: 3000,
+          power: this.power,
+          explodingTime: 1000,
+          owner: playerId
+        });
+        if (mineId) {
+          this.availableMines--;
+          this.prevPosition = this.position;
+          if (tile) {
+            tile.mine = mineId;
+          }
         }
       }
     }
