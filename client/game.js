@@ -49,8 +49,11 @@ function Game() {
 
   window.addEventListener('keydown', this.sendCommand.bind(this));
 
+  this.hud = new HUD();
+  // TODO: scale game drawing to screen/viewport
   canvas.width = screen.width;
-  canvas.height = screen.height * 0.7;
+  canvas.height = screen.height - 102;
+
   this.camera.setup();
 
 }
