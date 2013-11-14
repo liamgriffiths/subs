@@ -62,13 +62,13 @@ Mine.prototype.explodeTo = function(toX, toY, board) {
     for(x = this.position.x + 1; x < toX; x++){
       var tileId = board.tile({x: x, y: toY});
       if (! tileId) return;
-      if (this.explodeTile(tileId)) return;
+      if (! this.explodeTile(tileId)) return;
     }
   }else{
     for(x = this.position.x - 1; x > toX; x--){
       var tileId = board.tile({x: x, y: toY});
       if (! tileId) return;
-      if (this.explodeTile(tileId)) return;
+      if (! this.explodeTile(tileId)) return;
     }
   }
 
@@ -77,13 +77,13 @@ Mine.prototype.explodeTo = function(toX, toY, board) {
     for(y = this.position.y + 1; y < toY; y++){
       var tileId = board.tile({x: toX, y: y});
       if (! tileId) return;
-      if (this.explodeTile(tileId)) return;
+      if (! this.explodeTile(tileId)) return;
     }
   }else{
     for(y = this.position.y - 1; y > toY; y--){
       var tileId = board.tile({x: toX, y: y});
       if (! tileId) return;
-      if (this.explodeTile(tileId)) return;
+      if (! this.explodeTile(tileId)) return;
     }
   }
 };
@@ -123,7 +123,11 @@ Mine.prototype.explodeTile = function(tileId) {
   var tile = global.entities.find(tileId);
   if (tile && tile.isExplodable){
     tile.isExploding = true;
-    return true;
+    if (tile.type == 'water') {
+      return true;
+    } else {
+      return false;
+    }
   }
   return false;
 };
