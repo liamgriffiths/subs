@@ -36,6 +36,15 @@ Entities.prototype.find = function(id) {
   return false;
 };
 
+Entities.prototype.set = function(id, settings) {
+  if (this.objects[id]) {
+    for (var prop in settings) {
+      this.objects[id].object[prop] = settings[prop];
+    }
+  }
+  return false;
+};
+
 Entities.prototype.remove = function(id) {
   // mark for deletion
   console.log('Marked for removal <%s %s>', this.objects[id].constructor, id);

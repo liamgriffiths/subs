@@ -30,6 +30,7 @@ Mine.prototype.finishExplosion = function(board) {
   // give player back mine
   var player = entities.find(this.owner);
   player.availableMines++;
+  player.prevPosition = player.position;
 
   // mark for deletion
   entities.remove(this.id);

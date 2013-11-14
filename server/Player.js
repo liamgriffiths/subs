@@ -16,6 +16,7 @@ Player.prototype.message = function(message, playerId, board) {
       if (mineId) {
         this.availableMines--;
         var tileId = board.tile({x: this.position.x, y: this.position.y});
+        this.prevPosition = this.position;
         var tile = entities.find(tileId);
         if (tile) {
           tile.mine = mineId;

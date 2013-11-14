@@ -11,8 +11,8 @@ var Utils = {
 
   // mixin function, gives objects new functons from other objects
   mixin: function(to, from) {
-    for(var prop in from.prototype) {
-      if(!to.prototype[prop]) {
+    for (var prop in from.prototype) {
+      if (! to.prototype[prop]) {
         to.prototype[prop] = from.prototype[prop];
       }
     }
@@ -23,7 +23,7 @@ var Utils = {
     var change = target - current;
     thresh = thresh || 0.01;
     if (Math.abs(change) < thresh) return target;
-        return change * delta / duration + current;
+    return change * delta / duration + current;
   },
 
   clearCanvas: function() {

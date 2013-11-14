@@ -54,10 +54,8 @@ Tile.prototype.update = function(now, delta) {
 };
 
 Tile.prototype.drawExplosion = function() {
-  context.moveTo(this.position.x * TILESIZE, this.position.y * TILESIZE);
-
-  var startX = this.position.x * TILESIZE;
-  var startY = this.position.y * TILESIZE;
+  var startX = Math.round(this.position.x * TILESIZE);
+  var startY = Math.round(this.position.y * TILESIZE);
   var pixelSize = Math.floor(TILESIZE / 4);
   var p = 0;
 

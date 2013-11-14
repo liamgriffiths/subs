@@ -48,6 +48,8 @@ Player.prototype.draw = function() {
   }
 };
 
+// FIXME: somehow the prevPosition and position are out of sync when a player
+// updated server side, ie. availableMines++ || availableMines--;
 Player.prototype.update = function(now, delta) {
   this.prevPosition = {
     x: Utils.linearTween(delta, this.prevPosition.x, this.position.x, 40),
