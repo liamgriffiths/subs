@@ -54,15 +54,17 @@ Tile.prototype.update = function(now, delta) {
 };
 
 Tile.prototype.drawExplosion = function() {
-  var startX = Math.round(this.position.x * TILESIZE);
-  var startY = Math.round(this.position.y * TILESIZE);
-  var pixelSize = Math.floor(TILESIZE / 4);
+  var startX = this.position.x * TILESIZE;
+  var startY = this.position.y * TILESIZE;
+  var pixelSize = (TILESIZE / 4);
   var p = 0;
+
+  console.log(startX, startY);
 
   for(var x = startX; x < startX + TILESIZE; x += pixelSize){
     for(var y = startY; y < startY + TILESIZE; y += pixelSize){
-      context.fillStyle = "rgba(255,0,0, "+(Utils.randBetween(0,10)/2)+")";
-      context.fillRect(x, y, pixelSize, pixelSize);
+      context.fillStyle = "rgba(240,0,0, "+(Utils.randBetween(0,10)/2)+")";
+      context.fillRect(x, y, pixelSize + 0.5, pixelSize + 0.5);
       p++;
     }
   }
