@@ -1,0 +1,57 @@
+Gameplay:
+  - devise points system
+  - high score system
+  - game menu screen
+    * input name
+    * chose game mode
+  - game over screen
+    * show winner
+    * list players by score
+  - let ghost players mess with other players
+
+Board/map:
+  - stop spawning player in walled tiles or in limited-movement spots
+  - maze generation algos?
+ 
+Server:
+  - how to start, restart game
+  - cookie sessions for accidental disconnects
+  - add event functions to objects (oncreate, ondestroy, etc)
+
+HUD:
+  - use sprites instead of words for each item
+  - game countdown timer
+
+Robot subs:
+  - A* search and destroy sub
+  - genetic algo sub
+  - neural network sub
+
+Game data API:
+  - log all gameplay data to disk
+  - create way to GET past game data
+
+Game modes:
+  - play game in FFA, Team mode, (incl coop mode (humans vs machines))
+
+Browser Client:
+  - z-index / priority queue drawing? multiple canvases?
+  - client-side prediction
+  - graphics for 'water', use color cycling?
+  - render screen in relation to viewport size
+
+Sound effects:
+  - explosions sound
+  - death sound
+  - new player sound
+  - new mine sound
+  - collect item sound
+  - gameplay music
+  - menu screen music
+  - game over music
+
+Mine bug:
+  - stopExploding can some times prematurely stop a tile from exploding
+
+
+
