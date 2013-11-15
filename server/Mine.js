@@ -49,9 +49,7 @@ Mine.prototype.finishExplosion = function(board) {
 
 Mine.prototype.explodeTo = function(toX, toY, board) {
   if(toX > board.w) toX = board.w;
-  if(toX < 0) toX = 0;
   if(toY > board.h) toY = board.h;
-  if(toY < 0) toY = 0;
 
   var tileId = board.tile({x: this.position.x, y: this.position.y});
   if (! tileId) return;
@@ -59,14 +57,14 @@ Mine.prototype.explodeTo = function(toX, toY, board) {
 
   // explode horizontally
   if(this.position.x < toX){
-    for(x = this.position.x + 1; x < toX; x++){
-      var tileId = board.tile({x: x, y: toY});
+    for(x = this.position.x; x < toX; x++){
+      tileId = board.tile({x: x, y: toY});
       if (! tileId) return;
       if (! this.explodeTile(tileId)) return;
     }
   }else{
-    for(x = this.position.x - 1; x > toX; x--){
-      var tileId = board.tile({x: x, y: toY});
+    for(x = this.position.x; x > toX; x--){
+      tileId = board.tile({x: x, y: toY});
       if (! tileId) return;
       if (! this.explodeTile(tileId)) return;
     }
@@ -74,14 +72,14 @@ Mine.prototype.explodeTo = function(toX, toY, board) {
 
   // explode vertically
   if(this.position.y < toY){
-    for(y = this.position.y + 1; y < toY; y++){
-      var tileId = board.tile({x: toX, y: y});
+    for(y = this.position.y; y < toY; y++){
+      tileId = board.tile({x: toX, y: y});
       if (! tileId) return;
       if (! this.explodeTile(tileId)) return;
     }
   }else{
-    for(y = this.position.y - 1; y > toY; y--){
-      var tileId = board.tile({x: toX, y: y});
+    for(y = this.position.y; y > toY; y--){
+      tileId = board.tile({x: toX, y: y});
       if (! tileId) return;
       if (! this.explodeTile(tileId)) return;
     }
@@ -90,9 +88,7 @@ Mine.prototype.explodeTo = function(toX, toY, board) {
 
 Mine.prototype.finishExplosionTo = function(toX, toY, board) {
   if(toX > board.w) toX = board.w;
-  if(toX < 0) toX = 0;
   if(toY > board.h) toY = board.h;
-  if(toY < 0) toY = 0;
 
   if(this.position.x < toX){
     for(x = this.position.x; x < toX; x++){
