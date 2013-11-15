@@ -1,9 +1,8 @@
-var repl = require("repl"),
-    WebSocket = require('ws'),
-    websocketURL = "ws://localhost:9000";
+var WebSocket = require('ws'),
+    URL = "ws://localhost:9000";
 
 function Sub() {
-  this.conn = new WebSocket(websocketURL, {});
+  this.conn = new WebSocket(URL, {});
   if (this.conn) {
     this.conn.on('open', this.connected.bind(this));
     this.conn.on('close', this.disconnected.bind(this));
@@ -14,10 +13,10 @@ function Sub() {
   }
 
   // what to expect
-  this.update = undefined;
+  this.entities = undefined;
   this.id = undefined;
   this.lastUpdate = new Date().getTime();
-  this.updateSpeed = 0;
+  this.updateDelta = 0;
 }
 
 Sub.prototype = {
@@ -27,19 +26,28 @@ Sub.prototype = {
 
   error: function(err, description) { throw err; },
 
-  recieve: function(message, flags) {
-  },
+  recieve: function(e, flags) {
+    if (e.data) {
+      var currentTime = new Date().getTime();
+      this.updateDelta = currentTime - this.lastUpdate;
+      this.lastUpdate = currentTime;
 
-  send: function(message) {
-    if (this.conn.readyState === 1) {
-      this.conn.send(message);
+      var message = JSON.parse(e.data);
+      if (message.hi) this.id = message.hi.id;
+      if (message.entities) this.entities = message.entities;
     }
   },
 
-  // shortcuts
+  send: function(message) {
+    if (this.conn.readyState === 1) this.conn.send(message);
+  },
+
+  // commands the server accepts
   up: function() { this.send('up'); },
   down: function() { this.send('down'); },
   left: function() { this.send('left'); },
   right: function() { this.send('right'); },
   mine: function() { this.send('mine'); }
 };
+
+module.exports = Sub;
