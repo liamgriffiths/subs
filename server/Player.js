@@ -41,13 +41,15 @@ Player.prototype.message = function(message, playerId, board) {
 
 Player.prototype.update = function(now, delta, board) {
   var tileId = board.tile(this.position);
-  if (tileId) {
-    var tile = entities.find(tileId);
-    if (tile) {
-      if (tile.isExploding) this.life -= 0.1;
+  if (this.isAlive) {
+    if (tileId) {
+      var tile = entities.find(tileId);
+      if (tile) {
+        if (tile.isExploding) this.life -= 0.1;
+      }
     }
   }
-  if (this.life < 1) this.isAlive = false;
+  if (this.life < 0) this.isAlive = false;
 };
 
 Player.prototype.canMoveTo = function(position, board) {
@@ -101,7 +103,11 @@ Player.prototype.addItem = function(itemId) {
   if (item) {
     console.log("Adding <Item %s> to <Player %s>", itemId, this.id);
     if(item.type == 'fire') this.power++;
-    if(item.type == 'mine') this.availableMines++;
+    if(item.type == 'heart') this.life++;
+    if(item.type == 'mine') {
+      this.availableMines++;
+      this.maxMines++;
+    }
     entities.remove(itemId);
   }
 };

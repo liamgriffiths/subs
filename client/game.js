@@ -105,6 +105,11 @@ Game.prototype = {
   update: function(now, delta) {
     var player = this.currentPlayer();
     this.camera.update(player.position);
+    this.hud.update({
+      life: player.life,
+      power: player.power,
+      mines: player.maxMines
+    }, delta);
 
     for (var id in this.entities.objects) {
       var object = this.entities.objects[id].object;
@@ -116,6 +121,7 @@ Game.prototype = {
   },
 
   draw: function() {
+    this.hud.draw();
     Utils.clearCanvas();
 
     context.save();

@@ -34,7 +34,7 @@ Tile.prototype.makeSprites = function() {
 
     case 'water':
       this.sprite = new Sprite(1, this.position);
-      var watercolor = Color.CLEAR();
+      var watercolor = Color.DPURPLE();
       this.sprite.frames.push([[watercolor]]);
       break;
 

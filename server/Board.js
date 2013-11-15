@@ -17,7 +17,7 @@ Board.prototype.reticulateSplines = function() {
     if(type == 'wall'){
       var hasItem = Math.floor(Math.random() * 10) < 2;
       if(hasItem){
-        var itemTypes = ['fire','mine'];
+        var itemTypes = ['fire','mine','heart'];
         var whatItem = itemTypes[Math.floor(Math.random() * itemTypes.length)];
         var itemId = entities.create('Item', {
           type: whatItem,

@@ -39,6 +39,19 @@ Item.prototype.makeSprites = function() {
     frames = [f1,f2,f3];
   }
 
+  if(this.type === 'heart'){
+    var c1 = Color.CLEAR();
+    var c2 = Color.LRED('rand');
+    var c3 = Color.WHITE();
+
+    var f1 = [[c1, c2, c1, c2, c1],
+              [c2, c2, c2, c2, c2],
+              [c2, c2, c2, c2, c2],
+              [c1, c2, c2, c2, c1],
+              [c1, c1, c2, c1, c1]];
+    frames = [f1];
+  }
+
   if(this.type === 'mine'){
     var c1 = Color.CLEAR();
     var c2 = Color.BLUE();
