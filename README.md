@@ -12,7 +12,19 @@ water, use sonar, and some other things.
 
 ## Usage
 
-FIXME!!!!!
+Install node.js dependencies:
+
+    npm install
+
+Install foreman:
+
+    gem install foreman
+
+Start the server:
+
+    foreman start
+
+Visit: [http://localhost:3000](http://localhost:3000)
 
 ## License
 

@@ -29,7 +29,7 @@ window.onload = function herewego() {
 
 
 function Game() {
-  this.conn = new WebSocket("ws://10.0.1.44:9000");
+  this.conn = new WebSocket("ws://localhost:9000");
   if (this.conn) {
     this.conn.onopen = this.connected.bind(this);
     this.conn.onclose = this.disconnected.bind(this);
