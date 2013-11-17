@@ -1,5 +1,5 @@
 Item.prototype.init = function() {
-  this.makeSprites();
+  this.sprite = makeItemSprite(this.type, this.position);
 };
 
 Item.prototype.draw = function() {
@@ -10,11 +10,11 @@ Item.prototype.update = function(now, delta) {
   this.sprite.update(delta);
 };
 
-Item.prototype.makeSprites = function() {
-  this.sprite = new Sprite(5, this.position, 200);
+function makeItemSprite(type, position) {
+  var sprite = new Sprite(5, position, 200);
   var frames = [];
 
-  if(this.type === 'fire'){
+  if(type === 'fire'){
     var c1 = Color.CLEAR();
     var c2 = Color.BLUE();
     var c3 = Color.YELLOW('rand');
@@ -39,7 +39,7 @@ Item.prototype.makeSprites = function() {
     frames = [f1,f2,f3];
   }
 
-  if(this.type === 'heart'){
+  if(type === 'heart'){
     var c1 = Color.CLEAR();
     var c2 = Color.LRED('rand');
     var c3 = Color.WHITE();
@@ -52,7 +52,7 @@ Item.prototype.makeSprites = function() {
     frames = [f1];
   }
 
-  if(this.type === 'mine'){
+  if(type === 'mine'){
     var c1 = Color.CLEAR();
     var c2 = Color.BLUE();
     var c3 = Color.DPURPLE('rand');
@@ -77,6 +77,6 @@ Item.prototype.makeSprites = function() {
     frames = [f1,f2,f3];
   }
 
-  this.sprite.frames = frames;
-  return this.sprite;
+  sprite.frames = frames;
+  return sprite;
 };

@@ -1,15 +1,11 @@
-function Camera(position) {
-  this.position = {x: 0, y: 0};
+function Camera(width, height) {
   this.drawQueue = new PriorityQueue();
   this.start = {x: 0, y: 0}; // top left of the board
   this.end = {x: 0, y: 0};   // bottom right of the board
-}
-
-Camera.prototype.setup = function() {
   // Tiles from center of board to edge of board
-  this.distToEdge = {x: Math.ceil((canvas.width / TILESIZE) / 2) + 1,
-                     y: Math.ceil((canvas.height / TILESIZE) / 2) + 1};
-};
+  this.distToEdge = {x: Math.ceil((width / TILESIZE) / 2) + 1,
+                     y: Math.ceil((height / TILESIZE) / 2) + 1};
+}
 
 Camera.prototype.update = function(position) {
   // origin of current canvas view (in tiles not pixels)
@@ -21,9 +17,11 @@ Camera.prototype.update = function(position) {
   }
 };
 
-Camera.prototype.addDrawing = function(drawFn, position){
+Camera.prototype.addDrawing = function(object){
   // if the position to draw is within the camera view, add the draw function
   // to the draw queue
+  var position = object.position;
+  var drawFn = object.draw.bind(object);
   if(position.x >= this.start.x && position.x <= this.end.x &&
      position.y >= this.start.y && position.y <= this.end.y) {
        //prioritize by position.z, the lower the sooner it is drawn
@@ -35,6 +33,6 @@ Camera.prototype.draw = function() {
   // remove from queue and execute function
   while(this.drawQueue.size()){
     var fn = this.drawQueue.dequeue();
-    if(fn instanceof Function) fn();
+    fn();
   }
 };
