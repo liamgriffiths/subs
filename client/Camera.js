@@ -35,6 +35,6 @@ Camera.prototype.draw = function() {
   // remove from queue and execute function
   while(this.drawQueue.size()){
     var fn = this.drawQueue.dequeue();
-    if(fn instanceof Function) fn();
+    fn();
   }
 };
