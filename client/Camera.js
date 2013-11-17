@@ -1,5 +1,4 @@
 function Camera(width, height) {
-  this.position = {x: 0, y: 0};
   this.drawQueue = new PriorityQueue();
   this.start = {x: 0, y: 0}; // top left of the board
   this.end = {x: 0, y: 0};   // bottom right of the board
