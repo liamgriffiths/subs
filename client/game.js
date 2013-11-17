@@ -142,7 +142,7 @@ Game.prototype = {
       for (var id in this.entities.objects) {
         var object = this.entities.objects[id].object;
         if (object.position !== undefined && object.draw !== undefined) {
-          this.camera.addDrawing(object.draw.bind(object), object.position);
+          this.camera.addDrawing(object);
         }
       }
 
