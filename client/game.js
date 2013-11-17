@@ -40,7 +40,6 @@ function Game() {
   }
 
   this.entities = new Entities();
-  this.camera = new Camera();
   this.id = undefined;
   this.lastUpdate = new Date().getTime();
   this.lastFrameTime = (new Date()).getTime(),
@@ -54,7 +53,7 @@ function Game() {
   canvas.width = screen.width;
   canvas.height = screen.height - 102;
 
-  this.camera.setup();
+  this.camera = new Camera(canvas.width, canvas.height);
 
 }
 

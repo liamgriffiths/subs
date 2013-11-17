@@ -1,15 +1,12 @@
-function Camera(position) {
+function Camera(width, height) {
   this.position = {x: 0, y: 0};
   this.drawQueue = new PriorityQueue();
   this.start = {x: 0, y: 0}; // top left of the board
   this.end = {x: 0, y: 0};   // bottom right of the board
-}
-
-Camera.prototype.setup = function() {
   // Tiles from center of board to edge of board
-  this.distToEdge = {x: Math.ceil((canvas.width / TILESIZE) / 2) + 1,
-                     y: Math.ceil((canvas.height / TILESIZE) / 2) + 1};
-};
+  this.distToEdge = {x: Math.ceil((width / TILESIZE) / 2) + 1,
+                     y: Math.ceil((height / TILESIZE) / 2) + 1};
+}
 
 Camera.prototype.update = function(position) {
   // origin of current canvas view (in tiles not pixels)
