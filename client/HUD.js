@@ -25,27 +25,25 @@ HUD.prototype.draw = function() {
   this.drawPower();
 };
 
-HUD.prototype.drawTitle = function() {
+HUD.prototype.drawText = function(text, xpos) {
+  var ypos = 65;
   this.context.fillStyle = '#fff';
   this.context.font = "bold 60px 'VT323'";
-  this.context.fillText("fun game", 40, 65);
+  this.context.fillText(text, xpos, ypos);
+}
+HUD.prototype.drawTitle = function() {
+  this.drawText("fun game", 40);
 };
 
 HUD.prototype.drawLife = function() {
-  this.context.fillStyle = '#fff';
-  this.context.font = "bold 60px 'VT323'";
-  this.context.fillText("Life x" + Math.round(this.life), 400, 65);
+  this.drawText("Life x" + Math.round(this.life), 400);
 };
 
 HUD.prototype.drawMines = function() {
-  this.context.fillStyle = '#fff';
-  this.context.font = "bold 60px 'VT323'";
-  this.context.fillText("Mine x" + this.mines, 650, 65);
+  this.drawText("Mine x" + this.mines, 650);
 };
 
 HUD.prototype.drawPower = function() {
-  this.context.fillStyle = '#fff';
-  this.context.font = "bold 60px 'VT323'";
-  this.context.fillText("Fire x" + this.power, 900, 65);
+  this.drawText("Fire x" + this.power, 900);
 };
 

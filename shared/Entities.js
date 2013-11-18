@@ -32,12 +32,12 @@ Entities.prototype.create = function(constructor, settings) {
 };
 
 Entities.prototype.find = function(id) {
-  if (this.objects[id]) return this.objects[id].object;
+  if (id in this.objects) return this.objects[id].object;
   return false;
 };
 
 Entities.prototype.set = function(id, settings) {
-  if (this.objects[id]) {
+  if (id in this.objects) {
     for (var prop in settings) {
       this.objects[id].object[prop] = settings[prop];
     }
@@ -58,7 +58,7 @@ Entities.prototype._in = function(entities) {
     var entity = entities.update[id];
     var settings = root[entity.constructor].prototype._in(entity.object);
 
-    if (this.objects[id]) {
+    if (id in this.objects) {
       // update existing object with new settings from the server
       if (this.objects[id].object.set) {
         this.objects[id].object.set(settings);

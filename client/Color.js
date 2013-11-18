@@ -2,12 +2,13 @@
 var Color = {
   rgb: function(r, g, b) { return 'rgb('+r+','+g+','+b+')'; },
   rgba: function(r, g, b, a) {
-    if(a){
-      a = a == 'rand' ? (Utils.randBetween(5,10)/2) : a;
-      return 'rgba('+r+','+g+','+b+','+a+')'; 
-    }else{
+    if (!a) {
       return this.rgb(r, g, b);
     }
+    if (a === 'rand') {
+      a = Utils.randBetween(2.5, 5, true);
+    }
+    return 'rgba('+r+','+g+','+b+','+a+')';
   }
 };
 
