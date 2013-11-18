@@ -40,15 +40,19 @@ Item.prototype.makeSprites = function() {
   }
 
   if(this.type === 'heart'){
-    var c1 = Color.CLEAR();
-    var c2 = Color.LRED('rand');
-    var c3 = Color.WHITE();
+    this.sprite = new Sprite(7, this.position, 200);
+    var c = Color.CLEAR();
+    var r = Color.LRED('rand');
+    var b = Color.BLACK();
 
-    var f1 = [[c1, c2, c1, c2, c1],
-              [c2, c2, c2, c2, c2],
-              [c2, c2, c2, c2, c2],
-              [c1, c2, c2, c2, c1],
-              [c1, c1, c2, c1, c1]];
+    var f1 = [[c, b, b, c, b, b, c],
+              [b, r, r, b, r, r, b],
+              [b, r, r, r, r, r, b],
+              [c, b, r, r, r, b, c],
+              [c, b, r, r, r, b, c],
+              [c, c, b, r, b, c, c],
+              [c, c, c, b, c, c, c]];
+
     frames = [f1];
   }
 

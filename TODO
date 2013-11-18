@@ -28,7 +28,7 @@ Robot subs:
   - neural network sub
 
 Game data API:
-  - log all gameplay data to disk
+  - good way of logging all gameplay data to disk
   - create way to GET past game data
 
 Game modes:
