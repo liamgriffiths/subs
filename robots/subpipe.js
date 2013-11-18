@@ -1,6 +1,7 @@
 var Sub = require('./Sub');
 var sub = new Sub();
 
+console.log('hello!');
 
 process.stdin.on('data', function (buf) {
   var input = buf.toString().trim();
@@ -12,5 +13,7 @@ process.stdin.on('data', function (buf) {
     case 'up': sub.up(); break;
     case 'mine': sub.mine(); break;
   }
+
+  console.log(input);
 
 });
