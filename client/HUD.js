@@ -32,7 +32,7 @@ HUD.prototype.drawText = function(text, xpos) {
   this.context.fillText(text, xpos, ypos);
 }
 HUD.prototype.drawTitle = function() {
-  this.drawText("fun game", 40);
+  this.drawText("bit bomber", 40);
 };
 
 HUD.prototype.drawLife = function() {

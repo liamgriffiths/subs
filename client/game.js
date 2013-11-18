@@ -47,15 +47,22 @@ function Game() {
 
 
   window.addEventListener('keydown', this.sendCommand.bind(this));
+  window.addEventListener('resize', function(event) {
+    canvas.width = document.documentElement.clientWidth;
+    canvas.height = document.documentElement.clientHeight - 102;
+  });
 
   this.hud = new HUD();
   // TODO: scale game drawing to screen/viewport
-  canvas.width = screen.width;
-  canvas.height = screen.height - 102;
+  canvas.width = document.documentElement.clientWidth;
+  canvas.height = document.documentElement.clientHeight - 102;
+  // TILESIZE = Math.floor((canvas.height / 12) / (canvas.width / 16)) * 100;
 
   this.camera = new Camera(canvas.width, canvas.height);
 
 }
+
+
 
 Game.prototype = {
   connected: function(){ },

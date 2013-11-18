@@ -1,5 +1,5 @@
 // handles all user inputs
-window.addEventListener('keydown', function (event) {
+window.addEventListener('keydown', function(event) {
   switch (event.keyCode) {
     case 37: ws.send('left'); break;
     case 38: ws.send('up'); break;
@@ -8,5 +8,8 @@ window.addEventListener('keydown', function (event) {
     case 32: ws.send('mine'); break; // space
     // case 68: debugger; break;
   }
+});
+
+  console.log('lol');
 });
 
