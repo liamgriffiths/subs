@@ -36,15 +36,14 @@ Player.prototype.onmessage = function(message, board) {
       }
     }
   } else {
-    var dist = this.speed / Player.maxSpeed;
     if (message == 'left') {
-      this.move({x: this.position.x - dist, y: this.position.y}, board);
+      this.move({x: this.position.x - 1, y: this.position.y}, board);
     } else if (message == 'right') {
-      this.move({x: this.position.x + dist, y: this.position.y}, board);
+      this.move({x: this.position.x + 1, y: this.position.y}, board);
     } else if (message == 'up') {
-      this.move({x: this.position.x, y: this.position.y - dist}, board);
+      this.move({x: this.position.x, y: this.position.y - 1}, board);
     } else if (message == 'down') {
-      this.move({x: this.position.x, y: this.position.y + dist}, board);
+      this.move({x: this.position.x, y: this.position.y + 1}, board);
     }
   }
 };

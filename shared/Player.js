@@ -8,12 +8,9 @@ function Player(settings) {
   this.maxMines = settings.maxMines || 1;
   this.createdAt = settings.createdAt || new Date().getTime();
   this.life = settings.life || 3;
-  this.speed = settings.speed || 10;
   this.isConnected = settings.isConnected;
   this.name = settings.name || "yolo";
 }
-
-Player.maxSpeed = 10;
 
 Player.prototype.set = function(settings) {
   this.constructor(settings);
