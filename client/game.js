@@ -70,7 +70,7 @@ Game.prototype = {
     var sessionId = Utils.readSessionId();
     if (sessionId) {
       // reconnect
-      this.send(sessionId);
+      this.send('hi, i am back ' + sessionId);
     } else {
       // send connection message
       var name = prompt("Enter your name", "Human");
