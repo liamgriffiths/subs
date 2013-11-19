@@ -1,7 +1,7 @@
 function HUD() {
   this.canvas = document.getElementById('hud');
   this.context = this.canvas.getContext('2d');
-  this.canvas.width = screen.width;
+  this.canvas.width = document.documentElement.clientWidth;
   this.canvas.height = 100;
 
   this.life = 0;
