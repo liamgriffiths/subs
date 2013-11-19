@@ -14,7 +14,6 @@ Board/map:
  
 Server:
   - how to start, restart game
-  - cookie sessions for accidental disconnects
   - add event functions to objects (oncreate, ondestroy, etc)
 
 HUD:
@@ -28,7 +27,9 @@ Robot subs:
 
 Game data API:
   - good way of logging all gameplay data to disk
+    - maybe output the entities._out() changes to file on update?
   - create way to GET past game data
+    - serve static files?
 
 Game modes:
   - play game in FFA, Team mode, (incl coop mode (humans vs machines))
