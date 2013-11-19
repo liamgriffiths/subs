@@ -53,22 +53,15 @@ Player.prototype.update = function(now, delta, board) {
 };
 
 Player.prototype.canMoveTo = function(position, board) {
-
-  if (this.position) {
-    // if moving from another tile, round one way or the other
-    position = {
-      x: position.x < this.position.x ? Math.floor(position.x) : Math.ceil(position.x),
-      y: position.y < this.position.y ? Math.floor(position.y) : Math.ceil(position.y)
-    };
-  }
-
   var tileId = board.tile(position);
   if (! tileId) return false;
 
   var tile = entities.find(tileId);
   if (! tile) return false;
 
-  if (! this.isAlive) return true;
+  if (typeof this.isAlive !== 'undefined' && ! this.isAlive) {
+    return true;
+  }
 
   if (tile.type == 'wall' || tile.type == 'hardwall' || tile.mine) {
     return false;

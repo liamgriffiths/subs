@@ -53,13 +53,13 @@ Board.prototype.spawnPosition = function() {
     index = index > this.size ? 0 : index + 1;
     var pos = this.coords(index);
 
-    if (Player.prototype.canMoveTo(pos, this)) {
+    if (Player.prototype.canMoveTo({x: pos.x, y: pos.y}, this)) {
       var cnt = 0;
       if (Player.prototype.canMoveTo({x: pos.x + 1, y: pos.y}, this)) cnt++;
       if (Player.prototype.canMoveTo({x: pos.x + 1, y: pos.y}, this)) cnt++;
       if (Player.prototype.canMoveTo({x: pos.x, y: pos.y + 1}, this)) cnt++;
       if (Player.prototype.canMoveTo({x: pos.x, y: pos.y - 1}, this)) cnt++;
-      if (cnt > 1) {
+      if (cnt > 3) {
         return pos; // found a good position
       }
     }
