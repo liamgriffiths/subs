@@ -53,6 +53,7 @@ function Game() {
   });
 
   this.hud = new HUD();
+
   // TODO: scale game drawing to screen/viewport
   canvas.width = document.documentElement.clientWidth;
   canvas.height = document.documentElement.clientHeight - 102;
@@ -67,7 +68,7 @@ function Game() {
 Game.prototype = {
   connected: function(){ },
 
-  disconnected: function(){ return process.exit(); },
+  disconnected: function(){ },
 
   error: function(err, description) { throw err; },
 
