@@ -39,11 +39,6 @@ Mine.prototype.finishExplosion = function(board) {
   var tileId = board.tile(this.position);
   var tile = entities.find(tileId);
   tile.mine = undefined;
-
-  this.finishExplosionTo(this.position.x + this.power, this.position.y, board);
-  this.finishExplosionTo(this.position.x - this.power, this.position.y, board);
-  this.finishExplosionTo(this.position.x, this.position.y + this.power, board);
-  this.finishExplosionTo(this.position.x, this.position.y - this.power, board);
 };
 
 
@@ -86,56 +81,11 @@ Mine.prototype.explodeTo = function(toX, toY, board) {
   }
 };
 
-Mine.prototype.finishExplosionTo = function(toX, toY, board) {
-  if(toX > board.w) toX = board.w;
-  if(toY > board.h) toY = board.h;
-
-  if(this.position.x < toX){
-    for(x = this.position.x; x < toX; x++){
-      var tileId = board.tile({x: x, y: toY});
-      this.stopExplodingTile(tileId);
-    }
-  }else{
-    for(x = this.position.x; x > toX; x--){
-      var tileId = board.tile({x: x, y: toY});
-      this.stopExplodingTile(tileId);
-    }
-  }
-
-  if(this.position.y < toY){
-    for(y = this.position.y; y < toY; y++){
-      var tileId = board.tile({x: toX, y: y});
-      this.stopExplodingTile(tileId);
-    }
-  }else{
-    for(y = this.position.y; y > toY; y--){
-      var tileId = board.tile({x: toX, y: y});
-      this.stopExplodingTile(tileId);
-    }
-  }
-};
-
 Mine.prototype.explodeTile = function(tileId) {
   var tile = global.entities.find(tileId);
   if (tile && tile.isExplodable){
-    tile.isExploding = true;
-    if (tile.type == 'water') {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  return false;
-};
-
-Mine.prototype.stopExplodingTile = function(tileId) {
-  var tile = global.entities.find(tileId);
-  if (tile && tile.isExploding){
-    tile.isExploding = false;
-    if(tile.isExplodable) {
-      tile.type = 'water';
-    }
-    return true;
+    tile.explodingTime = this.explodingTime;
+    return tile.type === 'water';
   }
   return false;
 };
