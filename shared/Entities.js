@@ -97,6 +97,7 @@ Entities.prototype._in = function(entities) {
 
 Entities.prototype._out = function(options) {
   var out = {
+    timestamp: new Date().getTime(),
     update: {},
     remove: []
   };
@@ -106,7 +107,7 @@ Entities.prototype._out = function(options) {
 
     if (! entity.object) {
       // if marked for removal, delete
-      console.log('Removal <%s %s>', entity.constructor, id);
+      console.log('Removing <%s %s>', entity.constructor, id);
       delete this.objects[id];
       out.remove.push(id);
 
