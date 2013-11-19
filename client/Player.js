@@ -6,8 +6,9 @@ Player.prototype.makeSprites = function() {
   var c0 = Color.BLACK(1/10);
   var c1 = Color.WHITE(8/10);
 
-  var c2 = Color.Rand();
-  var c6 = Color.Rand();
+  var playerColors = Color.guidColors(this.id);
+  var c2 = playerColors[0];
+  var c6 = playerColors[1];
 
   var c3 = Color.WHITE(9/10);
   var c4 = Color.YELLOW();
