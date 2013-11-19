@@ -2,14 +2,14 @@ function Player(settings) {
   this.id = settings.id;
   this.position = settings.position;
   this.prevPosition = settings.prevPosition || settings.position;
-  this.power = settings.power;
+  this.power = settings.power || 2;
   this.isAlive = settings.isAlive;
-  this.availableMines = settings.availableMines;
+  this.availableMines = settings.availableMines || 1;
   this.maxMines = settings.maxMines || 1;
   this.createdAt = settings.createdAt || new Date().getTime();
   this.life = settings.life || 3;
   this.speed = settings.speed || 10;
-  this.isConnected = settings.isConnected || false;
+  this.isConnected = settings.isConnected;
   this.name = settings.name || "yolo";
 }
 
