@@ -10,7 +10,6 @@ Gameplay:
   - let ghost players mess with other players
 
 Board/map:
-  - stop spawning player in walled tiles or in limited-movement spots
   - maze generation algos?
  
 Server:
