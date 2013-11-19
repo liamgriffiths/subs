@@ -1,9 +1,6 @@
 var Player = require('../shared/Player');
 
 Player.prototype.message = function(message, playerId, board) {
-  message = message.trim().toLowerCase();
-  if(! message) return;
-
   if (message == 'mine' && this.isAlive) {
     if(this.availableMines > 0){
       var tileId = board.tile({x: this.position.x, y: this.position.y});

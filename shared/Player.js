@@ -9,6 +9,8 @@ function Player(settings) {
   this.createdAt = settings.createdAt || new Date().getTime();
   this.life = settings.life || 3;
   this.speed = settings.speed || 10;
+  this.isConnected = settings.isConnected || false;
+  this.name = settings.name || "yolo";
 }
 
 Player.maxSpeed = 10;
@@ -29,7 +31,8 @@ Player.prototype._out = function() {
     this.life,
     this.prevPosition.x,
     this.prevPosition.y,
-    this.maxMines
+    this.maxMines,
+    this.name
   ];
 };
 
@@ -43,7 +46,8 @@ Player.prototype._in = function(data) {
     id: data[6],
     life: data[7],
     prevPosition: {x: data[8], y: data[9]},
-    maxMines: data[10]
+    maxMines: data[10],
+    name: data[11]
   };
 };
 

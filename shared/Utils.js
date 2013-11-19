@@ -28,6 +28,29 @@ var Utils = {
 
   clearCanvas: function() {
     return context.clearRect(0, 0, canvas.width, canvas.height);
+  },
+
+  createSessionId: function(sessionId, days) {
+    // via:
+    // http://stackoverflow.com/questions/4825683/how-do-i-create-and-read-a-value-from-cookie
+    var date = new Date();
+    days = days || 7;
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    var expires = "; expires=" + date.toGMTString();
+    var data = "sessionId=" + sessionId;
+    var cookie = [data, ';', expires, "; path=/"];
+    document.cookie = cookie.join('');
+  },
+
+  readSessionId: function() {
+    if (document.cookie.length && document.cookie.match(/sessionId/)) {
+      var matches = document.cookie.match(/sessionId=(\w+-\w+-\w+-\w+-\w+)/);
+      return matches ? matches[1] : undefined;
+    }
+  },
+
+  eraseSessionId: function() {
+    this.createSessionId("");
   }
 };
 

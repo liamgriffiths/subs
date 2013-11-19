@@ -59,35 +59,63 @@ WebSocketServer.prototype.broadcast = function(data) {
 };
 
 wss.on('connection', function(ws) {
-  // client connected, create new player
-  var playerId = global.entities.create('Player', {
-    position: board.spawnPosition(),
-    power: 2,
-    isAlive: true,
-    availableMines: 1
+  var playerId;
+
+  console.log('Opened connection');
+
+  ws.on('close', function() {
+    if (ws.player) {
+      console.log('Closed connection: %s', playerId);
+      ws.player.isConnected = false;
+    }
+    // remove from entities
+    // global.entities.remove(playerId);
   });
 
-
-  if (playerId) {
-    console.log('Opened connection: %s', playerId);
-    var player = global.entities.find(playerId);
-
-    ws.on('close', function() {
-      console.log('Closed connection: %s', playerId);
-      // remove from entities
-      global.entities.remove(playerId);
-    });
-
-    ws.on('message', function(message) {
-      console.log('Message recieved from %s: %s', playerId, message);
-      return player.message(message, playerId, board);
-    });
-
-    ws.sendJSON({hi: {id: playerId}});
-    ws.player = player;
-    // send the whole game state to new player
-    ws.sendJSON({entities: global.entities._out()});
-  }
+  ws.on('message', function(message) {
+    message = message.trim().toLowerCase();
+    if (message) {
+      if (ws.player) {
+        console.log('Command recieved from %s: %s', ws.player.id, message);
+        return ws.player.message(message, ws.player.id, board);
+      } else {
+        if (message.match(/^hi, i am \w+.*$/)) {
+          var name = message.match(/^hi, i am (.*)$/)[1].substring(0, 26);
+          // create new player
+          playerId = global.entities.create('Player', {
+            position: board.spawnPosition(),
+            power: 2,
+            isAlive: true,
+            availableMines: 1,
+            isConnected: true,
+            name: name
+          });
+          var player = global.entities.find(playerId);
+          ws.sendJSON({hi: {id: playerId}});
+          ws.player = player;
+          console.log("Created session for: " + name);
+          // send the whole game state to new player
+          ws.sendJSON({entities: global.entities._out()});
+        } else {
+          // reconnect player, player id should be in session
+          var player = global.entities.find(message);
+          if (player) {
+            if (! player.isConnected) {
+              player.isConnected = true;
+              console.log("Reconnected to session for: " + player.name);
+              ws.player = player;
+              ws.sendJSON({hi: {id: player.id}});
+              // send the whole game state to new player
+              ws.sendJSON({entities: global.entities._out()});
+            } else {
+              // already connected!
+            }
+          } else {
+            ws.sendJSON({bye: true});
+          }
+        }
+      }
+    }
+  });
 });
-
 

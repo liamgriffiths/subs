@@ -66,7 +66,17 @@ function Game() {
 
 
 Game.prototype = {
-  connected: function(){ },
+  connected: function(){
+    var sessionId = Utils.readSessionId();
+    if (sessionId) {
+      // reconnect
+      this.send(sessionId);
+    } else {
+      // send connection message
+      var name = prompt("Enter your name", "Human");
+      this.send('hi, i am ' + name);
+    }
+  },
 
   disconnected: function(){ },
 
@@ -79,10 +89,19 @@ Game.prototype = {
       this.lastUpdate = currentTime;
 
       var message = JSON.parse(e.data);
-      if (message.hi) this.id = message.hi.id;
+      if (message.hi) {
+        this.id = message.hi.id;
+        // create session cookie
+        Utils.createSessionId(this.id);
+      }
+
       if (message.entities) {
         // console.log(message.entities);
         this.entities._in(message.entities);
+      }
+
+      if (message.bye) {
+        Utils.eraseSessionId();
       }
     }
   },

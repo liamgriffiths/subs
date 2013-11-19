@@ -39,7 +39,7 @@ Sub.prototype = {
   },
 
   send: function(message) {
-    if (this.conn.readyState === 1) this.conn.send(message);
+    if (this.conn.readyState === 1 && this.id) this.conn.send(message);
   },
 
   // commands the server accepts
