@@ -26,10 +26,6 @@ var Utils = {
     return change * delta / duration + current;
   },
 
-  clearCanvas: function() {
-    return context.clearRect(0, 0, canvas.width, canvas.height);
-  },
-
   createSessionId: function(sessionId, days) {
     // via:
     // http://stackoverflow.com/questions/4825683/how-do-i-create-and-read-a-value-from-cookie
