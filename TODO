@@ -38,7 +38,8 @@ Browser Client:
   - z-index / priority queue drawing? multiple canvases?
   - client-side prediction
   - graphics for 'water', use color cycling?
-  - render screen in relation to viewport size
+  - relative tile-size
+  - relative font-size
 
 Sound effects:
   - explosions sound
@@ -49,9 +50,5 @@ Sound effects:
   - gameplay music
   - menu screen music
   - game over music
-
-Mine bug:
-  - stopExploding can some times prematurely stop a tile from exploding
-
 
 
