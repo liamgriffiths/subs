@@ -61,7 +61,7 @@ Tile.prototype.drawExplosion = function() {
 
   for(var x = startX; x < startX + TILESIZE; x += pixelSize){
     for(var y = startY; y < startY + TILESIZE; y += pixelSize){
-      context.fillStyle = "rgba(240,0,0, "+(Utils.randBetween(0,10)/2)+")";
+      context.fillStyle = "rgba(240,0,0, "+(Utils.randBetween(0,5))+")";
       context.fillRect(x, y, pixelSize + 0.5, pixelSize + 0.5);
       p++;
     }
