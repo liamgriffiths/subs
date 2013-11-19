@@ -31,6 +31,16 @@ Entities.prototype.create = function(constructor, settings) {
   }
 };
 
+Entities.prototype.update = function(now, delta, board) {
+  for (var id in this.objects) {
+    var object = this.objects[id].object;
+    if (object && object.update) {
+      object.update(now, delta, board);
+    }
+  }
+  return this;
+};
+
 Entities.prototype.find = function(id) {
   if (id in this.objects) return this.objects[id].object;
   return false;
