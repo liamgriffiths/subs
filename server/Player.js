@@ -24,7 +24,7 @@ Player.prototype.onmessage = function(message, board) {
           countdown: 3000,
           power: this.power,
           explodingTime: 1000,
-          owner: playerId
+          owner: this.id
         });
         if (mineId) {
           this.availableMines--;
