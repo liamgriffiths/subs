@@ -1,6 +1,19 @@
 var Player = require('../shared/Player');
 
-Player.prototype.message = function(message, playerId, board) {
+Player.prototype.onconnect = function() {
+  this.isConnected = true;
+};
+
+Player.prototype.ondestroy = function () {
+};
+
+Player.prototype.ondisconnect = function() {
+  console.log('<Player %s> disconnected', this.id);
+  this.isConnected = false;
+};
+
+Player.prototype.onmessage = function(message, board) {
+  console.log('Command recieved from %s: %s', this.id, message);
   if (message == 'mine' && this.isAlive) {
     if(this.availableMines > 0){
       var tileId = board.tile({x: this.position.x, y: this.position.y});
