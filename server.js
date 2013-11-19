@@ -8,37 +8,47 @@ var WebSocket = require('ws'),
     Mine = require('./server/Mine'),
     Player = require('./server/Player'),
     Utils = require('./shared/Utils'),
-    lastTime = new Date().getTime();
-
-var entities,
+    lastTime = new Date().getTime(),
     delta,
     board;
 
+// new methods for WebSockets
+WebSocket.prototype.sendJSON = function(data) {
+  try {
+    this.send(JSON.stringify(data));
+  } catch(e) {
+    console.log("[%s]%s", e, data);
+  }
+};
+
+WebSocketServer.prototype.broadcast = function(data) {
+  for (var id in this.clients) {
+    this.clients[id].sendJSON(data);
+  }
+};
+
 function setup() {
+  // global vars, for now
+  // TODO: move these into Entities (client && serverside)?
   global.Tile = Tile;
   global.Item = Item;
   global.Player = Player;
   global.Mine = Mine;
   global.entities = new Entities();
-
   delta = 0;
   board = new Board({h: 40, w: 40}).reticulateSplines();
 }
 
 function update() {
+  // update delta (time since last update)
   var now = new Date().getTime();
   delta = now - lastTime;
   lastTime = now;
 
+  // update all game entities
+  global.entities.update(now, delta, board);
 
-  for (var id in global.entities.objects) {
-    var object = global.entities.objects[id].object;
-    if (object && object.update) {
-      object.update(now, delta, board);
-    }
-  }
-
-  // send changes to all players
+  // send updates/deletes to all players if there are any
   var message = {entities: global.entities._out({diff: true})};
   if (message.entities.remove.length || Object.keys(message.entities.update).length) {
     wss.broadcast(message);
@@ -48,74 +58,46 @@ function update() {
 setup();
 var interval = setInterval(update, 20);
 
-WebSocket.prototype.sendJSON = function(data) {
-  this.send(JSON.stringify(data));
-};
-
-WebSocketServer.prototype.broadcast = function(data) {
-  for (var id in this.clients) {
-    this.clients[id].sendJSON(data);
-  }
-};
-
 wss.on('connection', function(ws) {
-  var playerId;
 
-  console.log('Opened connection');
-
-  ws.on('close', function() {
-    if (ws.player) {
-      console.log('Closed connection: %s', playerId);
-      ws.player.isConnected = false;
-    }
-    // remove from entities
-    // global.entities.remove(playerId);
-  });
+  ws.on('close', function() { if (ws.player) ws.player.ondisconnect(); });
+  ws.on('error', function(error) { console.log(error); });
 
   ws.on('message', function(message) {
     message = message.trim().toLowerCase();
-    if (message) {
-      if (ws.player) {
-        console.log('Command recieved from %s: %s', ws.player.id, message);
-        return ws.player.message(message, ws.player.id, board);
-      } else {
-        if (message.match(/^hi, i am \w+.*$/)) {
-          var name = message.match(/^hi, i am (.*)$/)[1].substring(0, 26);
-          // create new player
-          playerId = global.entities.create('Player', {
-            position: board.spawnPosition(),
-            power: 2,
-            isAlive: true,
-            availableMines: 1,
-            isConnected: true,
-            name: name
-          });
-          var player = global.entities.find(playerId);
-          ws.sendJSON({hi: {id: playerId}});
-          ws.player = player;
-          console.log("Created session for: " + name);
-          // send the whole game state to new player
-          ws.sendJSON({entities: global.entities._out()});
-        } else {
-          // reconnect player, player id should be in session
-          var player = global.entities.find(message);
-          if (player) {
-            if (! player.isConnected) {
-              player.isConnected = true;
-              console.log("Reconnected to session for: " + player.name);
-              ws.player = player;
-              ws.sendJSON({hi: {id: player.id}});
-              // send the whole game state to new player
-              ws.sendJSON({entities: global.entities._out()});
-            } else {
-              // already connected!
-            }
-          } else {
-            ws.sendJSON({bye: true});
-          }
-        }
+    if (! message) return;
+
+    // player exists, let player process message/command && return
+    if (ws.player) return ws.player.onmessage(message, board);
+
+    // player is reconnecting
+    if (message.match(/^hi, i am back \w+-\w+-\w+-\w+-\w+$/)) {
+      var id = message.match(/^hi, i am back (\w+-\w+-\w+-\w+-\w+)$/)[1];
+      var player = global.entities.find(id);
+      if (player && ! player.isConnected) {
+        ws.player = player;
+        ws.sendJSON({hi: {id: ws.player.id}});
+        ws.sendJSON({entities: global.entities._out()});
+        return ws.player.onconnect();
       }
     }
+
+    // create a new player
+    if (message.match(/^hi, i am \w+.*$/)) {
+      var name = message.match(/^hi, i am (.*)$/)[1].substring(0, 26);
+      var playerId = global.entities.create('Player', {
+        position: board.spawnPosition(),
+        isAlive: true,
+        isConnected: true,
+        name: name
+      });
+
+      ws.player = global.entities.find(playerId);
+      ws.sendJSON({hi: {id: ws.player.id}});
+      ws.sendJSON({entities: global.entities._out()});
+      return ws.player.onconnect();
+    }
+
   });
 });
 
