@@ -1,54 +1,25 @@
-Gameplay:
-  - devise points system
-  - high score system
-  - game menu screen
-    * input name
-    * chose game mode
-  - game over screen
-    * show winner
-    * list players by score
-  - let ghost players mess with other players
+Version 1
+---------
+- game start/end on timer
+- let ghost players mess with other players
+- hud: use sprites instead of words for each item
+- hud: label players
+- hud: game timer
+- log game data, log game.entities._out()?
+- robot 1: genetic algo
+- robot 2: neural network
+- robot 3: a* searcher
+- sound effects: exposion sounds, item sound, bg music, wall breaking soound
 
-Board/map:
-  - maze generation algos?
- 
-Server:
-  - how to start, restart game
-  - add event functions to objects (oncreate, ondestroy, etc)
-
-HUD:
-  - use sprites instead of words for each item
-  - game countdown timer
-
-Robot subs:
-  - A* search and destroy sub
-  - genetic algo sub
-  - neural network sub
-
-Game data API:
-  - good way of logging all gameplay data to disk
-    - maybe output the entities._out() changes to file on update?
-  - create way to GET past game data
-    - serve static files?
-
-Game modes:
-  - play game in FFA, Team mode, (incl coop mode (humans vs machines))
-
-Browser Client:
-  - z-index / priority queue drawing? multiple canvases?
-  - client-side prediction
-  - graphics for 'water', use color cycling?
-  - relative tile-size
-  - relative font-size
-
-Sound effects:
-  - explosions sound
-  - death sound
-  - new player sound
-  - new mine sound
-  - collect item sound
-  - gameplay music
-  - menu screen music
-  - game over music
-
-
+Someday
+-------
+- maze generation algos rather than random map generation
+- points system
+- game menu
+- simultaneous games
+- reply games
+- play game in FFA, Team mode, (incl coop mode (humans vs machines))
+- z-index / priority queue drawing? multiple canvases?
+- graphics for 'water', use color cycling?
+- relative tile-size
+- relative font-size
