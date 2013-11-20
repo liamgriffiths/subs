@@ -70,7 +70,8 @@ function update() {
 }
 
 setup();
-var interval = setInterval(update, 20);
+newGame();
+var interval = setInterval(update, 10);
 
 wss.on('connection', function(ws) {
 

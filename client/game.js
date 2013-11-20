@@ -148,19 +148,32 @@ Game.prototype = {
     return this.entities.find(this.id);
   },
 
-  update: function(now, delta) {
-    var player = this.currentPlayer();
-    this.camera.update(player.position);
-    this.hud.update({
-      life: player.life,
-      power: player.power,
-      mines: player.maxMines
-    }, delta);
-
+  allPlayers: function() {
+    var players = [];
     for (var id in this.entities.objects) {
-      var object = this.entities.objects[id].object;
-      if (object.update) {
-        object.update(now, delta);
+      if (this.entities.objects[id].constructor === 'Player') {
+        players.push(this.entities.objects[id].object);
+      }
+    }
+    return players;
+  },
+
+  update: function(now, delta) {
+    if (player) {
+      this.camera.update(player.position);
+      this.hud.update({
+        life: player.life,
+        power: player.power,
+        mines: player.maxMines,
+        players: this.allPlayers()
+      }, delta);
+
+      // update all entities
+      for (var id in this.entities.objects) {
+        var object = this.entities.objects[id].object;
+        if (object.update) {
+          object.update(now, delta);
+        }
       }
     }
 
