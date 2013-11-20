@@ -3,8 +3,8 @@ function Camera(width, height) {
   this.start = {x: 0, y: 0}; // top left of the board
   this.end = {x: 0, y: 0};   // bottom right of the board
   // Tiles from center of board to edge of board
-  this.distToEdge = {x: Math.ceil((width / TILESIZE) / 2) + 1,
-                     y: Math.ceil((height / TILESIZE) / 2) + 1};
+  this.distToEdge = {x: Math.ceil((width / TILESIZE) / 2) + 3,
+                     y: Math.ceil((height / TILESIZE) / 2) + 3};
 }
 
 Camera.prototype.update = function(position) {
