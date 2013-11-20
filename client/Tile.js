@@ -44,8 +44,8 @@ Tile.prototype.makeSprites = function() {
 };
 
 Tile.prototype.draw = function() {
-  if(this.isExploding) { return this.drawExplosion(); }
-  if(this.type == 'water') return function(){};
+  if (this.isExploding) { return this.drawExplosion(); }
+  if (this.type == 'water') return function(){};
   return this.sprite.draw();
 };
 
@@ -61,7 +61,7 @@ Tile.prototype.drawExplosion = function() {
 
   for(var x = startX; x < startX + TILESIZE; x += pixelSize){
     for(var y = startY; y < startY + TILESIZE; y += pixelSize){
-      context.fillStyle = "rgba(240,0,0, "+(Utils.randBetween(0,5))+")";
+      context.fillStyle = "rgba(240,0,0, "+(Math.random() + 0.4)+")";
       context.fillRect(x, y, pixelSize + 0.5, pixelSize + 0.5);
       p++;
     }
