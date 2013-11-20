@@ -9,6 +9,7 @@ var WebSocket = require('ws'),
     Player = require('./server/Player'),
     Utils = require('./shared/Utils'),
     lastTime = new Date().getTime(),
+    GAMETIME = 10000,
     delta,
     board;
 
@@ -36,7 +37,19 @@ function setup() {
   global.Mine = Mine;
   global.entities = new Entities();
   delta = 0;
+  newGame();
+}
+
+function newGame() {
+  entities.each(function(entity) {
+    if (entity.constructor !== 'Player')  entity.object = undefined;
+  });
+
   board = new Board({h: 40, w: 40}).reticulateSplines();
+
+  entities.each(function(entity) {
+    if (entity.constructor === 'Player') entity.object.reset(board);
+  });
 }
 
 function update() {

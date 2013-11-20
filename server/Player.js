@@ -1,10 +1,8 @@
 var Player = require('../shared/Player');
 
 Player.prototype.onconnect = function() {
+  console.log('<Player %s> connected', this.id);
   this.isConnected = true;
-};
-
-Player.prototype.ondestroy = function () {
 };
 
 Player.prototype.ondisconnect = function() {
@@ -46,6 +44,16 @@ Player.prototype.onmessage = function(message, board) {
       this.move({x: this.position.x, y: this.position.y + 1}, board);
     }
   }
+};
+
+Player.prototype.reset = function(board) {
+  this.position = board.spawnPosition();
+  this.prevPosition = this.position;
+  this.power = undefined;
+  this.isAlive = true;
+  this.availableMines = undefined;
+  this.maxMines = undefined;
+  this.life = undefined;
 };
 
 Player.prototype.update = function(now, delta, board) {

@@ -46,6 +46,12 @@ Entities.prototype.find = function(id) {
   return false;
 };
 
+Entities.prototype.each = function(fn) {
+  for (var id in this.objects) {
+    fn(this.objects[id]);
+  }
+};
+
 Entities.prototype.set = function(id, settings) {
   if (id in this.objects) {
     for (var prop in settings) {

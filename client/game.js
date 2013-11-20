@@ -148,7 +148,7 @@ Game.prototype = {
 
   draw: function() {
     this.hud.draw();
-    Utils.clearCanvas();
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
     context.save();
     var player = this.currentPlayer();
