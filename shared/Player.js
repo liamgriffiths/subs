@@ -16,6 +16,62 @@ Player.prototype.set = function(settings) {
   this.constructor(settings);
 };
 
+Player.prototype.canMoveTo = function(position, board) {
+  var tileId = board.tile(position);
+  if (! tileId) return false;
+
+  var tile = entities.find(tileId);
+  if (! tile) return false;
+
+  if (typeof this.isAlive !== 'undefined' && ! this.isAlive) {
+    return true;
+  }
+
+  if (tile.type == 'wall' || tile.type == 'hardwall' || tile.mine) {
+    return false;
+  }
+
+  // TODO: check positions of ghosts, if there is one in the tile, then ret false
+
+  return true;
+};
+
+Player.prototype.move = function(position, board){
+  if (this.canMoveTo(position, board)) {
+    // move to new position
+    this.prevPosition = this.position;
+    this.position = position;
+
+    if (this.isAlive) {
+      // collect items at tile location
+      var tileId = board.tile(this.position);
+      var tile = entities.find(tileId);
+      if (tile) {
+        while (tile.items.length) {
+          var itemId = tile.items.shift();
+          this.addItem(itemId);
+        }
+      }
+    }
+    return true;
+  }
+  return false;
+};
+
+Player.prototype.addItem = function(itemId) {
+  var item = entities.find(itemId);
+  if (item) {
+    console.log("Adding <Item %s> to <Player %s>", itemId, this.id);
+    if(item.type == 'fire') this.power++;
+    if(item.type == 'heart') this.life++;
+    if(item.type == 'mine') {
+      this.availableMines++;
+      this.maxMines++;
+    }
+    entities.remove(itemId);
+  }
+};
+
 Player.prototype._out = function() {
   return [
     this.position.x,

@@ -128,6 +128,17 @@ Game.prototype = {
   send: function(message) {
     if (this.conn.readyState === 1) {
       this.conn.send(message);
+
+      if (message === 'left') {
+        player.move({x: player.position.x - 1, y: player.position.y}, board);
+      } else if (message === 'right') {
+        player.move({x: player.position.x + 1, y: player.position.y}, board);
+      } else if (message === 'up') {
+        player.move({x: player.position.x, y: player.position.y - 1}, board);
+      } else if (message === 'down') {
+        player.move({x: player.position.x, y: player.position.y + 1}, board);
+      }
+
     } else {
       throw 'Not connected!';
     }
