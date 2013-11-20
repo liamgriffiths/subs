@@ -14,7 +14,7 @@ Player.prototype.makeSprites = function() {
   var c4 = Color.YELLOW();
   var c5 = Color.YELLOW(5/10);
 
-  this.aliveSprite = new Sprite(5, this.position);
+  this.aliveSprite = new Sprite(TILESIZE, this.position);
   var a1 = [[c0, c2, c2, c2, c0],
             [c6, c2, c2, c2, c6],
             [c6, c2, c0, c2, c6],
@@ -27,7 +27,7 @@ Player.prototype.makeSprites = function() {
             [c5, c0, c0, c0, c5]];
   this.aliveSprite.frames = [a1,a2];
 
-  this.deadSprite = new Sprite(5, this.position);
+  this.deadSprite = new Sprite(TILESIZE, this.position);
   var d1 = [[c0, c1, c1, c1, c0],
             [c1, c0, c1, c0, c1],
             [c1, c1, c1, c1, c1],

@@ -1,5 +1,5 @@
 function Sprite(size, position, animationSpeed) {
-  this.size = size; // in "pixels" per tile
+  this.size = size; // size of tile in pixels
   this.position = {x: position.x, y: position.y, z: position.z};
   this.currentFrame = 0;
   this.tick = 0;
@@ -7,7 +7,6 @@ function Sprite(size, position, animationSpeed) {
   this.cache = [];
   this.animationDelta = 0;
   this.animationSpeed = animationSpeed || 500; // approx msecs/frame
-  this.pixelSize = Math.floor(TILESIZE / this.size);
 }
 
 Sprite.prototype.update = function(delta) {
@@ -24,21 +23,26 @@ Sprite.prototype.draw = function() {
   if(! this.frames.length) return false;
   var frame = this.frames[this.currentFrame];
 
-  var pos = {x: this.position.x * TILESIZE,
-             y: this.position.y * TILESIZE}; // pixel location on canvas
+  var pos = {x: this.position.x * this.size,
+             y: this.position.y * this.size}; // pixel location on canvas
   var key = this.currentFrame;
 
   if(this.cache[key] === undefined){
     // create a new canvas to cache the this frame drawing
     var cCanvas = document.createElement('canvas');
     var cContext = cCanvas.getContext('2d');
-    cCanvas.width  = cCanvas.height = TILESIZE;
-    for(var x = 0, ty = 0; x < TILESIZE; x += this.pixelSize, ty++){
-      for(var y = 0, tx = 0; y < TILESIZE; y += this.pixelSize, tx++){
+    cCanvas.width  = cCanvas.height = this.size;
+
+    var len = frame.length;
+    var pixelSize = Math.floor(this.size / len);
+
+    for (var x = 0, ty = 0; x < this.size; x += pixelSize, ty++) {
+      for (var y = 0, tx = 0; y < this.size; y += pixelSize, tx++) {
         cContext.fillStyle = frame[tx][ty];
-        cContext.fillRect(x, y, this.pixelSize, this.pixelSize);
+        cContext.fillRect(x, y, pixelSize, pixelSize);
       }
     }
+
     context.drawImage(cCanvas, pos.x, pos.y);
     this.cache[key] = cCanvas;
   }else{
