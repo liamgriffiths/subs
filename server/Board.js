@@ -1,5 +1,9 @@
 var Board = require('../shared/Board');
 
+Board.prototype.init = function() {
+  this.reticulateSplines();
+};
+
 // Create a new board w/ Tiles
 Board.prototype.reticulateSplines = function() {
   for (var i = 0; i < this.size; i++) {
@@ -33,13 +37,6 @@ Board.prototype.reticulateSplines = function() {
     return this;
   } else {
     return this.reticulateSplines();
-  }
-};
-
-// Update all the tiles on the board
-Board.prototype.update = function() {
-  for (var i = 0; i < this.size; i++) {
-    this.tiles[i].update();
   }
 };
 

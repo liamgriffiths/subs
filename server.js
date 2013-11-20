@@ -35,9 +35,9 @@ function setup() {
   global.Item = Item;
   global.Player = Player;
   global.Mine = Mine;
+  global.Board = Board;
   global.entities = new Entities();
   delta = 0;
-  newGame();
 }
 
 function newGame() {
@@ -45,7 +45,8 @@ function newGame() {
     if (entity.constructor !== 'Player')  entity.object = undefined;
   });
 
-  board = new Board({h: 40, w: 40}).reticulateSplines();
+  var boardId = global.entities.create('Board', {h: 60, w: 60});
+  board = global.entities.find(boardId);
 
   entities.each(function(entity) {
     if (entity.constructor === 'Player') entity.object.reset(board);

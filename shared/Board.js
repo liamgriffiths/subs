@@ -5,6 +5,28 @@ function Board(settings) {
   this.tiles = new Array(this.size);
 }
 
+Board.prototype.set = function(settings) {
+  this.constructor(settings);
+};
+
+Board.prototype._out = function() {
+  return [
+    this.w,
+    this.h,
+    this.size,
+    this.tiles
+  ];
+};
+
+Board.prototype._in = function(data) {
+  return {
+    w: data[0],
+    h: data[1],
+    size: data[2],
+    tiles: data[3]
+  };
+};
+
 // Check whether tile exists on board
 Board.prototype.exists = function(position){
   return !!this.tile(position.x, position.y);

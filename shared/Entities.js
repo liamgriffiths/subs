@@ -25,6 +25,9 @@ Entities.prototype.create = function(constructor, settings) {
       object: new root[constructor](settings)
     };
     console.log('Created <%s %s>', constructor, id);
+    if ('init' in root[constructor].prototype) {
+      root[constructor].prototype.init.call(this.objects[id].object);
+    }
     return id;
   } else {
     return false;

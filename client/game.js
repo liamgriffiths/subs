@@ -12,7 +12,8 @@ window.requestAnimFrame = (function(){
 
 var TILESIZE = 60,
     STARTED = false,
-    currentPlayer,
+    player,
+    board,
     canvas,
     context,
     delta; // time difference between frames
@@ -98,6 +99,14 @@ Game.prototype = {
       if (message.entities) {
         // console.log(message.entities);
         this.entities._in(message.entities);
+        if (! player) player = this.entities.find(this.id);
+        if (! board) { 
+          for (var id in this.entities.objects) {
+            if (this.entities.objects[id].constructor === 'Board') {
+              board = this.entities.objects[id].object;
+            }
+          }
+        }
       }
 
       if (message.bye) {
@@ -151,7 +160,6 @@ Game.prototype = {
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     context.save();
-    var player = this.currentPlayer();
     if (player) {
       // find the pixel position of the current player
       var newX = player.position.x * TILESIZE - (canvas.width / 2);
