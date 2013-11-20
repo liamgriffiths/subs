@@ -17,15 +17,22 @@ Camera.prototype.update = function(position) {
   }
 };
 
+Camera.prototype.isInView = function(position) {
+  if (position.x < this.start.x) return false;
+  if (position.x > this.end.x) return false;
+  if (position.y < this.start.y) return false;
+  if (position.y > this.end.y) return false;
+  return true;
+};
+
 Camera.prototype.addDrawing = function(object){
   // if the position to draw is within the camera view, add the draw function
   // to the draw queue
   var position = object.position;
-  var drawFn = object.draw.bind(object);
-  if(position.x >= this.start.x && position.x <= this.end.x &&
-     position.y >= this.start.y && position.y <= this.end.y) {
-       //prioritize by position.z, the lower the sooner it is drawn
-       this.drawQueue.enqueue(drawFn, position.z);
+  if (this.isInView(position)) {
+    var drawFn = object.draw.bind(object);
+    //prioritize by position.z, the lower the sooner it is drawn
+    this.drawQueue.enqueue(drawFn, position.z);
    }
 };
 
