@@ -11,7 +11,7 @@ Item.prototype.update = function(now, delta) {
 };
 
 function makeItemSprite(type, position) {
-  var sprite = new Sprite(TILESIZE, position, 200);
+  this.sprite = new Sprite(TILESIZE, context, position, 200);
   var frames = [];
 
   if(type === 'fire'){
@@ -40,7 +40,6 @@ function makeItemSprite(type, position) {
   }
 
   if(this.type === 'heart'){
-    this.sprite = new Sprite(TILESIZE, this.position, 200);
     var c = Color.CLEAR();
     var r = Color.LRED('rand');
     var b = Color.BLACK();

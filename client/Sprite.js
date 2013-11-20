@@ -1,4 +1,5 @@
-function Sprite(size, position, animationSpeed) {
+function Sprite(size, context, position, animationSpeed) {
+  this.context = context;
   this.size = size; // size of tile in pixels
   this.position = {x: position.x, y: position.y, z: position.z};
   this.currentFrame = 0;
@@ -43,10 +44,10 @@ Sprite.prototype.draw = function() {
       }
     }
 
-    context.drawImage(cCanvas, pos.x, pos.y);
+    this.context.drawImage(cCanvas, pos.x, pos.y);
     this.cache[key] = cCanvas;
   }else{
-    context.drawImage(this.cache[key], pos.x, pos.y);
+    this.context.drawImage(this.cache[key], pos.x, pos.y);
   }
 };
 

@@ -3,7 +3,7 @@ Mine.prototype.init = function() {
 };
 
 Mine.prototype.makeSprites = function() {
- this.sprite = new Sprite(TILESIZE, this.position, 50);
+ this.sprite = new Sprite(TILESIZE, context, this.position, 50);
   var c1 = Color.CLEAR();
   var c2 = Color.RED();
   var c3 = Color.DPURPLE();

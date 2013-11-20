@@ -5,7 +5,7 @@ Tile.prototype.init = function() {
 Tile.prototype.makeSprites = function() {
   switch(this.type){
     case 'wall':
-      this.sprite = new Sprite(TILESIZE, this.position);
+      this.sprite = new Sprite(TILESIZE, context, this.position);
       var frame = [[],[],[],[],[]];
       for(var x = 0; x < 5; x++){
         for(var y = 0; y < 5; y++){
@@ -18,7 +18,7 @@ Tile.prototype.makeSprites = function() {
       break;
 
     case 'hardwall':
-      this.sprite = new Sprite(TILESIZE, this.position, 600);
+      this.sprite = new Sprite(TILESIZE, context, this.position, 600);
       var c1 = Color.BLUE();
       var c2 = Color.RED();
       var f1 = [[c1, c2, c1, c2],
@@ -33,7 +33,7 @@ Tile.prototype.makeSprites = function() {
       break;
 
     case 'water':
-      this.sprite = new Sprite(TILESIZE, this.position);
+      this.sprite = new Sprite(TILESIZE, context, this.position);
       var watercolor = Color.DPURPLE();
       this.sprite.frames.push([[watercolor]]);
       break;

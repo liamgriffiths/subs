@@ -52,35 +52,13 @@ HUD.prototype.drawPower = function() {
 };
 
 HUD.prototype.drawPlayers = function() {
-  this.drawText("Players Connected:", 40, 70);
+  this.drawText("Players Connected:", 40, 60);
 
   for (var i = 1; i < this.players.length; i++) {
-    this.drawText(this.players[i].name, 140 + i * 100, 70);
-
-    var c0 = Color.BLACK(1/10);
-    var c1 = Color.WHITE(8/10);
-
-    var playerColors = Color.guidColors(this.players[i].id);
-    var c2 = playerColors[0];
-    var c6 = playerColors[1];
-
-    var c3 = Color.WHITE(9/10);
-    var c4 = Color.YELLOW();
-    var c5 = Color.YELLOW(5/10);
-
-    var aliveSprite = new Sprite(5, {x: 40, y: 100});
-    var a1 = [[c0, c2, c2, c2, c0],
-        [c6, c2, c2, c2, c6],
-        [c6, c2, c0, c2, c6],
-        [c0, c2, c2, c2, c0],
-        [c4, c0, c0, c0, c4]];
-    var a2 = [[c0, c2, c2, c2, c0],
-        [c6, c2, c2, c2, c6],
-        [c6, c2, c0, c2, c6],
-        [c0, c2, c2, c2, c0],
-        [c5, c0, c0, c0, c5]];
-    aliveSprite.frames = [a1,a2];
-    aliveSprite.draw();
+    this.drawText(this.players[i].name, 140 + i * 100, 60);
+    var sprite = this.players[i].miniAliveSprite;
+    sprite.position = {x: 8 + ((i - 1) * 3 + 0.4), y: 2.2};
+    sprite.draw();
   }
 };
 
