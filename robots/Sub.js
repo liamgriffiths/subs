@@ -20,7 +20,9 @@ function Sub() {
 }
 
 Sub.prototype = {
-  connected: function(){ },
+  connected: function(){
+    this.send('hi, i am robot');
+  },
 
   disconnected: function(){ return process.exit(); },
 
@@ -39,7 +41,7 @@ Sub.prototype = {
   },
 
   send: function(message) {
-    if (this.conn.readyState === 1 && this.id) this.conn.send(message);
+    if (this.conn.readyState === 1) this.conn.send(message);
   },
 
   // commands the server accepts
