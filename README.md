@@ -3,11 +3,11 @@
 This is a game (work in progress) that is designed to be a 2D browser-based
 realtime strategy game. It is similar to the game bomberman.
 
+## Live demo
 
+*Coming Soon*
 
-
-
-## Usage
+## Run your own game
 
 Install node.js dependencies:
 
@@ -23,9 +23,3 @@ Start the server:
 
 Visit: [http://localhost:3000](http://localhost:3000)
 
-## License
-
-Copyright © 2013 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
