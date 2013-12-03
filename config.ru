@@ -1,4 +1,4 @@
-use Rack::Static, :urls => ["/client", "/shared"], :root => "."
+use Rack::Static, :urls => ["/game.min.js"], :root => "."
 
 def index
   File.open('index.html', File::RDONLY)
