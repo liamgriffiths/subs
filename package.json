@@ -12,9 +12,7 @@
     "url": "https://github.com/liamgriffiths/subs/issues"
   },
   "dependencies": {
-    "ws": "latest"
-  },
-  "scripts": {
-    "hello": "echo hello world"
+    "ws": "latest",
+    "uglifyjs": "latest"
   }
 }
