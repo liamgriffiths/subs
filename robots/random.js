@@ -24,6 +24,6 @@ RandomSub.prototype.run = function() {
   setTimeout(this.run.bind(this), Math.random() * 1000);
 };
 
-// for (var i = 0 ; i < 20; i++){
+for (var i = 0 ; i < 20; i++){
   new RandomSub().run();
-// }
+}
