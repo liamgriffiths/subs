@@ -1,3 +1,6 @@
+var connect = require('connect');
+var http = require('http');
+
 var WebSocket = require('ws'),
     WebSocketServer = WebSocket.Server,
     wss = new WebSocketServer({port: 9000}),
@@ -12,6 +15,15 @@ var WebSocket = require('ws'),
     GAMETIME = 10000,
     delta,
     board;
+
+
+// server static files
+var app = connect()
+  .use(connect.static('public'))
+  .use(connect.directory('public'));
+http.createServer(app).listen(3000);
+
+
 
 // new methods for WebSockets
 WebSocket.prototype.sendJSON = function(data) {

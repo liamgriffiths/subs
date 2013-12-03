@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "ws": "latest",
-    "uglifyjs": "latest"
+    "uglifyjs": "latest",
+    "connect": "~2.11.2"
   }
 }
