@@ -1,5 +1,6 @@
 Tile.prototype.init = function() {
   this.makeSprites();
+  this.position.z = 1;
 };
 
 Tile.prototype.makeSprites = function() {
