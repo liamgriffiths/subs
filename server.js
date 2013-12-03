@@ -1,28 +1,26 @@
 var connect = require('connect');
 var http = require('http');
 
-var WebSocket = require('ws'),
-    WebSocketServer = WebSocket.Server,
-    wss = new WebSocketServer({port: 9000}),
-    Entities = require('./shared/Entities'),
-    Board = require('./server/Board'),
-    Tile = require('./server/Tile'),
-    Item = require('./shared/Item'),
-    Mine = require('./server/Mine'),
-    Player = require('./server/Player'),
-    Utils = require('./shared/Utils'),
-    lastTime = new Date().getTime(),
-    GAMETIME = 10000,
-    delta,
-    board;
+var WebSocket = require('ws');
+var WebSocketServer = WebSocket.Server;
 
+var wss = new WebSocketServer({port: 9000});
+var Entities = require('./shared/Entities');
+var Board = require('./server/Board');
+var Tile = require('./server/Tile');
+var Item = require('./shared/Item');
+var Mine = require('./server/Mine');
+var Player = require('./server/Player');
+var Utils = require('./shared/Utils');
+var lastTime = new Date().getTime();
+var GAMETIME = 10000;
+var delta;
+var board;
 
-// server static files
 var app = connect()
   .use(connect.static('public'))
   .use(connect.directory('public'));
 http.createServer(app).listen(3000);
-
 
 
 // new methods for WebSockets
