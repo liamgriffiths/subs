@@ -7,7 +7,7 @@ function Player(settings) {
   this.availableMines = settings.availableMines || 1;
   this.maxMines = settings.maxMines || 1;
   this.createdAt = settings.createdAt || new Date().getTime();
-  this.life = settings.life || 3;
+  this.life = settings.life || 1;
   this.isConnected = settings.isConnected;
   this.name = settings.name || "yolo";
 }
@@ -17,16 +17,16 @@ Player.prototype.set = function(settings) {
 };
 
 Player.prototype.canMoveTo = function(position, board) {
+  // ghosts can walk through walls
+  if (typeof this.isAlive !== 'undefined' && ! this.isAlive) return true;
+
   var tileId = board.tile(position);
   if (! tileId) return false;
 
   var tile = entities.find(tileId);
   if (! tile) return false;
 
-  if (typeof this.isAlive !== 'undefined' && ! this.isAlive) {
-    return true;
-  }
-
+  // live players cannot walk through walls :-P
   if (tile.type == 'wall' || tile.type == 'hardwall' || tile.mine) {
     return false;
   }

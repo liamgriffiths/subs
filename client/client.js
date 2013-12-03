@@ -68,15 +68,15 @@ function Game() {
 
 Game.prototype = {
   connected: function(){
-    var sessionId = Utils.readSessionId();
-    if (sessionId) {
-      // reconnect
-      this.send('hi, i am back ' + sessionId);
-    } else {
+    // var sessionId = Utils.readSessionId();
+    // if (sessionId) {
+    //   // reconnect
+    //   this.send('hi, i am back ' + sessionId);
+    // } else {
       // send connection message
       var name = prompt("Enter your name", "Human");
       this.send('hi, i am ' + name);
-    }
+    // }
   },
 
   disconnected: function(){ },
@@ -107,6 +107,10 @@ Game.prototype = {
             }
           }
         }
+      }
+
+      if (message.timeLeft) {
+        this.timeLeft = message.timeLeft;
       }
 
       if (message.bye) {

@@ -51,9 +51,9 @@ Player.prototype.reset = function(board) {
   this.prevPosition = this.position;
   this.power = undefined;
   this.isAlive = true;
-  this.availableMines = undefined;
-  this.maxMines = undefined;
-  this.life = undefined;
+  this.availableMines = 1;
+  this.maxMines = 1;
+  this.life = 1;
 };
 
 Player.prototype.update = function(now, delta, board) {
@@ -62,11 +62,11 @@ Player.prototype.update = function(now, delta, board) {
     if (tileId) {
       var tile = entities.find(tileId);
       if (tile) {
-        if (tile.isExploding) this.life -= 0.1;
+        if (tile.isExploding) this.life = 0;
       }
     }
   }
-  if (this.life < 0) this.isAlive = false;
+  if (this.life <= 0) this.isAlive = false;
 };
 
 
