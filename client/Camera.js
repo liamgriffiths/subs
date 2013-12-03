@@ -1,5 +1,5 @@
 function Camera(width, height) {
-  this.drawQueue = new PriorityQueue();
+  this.drawings = [];
   this.start = {x: 0, y: 0}; // top left of the board
   this.end = {x: 0, y: 0};   // bottom right of the board
   // Tiles from center of board to edge of board
@@ -32,14 +32,16 @@ Camera.prototype.addDrawing = function(object){
   if (this.isInView(position)) {
     var drawFn = object.draw.bind(object);
     //prioritize by position.z, the lower the sooner it is drawn
-    this.drawQueue.enqueue(drawFn, position.z);
+    var zindex = position.z || 0;
+    this.drawings.push({fn: drawFn, zindex: zindex});
    }
 };
 
 Camera.prototype.draw = function() {
+  this.drawings.sort(function(a, b) { return a.zindex - b.zindex; });
   // remove from queue and execute function
-  while(this.drawQueue.size()){
-    var fn = this.drawQueue.dequeue();
-    fn();
+  while(this.drawings.length){
+    var drawing = this.drawings.shift();
+    drawing.fn();
   }
 };
