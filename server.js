@@ -3,15 +3,8 @@ var http = require('http');
 
 var WebSocket = require('ws');
 var WebSocketServer = WebSocket.Server;
-
 var wss = new WebSocketServer({port: 9000});
 var Entities = require('./shared/Entities');
-var Board = require('./server/Board');
-var Tile = require('./server/Tile');
-var Item = require('./shared/Item');
-var Mine = require('./server/Mine');
-var Player = require('./server/Player');
-var Utils = require('./shared/Utils');
 var lastTime = new Date().getTime();
 var GAMETIME = 10000;
 var delta;
@@ -21,7 +14,6 @@ var app = connect()
   .use(connect.static('public'))
   .use(connect.directory('public'));
 http.createServer(app).listen(3000);
-
 
 // new methods for WebSockets
 WebSocket.prototype.sendJSON = function(data) {
@@ -41,11 +33,6 @@ WebSocketServer.prototype.broadcast = function(data) {
 function setup() {
   // global vars, for now
   // TODO: move these into Entities (client && serverside)?
-  global.Tile = Tile;
-  global.Item = Item;
-  global.Player = Player;
-  global.Mine = Mine;
-  global.Board = Board;
   global.entities = new Entities();
   delta = 0;
 }

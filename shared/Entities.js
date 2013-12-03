@@ -1,5 +1,14 @@
 var root = typeof global != 'undefined' ? global : window;
 
+if (typeof global != 'undefined') {
+  // if server-side, require other classes
+  root.Board = require('../server/Board');
+  root.Tile = require('../server/Tile');
+  root.Item = require('./Item');
+  root.Mine = require('../server/Mine');
+  root.Player = require('../server/Player');
+}
+
 function Entities(root) {
   // ex.
   // { 'guid-1234-abcd' : { constructor: 'Tile', object: [Object object] }
