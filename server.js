@@ -5,7 +5,7 @@ var WebSocketServer = WebSocket.Server;
 var wss = new WebSocketServer({port: 9000});
 var Entities = require('./shared/Entities');
 var lastTime = new Date().getTime();
-var GAMETIME = 1000 * 60 * 1; //minutes
+var GAMETIME = 1000 * 60 * 5; //minutes
 var runningTime = 0;
 var delta = 0;
 var board;
