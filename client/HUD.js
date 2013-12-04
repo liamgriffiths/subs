@@ -59,10 +59,12 @@ HUD.prototype.drawPlayers = function() {
   this.drawText("Players:", 40, 60);
 
   for (var i = 0; i < this.players.length; i++) {
-    this.drawText(this.players[i].name, 160 + i * 90, 60);
-    var sprite = this.players[i].miniAliveSprite;
-    sprite.position = spritePos(i);
-    sprite.draw();
+    if (this.players[i]) {
+      this.drawText(this.players[i].name, 160 + i * 90, 60);
+      var sprite = this.players[i].miniAliveSprite;
+      sprite.position = spritePos(i);
+      sprite.draw();
+    }
   }
 };
 

@@ -57,7 +57,7 @@ Tile.prototype.draw = function() {
 };
 
 Tile.prototype.update = function(now, delta) {
-  this.sprite.update(delta);
+  if (this.sprite.frames.length > 1) this.sprite.update(delta);
 };
 
 Tile.prototype.drawExplosion = function() {

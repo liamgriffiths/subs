@@ -33,7 +33,12 @@ WebSocketServer.prototype.broadcast = function(data) {
 
 // websocket server events
 wss.on('connection', function(ws) {
-  ws.on('close', function() { if (ws.player) ws.player.ondisconnect(); });
+  ws.on('close', function() { 
+    if (ws.player) { 
+      ws.player.ondisconnect(); 
+      global.entities.remove(ws.player.id);
+    }
+  });
   ws.on('error', function(error) { console.log(error); });
 
   ws.on('message', function(message) {

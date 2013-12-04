@@ -152,15 +152,13 @@ Game.prototype = {
     if (player) {
       this.camera.update(player.position);
 
-      if (now % 2) {
-        var players = this.allPlayers();
-        this.hud.update({
-          life: player.life,
-          power: player.power,
-          mines: player.maxMines,
-          players: players
-        }, delta);
-      }
+      var players = this.allPlayers();
+      this.hud.update({
+        life: player.life,
+        power: player.power,
+        mines: player.maxMines,
+        players: players
+      }, delta);
 
       // update all entities
       for (var id in this.entities.objects) {
