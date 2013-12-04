@@ -5,7 +5,9 @@ realtime strategy game. It is similar to the game bomberman.
 
 ## Live demo
 
-*Coming Soon*
+**Playable, but needs work**
+
+Visit: http://54.234.167.67
 
 ## Run your own game
 
