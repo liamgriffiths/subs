@@ -9,17 +9,13 @@ realtime strategy game. It is similar to the game bomberman.
 
 ## Run your own game
 
-Install node.js dependencies:
+Install node.js dependencies, prepare clientside js:
 
-    npm install
-
-Install foreman:
-
-    gem install foreman
+    make
 
 Start the server:
 
-    foreman start
+    node server
 
 Visit: [http://localhost:3000](http://localhost:3000)
 
