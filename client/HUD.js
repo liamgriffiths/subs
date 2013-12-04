@@ -21,6 +21,8 @@ HUD.prototype.update = function(settings, delta) {
 
 HUD.prototype.draw = function() {
   this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  this.context.fillStyle = '#fff';
+  this.context.font = "bold 20px 'VT323'";
   this.drawTitle();
   this.drawLife();
   this.drawMines();
@@ -30,8 +32,6 @@ HUD.prototype.draw = function() {
 
 HUD.prototype.drawText = function(text, xpos, ypos) {
   var ypos = ypos || 35;
-  this.context.fillStyle = '#fff';
-  this.context.font = "bold 20px 'VT323'";
   this.context.fillText(text, xpos, ypos);
 };
 
@@ -51,13 +51,17 @@ HUD.prototype.drawPower = function() {
   this.drawText("Fire x" + this.power, 900);
 };
 
-HUD.prototype.drawPlayers = function() {
-  this.drawText("Players Connected:", 40, 60);
+function spritePos(i) {
+  return {x: 8 + ((i - 1) * 3 + 0.4), y: 2.2};
+}
 
-  for (var i = 1; i < this.players.length; i++) {
-    this.drawText(this.players[i].name, 140 + i * 100, 60);
+HUD.prototype.drawPlayers = function() {
+  this.drawText("Players:", 40, 60);
+
+  for (var i = 0; i < this.players.length; i++) {
+    this.drawText(this.players[i].name, 160 + i * 90, 60);
     var sprite = this.players[i].miniAliveSprite;
-    sprite.position = {x: 8 + ((i - 1) * 3 + 0.4), y: 2.2};
+    sprite.position = spritePos(i);
     sprite.draw();
   }
 };

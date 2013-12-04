@@ -5,7 +5,7 @@ var WebSocketServer = WebSocket.Server;
 var wss = new WebSocketServer({port: 9000});
 var Entities = require('./shared/Entities');
 var lastTime = new Date().getTime();
-var GAMETIME = 1000 * 60 * 5; // 3 minutes
+var GAMETIME = 1000 * 60 * 1; //minutes
 var runningTime = 0;
 var delta = 0;
 var board;
@@ -43,18 +43,19 @@ wss.on('connection', function(ws) {
     // player exists, let player process message/command && return
     if (ws.player) return ws.player.onmessage(message, board);
 
+    // TODO: sessions
     // player is reconnecting
-    // if (message.match(/^hi, i am back \w+-\w+-\w+-\w+-\w+$/)) {
-    //   var id = message.match(/^hi, i am back (\w+-\w+-\w+-\w+-\w+)$/)[1];
-    //   var player = global.entities.find(id);
-    //   if (player && ! player.isConnected) {
-    //     ws.player = player;
-    //     ws.sendJSON({hi: {id: ws.player.id}});
-    //     ws.sendJSON({entities: global.entities._out()});
-    //     ws.sendJSON({timeLeft: GAMETIME - runningTime});
-    //     return ws.player.onconnect();
-    //   }
-    // }
+    if (message.match(/^hi, i am back \w+-\w+-\w+-\w+-\w+$/)) {
+      var id = message.match(/^hi, i am back (\w+-\w+-\w+-\w+-\w+)$/)[1];
+      var player = global.entities.find(id);
+      if (player && ! player.isConnected) {
+        ws.player = player;
+        ws.sendJSON({hi: {id: ws.player.id}});
+        ws.sendJSON({entities: global.entities._out()});
+        ws.sendJSON({timeLeft: GAMETIME - runningTime});
+        return ws.player.onconnect();
+      }
+    }
 
     // create a new player
     if (message.match(/^hi, i am \w+.*$/)) {

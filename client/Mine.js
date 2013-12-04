@@ -1,5 +1,6 @@
 Mine.prototype.init = function() {
   this.makeSprites();
+  this.position.z = 1;
 };
 
 Mine.prototype.makeSprites = function() {

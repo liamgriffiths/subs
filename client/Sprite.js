@@ -28,7 +28,7 @@ Sprite.prototype.draw = function() {
              y: this.position.y * this.size}; // pixel location on canvas
   var key = this.currentFrame;
 
-  if(this.cache[key] === undefined){
+  if(! this.cache[key]) {
     // create a new canvas to cache the this frame drawing
     var cCanvas = document.createElement('canvas');
     var cContext = cCanvas.getContext('2d');

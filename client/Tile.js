@@ -1,6 +1,12 @@
 Tile.prototype.init = function() {
   this.makeSprites();
-  this.position.z = 1;
+  this.position.z = 2;
+
+  // predraw sprites
+  for (var i = 0; i < this.sprite.frames.length; i++) {
+    this.sprite.currentFrame = i;
+    this.sprite.draw();
+  }
 };
 
 Tile.prototype.makeSprites = function() {
@@ -45,7 +51,7 @@ Tile.prototype.makeSprites = function() {
 };
 
 Tile.prototype.draw = function() {
-  if (this.isExploding) { return this.drawExplosion(); }
+  if (this.isExploding) return this.drawExplosion();
   if (this.type == 'water') return function(){};
   return this.sprite.draw();
 };

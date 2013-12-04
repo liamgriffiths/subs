@@ -10,13 +10,12 @@ window.requestAnimFrame = (function(){
 
 })();
 
-var TILESIZE = 60,
-    STARTED = false,
-    player,
-    board,
-    canvas,
-    context,
-    delta; // time difference between frames
+var TILESIZE = 60;
+var player;
+var board;
+var canvas;
+var context;
+var delta; // time difference between frames
 
 var oldX = 0, oldY = 0;
 
@@ -58,25 +57,13 @@ function Game() {
   // TODO: scale game drawing to screen/viewport
   canvas.width = document.documentElement.clientWidth;
   canvas.height = document.documentElement.clientHeight - 102;
-  // TILESIZE = Math.floor((canvas.height / 12) / (canvas.width / 16)) * 100;
-
   this.camera = new Camera(canvas.width, canvas.height);
-
 }
-
-
 
 Game.prototype = {
   connected: function(){
-    // var sessionId = Utils.readSessionId();
-    // if (sessionId) {
-    //   // reconnect
-    //   this.send('hi, i am back ' + sessionId);
-    // } else {
-      // send connection message
-      var name = prompt("Enter your name", "Human");
-      this.send('hi, i am ' + name);
-    // }
+    var name = prompt("Enter your name", "Human");
+    this.send('hi, i am ' + name);
   },
 
   disconnected: function(){ },
@@ -97,10 +84,9 @@ Game.prototype = {
       }
 
       if (message.entities) {
-        // console.log(message.entities);
         this.entities._in(message.entities);
         if (! player) player = this.entities.find(this.id);
-        if (! board) { 
+        if (! board) {
           for (var id in this.entities.objects) {
             if (this.entities.objects[id].constructor === 'Board') {
               board = this.entities.objects[id].object;
@@ -154,10 +140,10 @@ Game.prototype = {
 
   allPlayers: function() {
     var players = [];
-    for (var id in this.entities.objects) {
-      if (this.entities.objects[id].constructor === 'Player') {
-        players.push(this.entities.objects[id].object);
-      }
+    var playerIds = this.entities.types['Player'];
+    var len = playerIds.length;
+    for (var i = 0; i < len; i++) {
+      players.push(this.entities.find(playerIds[i]));
     }
     return players;
   },
@@ -165,12 +151,16 @@ Game.prototype = {
   update: function(now, delta) {
     if (player) {
       this.camera.update(player.position);
-      this.hud.update({
-        life: player.life,
-        power: player.power,
-        mines: player.maxMines,
-        players: this.allPlayers()
-      }, delta);
+
+      if (now % 2) {
+        var players = this.allPlayers();
+        this.hud.update({
+          life: player.life,
+          power: player.power,
+          mines: player.maxMines,
+          players: players
+        }, delta);
+      }
 
       // update all entities
       for (var id in this.entities.objects) {

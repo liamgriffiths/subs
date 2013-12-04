@@ -5,6 +5,7 @@ function Item(settings) {
   this.type = settings.type || '';
   this.createdAt = settings.createdAt || new Date().getTime();
   this.position = settings.position;
+  this.position.z = 0;
 }
 
 Item.prototype._out = function() {

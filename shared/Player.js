@@ -1,6 +1,7 @@
 function Player(settings) {
   this.id = settings.id;
   this.position = settings.position;
+  this.position.z = 1;
   this.prevPosition = settings.prevPosition || settings.position;
   this.power = settings.power || 2;
   this.isAlive = settings.isAlive;

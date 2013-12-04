@@ -37,10 +37,13 @@ Camera.prototype.addDrawing = function(object){
    }
 };
 
+function drawCompare(a, b) { return b.zindex <= a.zindex ? 1 : -1; }
+
 Camera.prototype.draw = function() {
-  this.drawings.sort(function(a, b) { return a.zindex - b.zindex; });
+  this.drawings.sort(drawCompare);
   // remove from queue and execute function
-  while(this.drawings.length){
+  var len = this.drawings.length;
+  while (len--) {
     var drawing = this.drawings.shift();
     drawing.fn();
   }

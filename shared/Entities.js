@@ -14,6 +14,8 @@ function Entities(root) {
   // { 'guid-1234-abcd' : { constructor: 'Tile', object: [Object object] }
   this.objects = {};
   this.previous = {};
+
+  this.types = {};
 }
 
 Entities.prototype.guid = function() {
@@ -33,10 +35,13 @@ Entities.prototype.create = function(constructor, settings) {
       constructor: constructor,
       object: new root[constructor](settings)
     };
+
     console.log('Created <%s %s>', constructor, id);
+
     if ('init' in root[constructor].prototype) {
       root[constructor].prototype.init.call(this.objects[id].object);
     }
+
     return id;
   } else {
     return false;
@@ -102,12 +107,26 @@ Entities.prototype._in = function(entities) {
       if ('init' in root[entity.constructor].prototype) {
         root[entity.constructor].prototype.init.call(this.objects[id].object);
       }
+
+      // add id types list
+      if (! (entity.constructor in this.types)) this.types[entity.constructor] = [];
+      this.types[entity.constructor].push(id);
     }
   }
 
   // do deletes
   for (var i = 0; i < entities.remove.length; i++) {
-    delete this.objects[entities.remove[i]];
+    var rmid = entities.remove[i];
+    delete this.objects[rmid];
+
+    // delete from types lists
+    for (var type in this.types) {
+      var idx = this.types[type].indexOf(rmid);
+      if (idx) {
+        delete this.types[type][id];
+        break;
+      }
+    }
   }
 
   return this;
