@@ -11,7 +11,7 @@ realtime strategy game. It is similar to the game bomberman.
 
 Install node.js dependencies, prepare clientside js:
 
-    npm install -g uglifyjs
+    npm install -g uglify-js
     make
 
 Start the server:
