@@ -105,14 +105,16 @@ Game.prototype = {
     }
   },
 
-  sendCommand: function() {
+  sendCommand: function(event) {
     switch (event.keyCode) {
       case 37: this.send('left'); break;
       case 38: this.send('up'); break;
       case 39: this.send('right'); break;
       case 40: this.send('down'); break;
       case 32: this.send('mine'); break; // space
+      default: return;
     }
+    event.preventDefault();
   },
 
   send: function(message) {
@@ -204,6 +206,9 @@ Game.prototype = {
   run: function() {
     var currentTime = new Date().getTime();
     delta = currentTime - this.lastFrameTime;
+    // cap delta so a stalled/throttled tab (e.g. backgrounded) can't blow up
+    // the unclamped camera tween below with a huge single-frame jump
+    if (delta > 100) delta = 100;
     this.lastFrameTime = currentTime;
 
     if (this.id) {

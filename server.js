@@ -26,9 +26,9 @@ WebSocket.prototype.sendJSON = function(data) {
 
 // send json to all connected clients
 WebSocketServer.prototype.broadcast = function(data) {
-  for (var id in this.clients) {
-    this.clients[id].sendJSON(data);
-  }
+  this.clients.forEach(function(client) {
+    client.sendJSON(data);
+  });
 };
 
 // websocket server events
@@ -42,7 +42,7 @@ wss.on('connection', function(ws) {
   ws.on('error', function(error) { console.log(error); });
 
   ws.on('message', function(message) {
-    message = message.trim().toLowerCase();
+    message = message.toString().trim().toLowerCase();
     if (! message) return;
 
     // player exists, let player process message/command && return
